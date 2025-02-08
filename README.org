@@ -293,18 +293,6 @@ https://github.com/Kyure-A/.emacs.d
 
 *** Scroll
 
-**** good-scroll
-cause bug?
-#+begin_src emacs-lisp :tangle no
-  (eval-when-compile
-    (el-clone :repo "io12/good-scroll.el"))
-
-  (with-delayed-execution-priority-high
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/good-scroll"))
-    (autoload-if-found '(good-scroll-mode) "good-scroll")
-    (good-scroll-mode t))
-#+end_src
-
 **** sublimity
 #+begin_src emacs-lisp
   (eval-when-compile
@@ -1976,18 +1964,6 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     (add-to-list 'load-path (locate-user-emacs-file "el-clone/js2")))
 #+end_src
 
-*** smartparens
-#+begin_src emacs-lisp :tangle no
-  (eval-when-compile
-    (el-clone :repo "Fuco1/smartparens"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/smartparens"))
-    (autoload-if-found '(smartparens-global-mode) "smartparens")
-    (smartparens-global-mode)
-    (show-smartparens-global-mode t))
-#+end_src
-
 *** undo-fu
 #+begin_src emacs-lisp
   (eval-when-compile
@@ -2497,14 +2473,6 @@ Allows you to integrate Rich Presence from Discord.
       (interactive)
       (call-interactively 'centaur-tabs-local-mode)
       (call-interactively 'centaur-tabs-local-mode)))
-#+end_src
-
-*** backward-kill-line
-#+begin_src emacs-lisp :tangle no
-  (defun backward-kill-line (arg)
-    "Kill ARG lines backward."
-    (interactive "p")
-    (kill-line (- 1 arg)))
 #+end_src
 
 *** delete-word
