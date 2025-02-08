@@ -184,7 +184,7 @@ https://github.com/Kyure-A/.emacs.d
   (global-set-key (kbd "C-x i") 'nil)
   (global-set-key (kbd "C-x i i") 'ivy-yasnippet)
   (global-set-key (kbd "C-x i n") 'yas-new-snippet)
-  (global-set-key (kbd "C-x u") 'undo-tree-visualize)
+  (global-set-key (kbd "C-x u") 'nil)
   (global-set-key (kbd "C-x C-z") 'nil)
   (global-set-key (kbd "C-x C-c") 'nil)
   #+end_src
@@ -214,10 +214,11 @@ https://github.com/Kyure-A/.emacs.d
   (global-set-key (kbd "C-h") 'smart-hungry-delete-backward-char)
   (global-set-key (kbd "C-m") 'smart-newline)
   (global-set-key (kbd "C-o") 'nil)
-  (global-set-key (kbd "C-u") 'undo-tree-undo)
-  (global-set-key (kbd "C-r") 'undo-tree-redo)
+  (global-set-key (kbd "C-u") 'undo-fu-only-undo)
+  (global-set-key (kbd "C-r") 'undo-fu-only-redo)
   (global-set-key (kbd "C-s") 'swiper)
-  (global-set-key (kbd "C-z") 'undo-tree-undo)
+  (global-set-key (kbd "C-z") 'undo-fu-only-undo)
+  (global-set-key (kbd "C-S-z") 'undo-fu-only-redo)
   (global-set-key (kbd "C-/") 'other-window)
   (global-set-key (kbd "C-;") 'smart-hungry-delete-forward-char)
 #+end_src
@@ -1987,18 +1988,15 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     (show-smartparens-global-mode t))
 #+end_src
 
-*** undo-tree
+*** undo-fu
 #+begin_src emacs-lisp
   (eval-when-compile
-    (el-clone :repo "apchamberlain/undo-tree.el"))
+    (el-clone :url "https://codeberg.org/ideasman42/emacs-undo-fu.git"
+              :repo "emacs-undo-fu"))
 
   (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/undo-tree"))
-    (autoload-if-found '(undo-tree-undo undo-tree-redo) "undo-tree")
-    (with-eval-after-load 'undo-tree
-      (global-undo-tree-mode)
-      (setq undo-tree-auto-save-history t)
-      (setq undo-tree-history-directory-alist  '(("." . "~/.emacs.d/.tmp")))))
+    (add-to-list 'load-path (locate-user-emacs-file "el-clone/emacs-undo-fu"))
+    (autoload-if-found '(undo-fu-only-undo undo-fu-only-redo undo-fu-only-redo-all) "undo-fu"))
 #+end_src
 
 *** visual-regexp
