@@ -1169,6 +1169,17 @@ plz is an HTTP library for Emacs.
       (setq lsp-rust-server 'rust-analyzer)))
 #+end_src
 
+**** RustOwl
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (el-clone :repo "cordx56/rustowl"
+            :load-paths `(,(locate-user-emacs-file "el-clone/rustowl/emacs"))))
+
+  (with-delayed-execution
+    (add-to-list 'load-path (locate-user-emacs-file "el-clone/rustowl/emacs"))
+    (autoload-if-found '(enable-rustowlsp-cursor) "rustowlsp"))
+#+end_src
+
 *** SATySFi
 #+begin_src emacs-lisp
   (eval-when-compile
