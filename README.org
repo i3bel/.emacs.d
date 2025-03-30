@@ -193,6 +193,7 @@ https://github.com/Kyure-A/.emacs.d
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c e b") 'eval-buffer)
   (global-set-key (kbd "C-c e m") 'menu-bar-mode)
+  (global-set-key (kbd "C-c m") 'minuet-configure-provider)
   (global-set-key (kbd "C-c o") 'Kyure_A/open)
   (global-set-key (kbd "C-c p") 'smartparens-global-mode)
   (global-set-key (kbd "C-c s") 'Kyure_A/start-repl)
@@ -225,8 +226,14 @@ https://github.com/Kyure-A/.emacs.d
 
 **** M-* 
 #+begin_src emacs-lisp
+  (global-set-key (kbd "M-a") 'minuet-accept-suggestion-line)
+  (global-set-key (kbd "M-e") 'minuet-dismiss-suggestion)
+  (global-set-key (kbd "M-i") 'minuet-show-suggestion)
   (global-set-key (kbd "M-k") 'puni-backward-kill-line)
+  (global-set-key (kbd "M-p") 'minuet-previous-suggestion)
+  (global-set-key (kbd "M-n") 'minuet-next-suggestion)
   (global-set-key (kbd "M-x") 'counsel-M-x)
+  (global-set-key (kbd "M-y") 'minuet-complete-with-minibuffer)
 #+end_src
 
 **** yes/no
@@ -714,6 +721,17 @@ https://github.com/Kyure-A/.emacs.d
     (autoload-if-found '(package-lint-current-buffer) "package-lint")
     (require 'package-lint))
 #+end_src
+
+*** plz
+plz is an HTTP library for Emacs.
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (el-clone :repo "alphapapa/plz.el"))
+
+  (with-delayed-execution-priority-high
+    (add-to-list 'load-path (locate-user-emacs-file "el-clone/plz")))
+#+end_src
+
 
 *** pos-tip
 #+begin_src emacs-lisp
@@ -2099,6 +2117,27 @@ Allows you to integrate Rich Presence from Discord.
     (with-eval-after-load 'magit
       (setq magit-repository-directories '(("~/ghq/" . 3)))
       (add-hook 'magit-status-mode-hook #'toggle-centaur-tabs-local-mode)))
+#+end_src
+
+*** Minuet
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (el-clone :repo "milanglacier/minuet-ai.el"))
+
+  (with-delayed-execution-priority-high
+    (add-to-list 'load-path (locate-user-emacs-file "el-clone/minuet-ai"))
+    (autoload-if-found '(minuet-auto-suggestion-mode) "minuet-ai")
+    (require 'minuet)
+    (add-hook 'prog-mode-hook #'minuet-auto-suggestion-mode)
+    (with-eval-after-load 'minuet
+      (setq minuet-provider 'openai-fim-compatible)
+      (setq minuet-n-completions 1)
+      (setq minuet-context-window 512)
+      (plist-put minuet-openai-fim-compatible-options :end-point "http://localhost:11434/v1/completions")
+      (plist-put minuet-openai-fim-compatible-options :name "Ollama")
+      (plist-put minuet-openai-fim-compatible-options :api-key "TERM")
+      (plist-put minuet-openai-fim-compatible-options :model "deepseek-r1:8b")
+      (minuet-set-optional-options minuet-openai-fim-compatible-options :max_tokens 256)))
 #+end_src
 
 *** Node.js
