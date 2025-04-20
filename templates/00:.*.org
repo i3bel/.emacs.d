@@ -1,5 +1,0 @@
-#+TITLE: ${1:TITLE}
-#+AUTHOR: ${2:AUTHOR}
-#+OPTIONS: toc:nil
-
-$0
