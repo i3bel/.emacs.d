@@ -22,7 +22,6 @@
     
     nongnu = {
       url = "git+https://git.savannah.gnu.org/git/emacs/nongnu.git";
-      ref = "master";
       flake = false;
     };
     
