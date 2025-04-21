@@ -78,13 +78,13 @@
           
         in {
           packages.default = package;
-          
-          homeManagerModules = {
-            emacsConfig = import ./nix/home-manager.nix {
-              inherit pkgs lib twist profile;
-            };
-          };
 
+          homeModules.twist = {
+            imports = [
+              inputs.twist.homeModules.emacs-twist
+            ];
+          };
+                    
           apps = package.makeApps {
             lockDirName = ./lock;
           };
