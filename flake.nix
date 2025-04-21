@@ -83,11 +83,6 @@
             imports = [
               inputs.twist.homeModules.emacs-twist
             ];
-
-            programs.emacs-twist = {
-              enable = true;
-              config = package;
-            };
           };
                     
           apps = package.makeApps {
