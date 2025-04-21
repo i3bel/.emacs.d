@@ -79,10 +79,12 @@
         in {
           packages.default = package;
 
-          homeModules.twist = [
-            inputs.twist.homeModules.emacs-twist
-            package
-          ];
+          homeModules.twist = {
+            imports = [
+              inputs.twist.homeModules.emacs-twist
+              package
+            ];
+          };
                     
           apps = package.makeApps {
             lockDirName = ./lock;
