@@ -79,15 +79,11 @@
         in {
           packages.default = package;
 
-          flake = {
-            homeModules.twist = {
-              imports = [
-                inputs.twist.homeModules.emacs-twist
-                package
-              ];
-            };
-          };
-          
+          homeModules.twist = [
+            inputs.twist.homeModules.emacs-twist
+            package
+          ];
+                    
           apps = package.makeApps {
             lockDirName = ./lock;
           };
