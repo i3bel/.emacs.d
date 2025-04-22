@@ -39,6 +39,7 @@
       flake-utils,
       systems,
       twist,
+      emacs,
       ...
   } @ inputs:
     let
@@ -54,14 +55,13 @@
             overlays = [
               inputs.org-babel.overlays.default
               overlays.emacs
+              emacs.overlay
             ];
           };
 
-          inherit (inputs.emacs.packages.${system}) emacs emacs-git;
-
           profile = import ./default.nix {
             inherit pkgs;
-            emacsPackage = emacs-git;
+            emacsPackage = pkgs.emacs-git;
           };
 
           package = (inputs.twist.lib.makeEnv {
