@@ -43,6 +43,7 @@
   } @ inputs:
     let
       supportedSystems = import systems;
+      overlays = import ./nix/overlays.nix;
     in    
       flake-utils.lib.eachSystem supportedSystems
         (system: let
@@ -52,6 +53,7 @@
             inherit system;
             overlays = [
               inputs.org-babel.overlays.default
+              overlays.emacs
             ];
           };
 
