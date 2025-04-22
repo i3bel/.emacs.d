@@ -39,10 +39,12 @@
       flake-utils,
       systems,
       twist,
+      emacs,
       ...
   } @ inputs:
     let
       supportedSystems = import systems;
+      overlays = import ./nix/overlays.nix;
     in    
       flake-utils.lib.eachSystem supportedSystems
         (system: let
@@ -52,23 +54,21 @@
             inherit system;
             overlays = [
               inputs.org-babel.overlays.default
+              overlays.emacs
+              emacs.overlay
             ];
           };
 
-          inventories = import ./nix/inventories.nix inputs;
-
-          inherit (inputs.emacs.packages.${system}) emacs emacs-git;
-
           profile = import ./default.nix {
             inherit pkgs;
-            emacsPackage = emacs-git;
+            emacsPackage = pkgs.emacs-git;
           };
 
           package = (inputs.twist.lib.makeEnv {
             inherit pkgs;
             inherit (profile) emacsPackage lockDir initFiles extraPackages;
             inputOverrides = (import ./nix/inputs.nix {inherit lib;}) // profile.extraInputOverrides;
-            registries = inventories ++ [
+            registries = (import ./nix/registries.nix inputs) ++ [
               {
                 type = "melpa";
                 path = profile.extraRecipeDir;
