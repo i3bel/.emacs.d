@@ -55,8 +55,6 @@
             ];
           };
 
-          registries = import ./nix/registries.nix inputs;
-
           inherit (inputs.emacs.packages.${system}) emacs emacs-git;
 
           profile = import ./default.nix {
@@ -68,7 +66,7 @@
             inherit pkgs;
             inherit (profile) emacsPackage lockDir initFiles extraPackages;
             inputOverrides = (import ./nix/inputs.nix {inherit lib;}) // profile.extraInputOverrides;
-            registries = registries ++ [
+            registries = (import ./nix/registries.nix inputs) ++ [
               {
                 type = "melpa";
                 path = profile.extraRecipeDir;
