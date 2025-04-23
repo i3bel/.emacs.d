@@ -277,7 +277,7 @@ https://github.com/Kyure-A/.emacs.d
     (setq sublimity-scroll-drift-length 10))
 #+end_src
 
-*** Indent
+*** Indent 
 #+begin_src emacs-lisp 
   (setq-default indent-tabs-mode nil)
 #+end_src
@@ -720,27 +720,14 @@ zkry/yaml.el
 #+end_src
 
 ** Language Server
-*** eglot
+*** eglot-booster
+jdtsmith/eglot-booster
 #+begin_src emacs-lisp
-  (with-delayed-execution-priority-high
-    (autoload-if-found '(eglot eglot-ensure) "eglot"))
-
-  (eval-when-compile
-    (el-clone :url "https://gist.github.com/ee156d1a3574442ac1d8a357834cf17e.git"
-              :repo "eglot-codelens")
-    (el-clone :repo "jdtsmith/eglot-booster"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/eglot-booster"))
-    (autoload-if-found '(eglot-booster-mode) "eglot-booster")
-    (with-eval-after-load 'eglot
-      (eglot-booster-mode)))
-
-  ;; (with-delayed-execution
-  ;;    (add-to-list 'load-path (locate-user-emacs-file "el-clone/eglot-codelens"))
-  ;;    (autoload-if-found '(eglot-lens-mode) "eglot-codelens")
-  ;;    (with-eval-after-load 'eglot
-  ;;      (eglot-lens-mode)))
+  (use-package eglot-booster
+    :after eglot
+    :ensure t
+    :config
+    (eglot-booster-mode))
 #+end_src
 
 *** C#
@@ -823,14 +810,9 @@ zkry/yaml.el
 ** Programming Languages
 *** Arduino Style C
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :url "https://repo.or.cz/arduino-mode.git"
-              :repo "arduino-mode"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/arduino-mode"))
-    (autoload-if-found '(arduino-mode) "arduino-mode")
-    (add-to-list 'auto-mode-alist '("\\.ino$" . arduino-mode)))
+  (use-package arduino-mode
+    :mode (("\\.ino$" . arduino-mode))
+    :ensure t)
 #+end_src
 
 *** astro
@@ -847,25 +829,19 @@ zkry/yaml.el
 
 *** Common Lisp
 #+begin_src emacs-lisp 
-  (with-delayed-execution
-    (autoload-if-found '(lisp-mode) "lisp-mode")
-    (add-to-list 'auto-mode-alist '("\\.cl$" . lisp-mode)))
+  (use-package lisp-mode
+    :mode (("\\.cl$" . lisp-mode)))
 
-  (eval-when-compile
-    (el-clone :repo "joaotavora/sly"
-              :load-paths `(,(locate-user-emacs-file "el-clone/sly/lib")
-                            ,(locate-user-emacs-file "el-clone/sly/contrib")
-                            ,(locate-user-emacs-file "el-clone/sly/slynk"))))
+  (use-package sly
+    :ensure t
+    :config
+    (setopt inferior-lisp-program "/usr/bin/sbcl"))
 
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/sly"))
-    (autoload-if-found '(sly) "sly")
-    (setq inferior-lisp-program "/usr/bin/sbcl")
-    (defun start-sly ()
-      "Make Sly startup behavior similar to Slime"
-      (interactive)
-      (split-window-right)
-      (sly)))
+  (defun start-sly ()
+    "Make Sly startup behavior similar to Slime"
+    (interactive)
+    (split-window-right)
+    (sly))
 #+end_src
 
 *** Flutter
@@ -885,245 +861,161 @@ zkry/yaml.el
 
 **** flutter
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "amake/flutter.el"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/flutter"))
-    (autoload-if-found '(flutter-run-or-hot-reload) "flutter")
-    (with-eval-after-load 'flutter
-      (add-hook 'dart-mode (lambda () (add-hook 'after-save-hook #'flutter-run-or-hot-reload nil t)))))
+  (use-package flutter
+    :ensure t
+    :config
+    (add-hook 'dart-mode (lambda () (add-hook 'after-save-hook #'flutter-run-or-hot-reload nil t))))
 #+end_src
 
 *** Dockerfile
 #+begin_src emacs-lisp 
-  (eval-when-compile
-    (el-clone :repo "spotify/dockerfile-mode"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/dockerfile-mode"))
-    (autoload-if-found '(dockerfile-mode) "dockerfile-mode")
-    (add-to-list 'auto-mode-alist '("\\Dockerfile$" . dockerfile-mode))
-    (with-eval-after-load 'dockerfile-mode
-      (add-hook 'dockerfile-mode-hook #'flycheck-mode)))
+  (use-package dockerfile-mode
+    :mode (("\\Dockerfile$" . dockerfile-mode))
+    :ensure t
+    :config
+    (add-hook 'dockerfile-mode-hook #'flycheck-mode))
 #+end_src
 
 *** F#
 #+begin_src emacs-lisp 
-  (eval-when-compile
-    (el-clone :repo "fsharp/emacs-fsharp-mode"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/emacs-fsharp-mode"))
-    (autoload-if-found '(fsharp-mode) "fsharp-mode")
-    (add-to-list 'auto-mode-alist '("\\.fs[iylx]?$" . fsharp-mode)))
+  (use-package fsharp-mode
+    :mode ("\\.fs[iylx]?$" . fsharp-mode)
+    :ensure t)
 #+end_src
 
 *** Hylang
 #+begin_src emacs-lisp 
-  (eval-when-compile
-    (el-clone :repo "hylang/hy-mode"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/hy-mode"))
-    (autoload-if-found '(hy-mode) "hy")
+  (use-package hy-mode
+    :ensure t
+    :config
     (add-hook 'hy-mode (lambda () (setq hy-shell-interpreter-args
-                              (concat "--repl-output-fn=hy.contrib.hy-repr.hy-repr "
-                                      hy-shell-interpreter-args)))))
+                                (concat "--repl-output-fn=hy.contrib.hy-repr.hy-repr "
+                                        hy-shell-interpreter-args)))))
 #+end_src
 
 *** mcfunction
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "rasensuihei/mcf"))
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/mcf"))
-    (autoload-if-found '(mcf-mode) "mcf")
-    (add-to-list 'auto-mode-alist '("\\.mcfunction$" . mcf-mode)))
+  (use-package mcf
+    :mode (("\\.mcfunction$" . mcf-mode))
+    :ensure t)
 #+end_src
 
 *** Nix
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "NixOS/nix-mode"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/nix-mode"))
-    (require 'nix-mode)
-    (autoload-if-found '(nix-mode) "nix-mode")
-    (autoload-if-found '(nix-drv-mode) "nix-drv-mode")
-    (autoload-if-found '(company-nix) "nix-company")
-    (add-to-list 'auto-mode-alist '("\\.nix$" . nix-mode)))
+  (use-package nix-mode
+    :mode (("\\.nix$" . nix-mode))
+    :ensure t)
 #+end_src
 
 *** pwsh
 #+begin_src emacs-lisp 
-  (eval-when-compile
-    (el-clone :repo "jschaf/powershell.el"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/powershell"))
-    (autoload-if-found '(powershell powershell-mode) "powershell")
-    (add-to-list 'auto-mode-alist '("\\.ps1$" . powershell-mode)))
+  (use-package powershell
+    :mode (("\\.ps1$" . powershell-mode))
+    :ensure t)
 #+end_src
 
 *** Rust
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "rust-lang/rust-mode"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/rust-mode"))
-    (autoload-if-found '(rust-mode) "rust-mode")
-    (add-to-list 'auto-mode-alist '("\\.rs$" . rust-mode))
-    (require 'rust-mode)
-    (with-eval-after-load 'rust-mode
-      (setq rust-format-on-save nil)
-      (add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
-      (setq lsp-rust-server 'rust-analyzer)))
+  (use-package rust-mode
+    :mode (("\\.rs$" . rust-mode))
+    :ensure t
+    :config
+    (add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
+    (setopt rust-format-on-save nil)
+    (setopt lsp-rust-server 'rust-analyzer))
 #+end_src
 
 **** RustOwl
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "cordx56/rustowl"
-            :load-paths `(,(locate-user-emacs-file "el-clone/rustowl/emacs"))))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/rustowl/emacs"))
-    (autoload-if-found '(enable-rustowlsp-cursor) "rustowlsp"))
+  (use-package rustowl
+    :ensure t)
 #+end_src
 
 *** SATySFi
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "hanazuki/satysfi.el")
-    (el-clone :repo "Kyure-A/satysfi-ts-mode"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/satysfi"))
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/satysfi-ts-mode"))
-    (require 'satysfi-mode)
-    (autoload-if-found '(satysfi-mode) "satysfi")
-    (autoload-if-found '(satysfi-ts-mode) "satysfi-ts-mode")
-    (add-to-list 'auto-mode-alist '("\\.saty$" . satysfi-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.satyh$" . satysfi-ts-mode))
-    (setq satysfi-command "satysfi"))
+  (use-package satysfi-ts-mode
+    :mode (("\\.saty$" . satysfi-ts-mode))
+    :ensure t)
 #+end_src
 
 *** Svelte
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "leafOfTree/svelte-mode"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/svelte-mode"))
-    (autoload-if-found '(svelte-mode) "svelte-mode")
-    (add-to-list 'auto-mode-alist '("\\.svelte$" . svelte-mode)))
+  (use-package svelte-mode
+    :mode (("\\.svelte$" . svelte-mode))
+    :ensure t)
 #+end_src
 
 ** Markup Languages
 *** CSV
 #+begin_src emacs-lisp 
-  (eval-when-compile
-    (el-clone :repo "emacsmirror/csv-mode"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/csv-mode"))
-    (autoload-if-found '(csv-mode) "csv-mode")
-    (add-to-list 'auto-mode-alist '("\\.csv$" . csv-mode)))
+  (use-package csv-mode
+    :mode (("\\.csv$" . csv-mode))
+    :ensure t)
 #+end_src
 
 *** Markdown
 #+begin_src emacs-lisp 
-  (eval-when-compile
-    (el-clone :repo "jrblevin/markdown-mode"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/markdown-mode"))
-    (require 'markdown-mode)
-    (autoload-if-found '(markdown-mode gfm-mode) "markdown-mode")
-    (add-to-list 'auto-mode-alist '("\\.md$" . gfm-mode))
-    (add-to-list 'auto-mode-alist '("\\.markdown$" . gfm-mode))
-    (with-eval-after-load 'markdown
-      (setq markdown-command "github-markup")
-      (setq markdown-command-needs-filename t)))
+  (use-package markdown-mode
+    :mode (("\\.md$" . gfm-mode)
+           ("\\.markdown$" . gfm-mode))
+    :ensure t
+    :config
+    (setq markdown-command "github-markup")
+    (setq markdown-command-needs-filename t))
 #+end_src
 
 *** Mermaid
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "abrochard/mermaid-mode"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/mermaid-mode"))
-    (require 'mermaid-mode)
-    (add-to-list 'auto-mode-alist '("\\.mmd$" . mermaid-mode))
-    (add-to-list 'auto-mode-alist '("\\.mermaid$" . mermaid-mode)))
+  (use-package mermaid-mode
+    :mode (("\\.mmd$" . mermaid-mode)
+           ("\\.mermaid$" . mermaid-mode))
+    :ensure t)
 #+end_src
 
 *** Org-mode
 **** org-mode
 #+begin_src emacs-lisp 
-  (with-eval-after-load 'org
+  (use-package org-mode
+    :config
     (setq org-directory "~/document/org")
     (setq org-latex-pdf-process '("tectonic %f"))
     (setq org-startup-truncated nil)
     (setq org-enforce-todo-dependencies t)
     (setq org-support-shift-select t)
     (setq org-latex-default-class "ltjsarticle"))
-
-  (with-eval-after-load 'org)
 #+end_src
 
 **** org-modern
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "minad/org-modern"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/org-modern"))
-    (autoload-if-found '(org-modern-mode) "org-modern")
+  (use-package org-modern
+    :after org
+    :config
     (add-hook 'org-mode-hook #'org-modern-mode)
     (add-hook 'org-agenda-finalize-hook #'org-modern-agenda))
 #+end_src
 
 **** org-roam
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "org-roam/org-roam"
-              :load-paths `(,(locate-user-emacs-file "el-clone/org-roam/extensions")))
-    (el-clone :repo "org-roam/org-roam-ui"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/org-roam"))
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/org-roam/extensions"))
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/org-roam-ui"))
-    (autoload-if-found '(org-roam-mode) "org-roam")
-    (autoload-if-found '(org-roam-ui-mode) "org-roam-ui")
-    (with-eval-after-load 'org
-      (require 'org-roam))
-    (with-eval-after-load 'org-roam-mode
-      (add-hook 'org-roam-mode-hook #'org-roam-ui-mode)))
+  (use-package org-roam
+    :after org
+    :config
+    (add-hook 'org-roam-mode-hook #'org-roam-ui-mode))
 #+end_src
 
 **** org-tempo
 #+begin_src emacs-lisp
-  (with-delayed-execution
-    (with-eval-after-load 'org
-      (require 'org-tempo)))
+  (use-package org-tempo :after org)
 #+end_src
 
 **** org-ai
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "rksm/org-ai"))
+  (use-package org-ai
+    :after org
+    :config
+    (add-hook 'org-mode-hook #'org-ai-mode))
 
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/org-ai"))
-    (autoload-if-found '(org-ai-mode) "org-ai")
-    (with-eval-after-load 'org
-      (add-hook 'org-mode-hook #'org-ai-mode)))
+  (eval-when-compile
+      (el-clone :repo "rksm/org-ai"))
 #+end_src
 
 *** VHDL
@@ -1135,13 +1027,18 @@ zkry/yaml.el
 
 *** Web-mode
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "fxbois/web-mode"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/web-mode"))
-    (autoload-if-found '(web-mode) "web-mode")
-    (require 'web-mode)
+  (use-package web-mode
+    :ensure t
+    :config
+    (setopt web-mode-markup-indent-offset 2)
+    (setopt web-mode-enable-auto-pairing t)
+    (setopt web-mode-enable-auto-closing t)
+    (setopt web-mode-tag-auto-close-style 2)
+    (setopt web-mode-enable-auto-quoting nil)
+    (setopt web-mode-enable-current-column-highlight t)
+    (setopt web-mode-enable-current-element-highlight t)
+    (setopt web-mode-comment-style 2)
+    (setopt web-mode-enable-auto-indentation nil)
     (add-to-list 'auto-mode-alist '("\\.[agj]sp$" . web-mode))
     (add-to-list 'auto-mode-alist '("\\.erb$" . web-mode))
     (add-to-list 'auto-mode-alist '("\\.gsp$" . web-mode))
@@ -1158,31 +1055,17 @@ zkry/yaml.el
     (add-to-list 'auto-mode-alist '("\\.tsx$" . web-mode))
     (add-to-list 'auto-mode-alist '("\\.mts$" . web-mode))
     (add-to-list 'auto-mode-alist '("\\.cts$" . web-mode))
-    (add-hook 'web-mode-hook #'flycheck-mode)
-    (with-eval-after-load 'web-mode
-      (setq web-mode-markup-indent-offset 2)
-      (setq web-mode-enable-auto-pairing t)
-      (setq web-mode-enable-auto-closing t)
-      (setq web-mode-tag-auto-close-style 2)
-      (setq web-mode-enable-auto-quoting nil)
-      (setq web-mode-enable-current-column-highlight t)
-      (setq web-mode-enable-current-element-highlight t)
-      (setq web-mode-comment-style 2)
-      (setq web-mode-enable-auto-indentation nil)))
+    (add-hook 'web-mode-hook #'flycheck-mode))
 #+end_src
 
 *** YAML
 #+begin_src emacs-lisp 
-  (eval-when-compile
-    (el-clone :repo "yoshiki/yaml-mode"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/yaml-mode"))
-    (autoload-if-found '(yaml-mode) "yaml-mode")
+  (use-package yaml-mode
+    :ensure t
+    :config
     (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
     (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
-    (with-eval-after-load 'yaml-mode
-      (add-hook 'yaml-mode-hook #'flycheck-mode)))
+    (add-hook 'yaml-mode-hook #'flycheck-mode))
 #+end_src
 
 
@@ -1208,20 +1091,16 @@ zkry/yaml.el
 ** Shell
 *** Eat
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :url "https://codeberg.org/akib/emacs-eat.git"
-              :repo "emacs-eat"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/emacs-eat"))
-    (autoload-if-found '(eat) "eat")
+  (use-package emacs-eat
+    :ensure t
+    :config
     (defun toggle-eat ()
-      (interactive)
-      (let ((kill-buffer-query-functions nil))
-        (if (get-buffer "*eat*")
-          (progn (kill-buffer "*eat*")
-                 (eat))
-        (eat)))))
+        (interactive)
+        (let ((kill-buffer-query-functions nil))
+          (if (get-buffer "*eat*")
+            (progn (kill-buffer "*eat*")
+                   (eat))
+          (eat)))))
 #+end_src
 
 *** exec-path-from-shell
