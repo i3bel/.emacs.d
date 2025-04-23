@@ -9,7 +9,7 @@ inputs: [
     path = inputs.elpa.outPath + "/elpa-packages";
     auto-sync-only = true;
     exclude = [
-      "bbdb"
+      "lv" # hydra in elpa is missed recipe
     ];
   }
   {
