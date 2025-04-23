@@ -11,6 +11,7 @@
 !/flake.lock
 !/flake.nix
 !/lock/
+!/lock/**
 !/nix/
 !/recipes/
 !/snippets/
