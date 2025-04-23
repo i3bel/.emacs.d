@@ -1403,65 +1403,42 @@ highlights dired buffer like supercrabtree/k
 *** multiple-cursors
 https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "magnars/multiple-cursors.el"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/multiple-cursors"))
-    (autoload-if-found '(mc/edit-lines mc/mark-next-like-this mc/mark-previous-like-this mc/mark-all-like-this) "multiple-cursors")
-    (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-    (global-set-key (kbd "C->") #'mc/mark-next-like-this)
-    (global-set-key (kbd "C-<") #'mc/mark-previous-like-this)
-    (global-set-key (kbd "C-c C-<") #'mc/mark-all-like-this))
+  (use-package multiple-cursors :ensure t)
 #+end_src
 
 *** Nu-fun
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "ayanyan/nihongo-util"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/nihongo-util"))
-    (require 'nu-fun)
-    (setq nu-my-toten "，")
-    (setq nu-my-kuten "．"))
+  (use-package nu-fun
+    :ensure t
+    :config
+    (setopt nu-my-toten "，")
+    (setopt nu-my-kuten "．"))  
 #+end_src
 
 *** orderless
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "oantolin/orderless"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/orderless"))
-    (autoload-if-found '(orderless orderless-try-completion orderless-all-completions) "orderless")
-
-    (with-eval-after-load 'minibuffer
-      (setq completion-styles '(orderless basic))
+  (use-package orderless
+    :after compat
+    :ensure t
+    :config
+    (setq completion-styles '(orderless basic))
       (setq completion-category-overrides '((file (styles basic partial-completion))))
       (add-to-list 'completion-styles-alist
              '(orderless
                orderless-try-completion orderless-all-completions
-               "Completion of multiple components, in any order."))))
+               "Completion of multiple components, in any order.")))
 #+end_src
 
 *** paredit
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "emacsmirror/paredit"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/paredit")))
+  (use-package paredit :ensure t)
 #+end_src
 
 *** puni
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "AmaiKinono/puni"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/puni"))
-    (autoload-if-found '(puni-global-mode) "puni")
+  (use-package puni
+    :ensure t
+    :config
     (puni-global-mode)
     (with-eval-after-load 'lisp-mode
       (add-hook 'lisp-mode-hook #'puni-disable-puni-mode))
@@ -1473,157 +1450,93 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 
 *** popwin
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "emacsorphanage/popwin"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/popwin"))
-    (autoload-if-found '(popwin-mode) "popwin")
+  (use-package popwin
+    :ensure t
+    :config
     (popwin-mode t)
-    (with-eval-after-load 'popwin
-      (setq display-buffer-function 'popwin:display-buffer)
-      (setq popwin:special-display-config t)
-      (setq popwin:popup-window-position 'bottom)))
+    (setq display-buffer-function 'popwin:display-buffer)
+    (setq popwin:special-display-config t)
+    (setq popwin:popup-window-position 'bottom))
 #+end_src
 
 *** posframe
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "tumashu/posframe"))
-
-  (with-delayed-execution-priority-high
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/posframe")))
+  (use-package posframe :ensure t)
 #+end_src
 
 *** undo-fu
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :url "https://codeberg.org/ideasman42/emacs-undo-fu.git"
-              :repo "emacs-undo-fu"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/emacs-undo-fu"))
-    (autoload-if-found '(undo-fu-only-undo undo-fu-only-redo undo-fu-only-redo-all) "undo-fu"))
+  (use-package undo-fu :ensure t)
 #+end_src
 
 *** visual-regexp
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "benma/visual-regexp.el"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/visual-regexp"))
-    (autoload-if-found '(vr/replace) "visual-regexp"))
+  (use-package visual-regexp :ensure t)
 #+end_src
 
 *** which-key
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "justbur/emacs-which-key"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/emacs-which-key"))
-    (autoload-if-found '(which-key-mode) "which-key")
-    (which-key-mode))
+  (use-package which-key
+    :ensure t
+    :config (which-key-mode))
 #+end_src
 
 *** which-key-posframe
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "yanghaoxie/which-key-posframe"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/which-key-posframe"))
-    (autoload-if-found '(which-key-posframe-mode) "which-key-posframe")
-    (with-eval-after-load 'which-key
-      (which-key-posframe-mode)))
+  (use-package which-key-posframe
+    :ensure t
+    :config (which-key-posframe-mode))
 #+end_src
 
 *** yasnippet
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "joaotavora/yasnippet")
-    (el-clone :repo "mkcms/ivy-yasnippet"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/yasnippet"))
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/ivy-yasnippet"))
-    (autoload-if-found '(yas-global-mode yas-minor-mode) "yasnippet")
-    (autoload-if-found '(ivy-yasnippet) "ivy-yasnippet")
+  (use-package yasnippet
+    :ensure t
+    :config
     (yas-global-mode t)
-    (with-eval-after-load 'yasnippet
-      (setq yas-snippet-dirs '("~/.emacs.d/snippets"))))
+    (setopt yas-snippet-dirs '("~/.emacs.d/snippets")))
+  (use-package ivy-yasnippet :ensure t)
 #+end_src
 
 ** Utilities
 *** Aidermacs
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "MatthewZMD/aidermacs"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/aidermacs"))
-    (autoload-if-found '(aidermacs-transient-menu) "aidermacs")
+  (use-package aidermacs
+    :ensure t
+    :config
     (global-set-key (kbd "C-c a") 'aidermacs-transient-menu)
     (setq aidermacs-use-architect-mode t)
-    (setq aidermacs-default-model "openrouter/optimus-alpha")
-    )
+    (setq aidermacs-default-model "openrouter/optimus-alpha"))
 #+end_src
 
 *** Docker
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "Silex/docker.el"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/docker"))
-    (require 'docker))
+  (use-package docker :ensure t)
 #+end_src
 
 *** Elcord
 Allows you to integrate Rich Presence from Discord.
-#+begin_src emacs-lisp 
-  (eval-when-compile
-    (el-clone :repo "Mstrodl/elcord"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/elcord")))  
+#+begin_src emacs-lisp
+  (use-package elcord :ensure t)
 #+end_src
 
 *** Jobcan
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "Kyure-A/jobcan.el"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/jobcan"))
-    (require 'jobcan))
+  (use-package jobcan :ensure t)
 #+end_src
 
 *** Magit
-#+begin_src emacs-lisp 
-  (eval-when-compile
-    (el-clone :repo "magit/magit"
-              :load-paths `(,(locate-user-emacs-file "el-clone/magit/lisp")))
-    (el-clone :repo "magit/transient"
-              :load-paths `(,(locate-user-emacs-file "el-clone/transient/lisp")))
-    (el-clone :repo "magit/with-editor"
-              :load-paths `(,(locate-user-emacs-file "el-clone/with-editor/lisp"))))
-
-  (with-delayed-execution-priority-high
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/magit/lisp"))
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/transient/lisp"))
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/with-editor/lisp"))
-    (autoload-if-found '(global-git-commit-mode) "git-commit")
-    (autoload-if-found '(magit-status magit-blame) "magit")
+#+begin_src emacs-lisp
+  (use-package magit
+    :ensure t
+    :config
     (global-git-commit-mode)
-    (with-eval-after-load 'magit
-      (setq magit-repository-directories '(("~/ghq/" . 3)))
-      (add-hook 'magit-status-mode-hook #'toggle-centaur-tabs-local-mode)))
+    (setopt magit-repository-directories '(("~/ghq/" . 3)))
+    (add-hook 'magit-status-mode-hook #'toggle-centaur-tabs-local-mode))
 #+end_src
 
 *** Minuet
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (eval-when-compile
     (el-clone :repo "milanglacier/minuet-ai.el"))
 
@@ -1645,56 +1558,37 @@ Allows you to integrate Rich Presence from Discord.
 
 *** swagg
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "isamert/swagg.el"))
-  
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/swagg")))
+  (use-package swagg :ensure t)
 #+end_src
 ** Visual
 *** all-the-icons
 **** all-the-icons
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "domtronn/all-the-icons.el"))
-
-  (with-delayed-execution-priority-high
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/all-the-icons")))
+  (use-package all-the-icons :ensure t)
 #+end_src
 
 **** all-the-icons-dired
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "wyuenho/all-the-icons-dired"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/all-the-icons-dired"))
-    (autoload-if-found '(all-the-icons-dired-mode) "all-the-icons-dired")
+  (use-package all-the-icons-dired
+    :ensure t
+    :config
     (add-hook 'dired-mode #'all-the-icons-dired-mode))
 #+end_src
 
 **** all-the-icons-ivy-rich
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "seagle0128/all-the-icons-ivy-rich"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/all-the-icons-ivy-rich"))
-    (autoload-if-found '(all-the-icons-ivy-rich-mode) "all-the-icons-ivy-rich")
-    (all-the-icons-ivy-rich-mode t))
+  (use-package all-the-icons-ivy-rich
+   :ensure t
+   :config
+   (all-the-icons-ivy-rich-mode t))
 #+end_src
 
 *** beacon
 #+begin_src emacs-lisp 
-  (eval-when-compile
-    (el-clone :repo "Malabarba/beacon"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/beacon"))
-    (autoload-if-found '(beacon-mode) "beacon")
-    (beacon-mode t)
-    (with-eval-after-load 'beacon
-      (setq beacon-color "red")))
+  (use-package beacon
+    :ensure t
+    :config
+    (setopt beacon-color "red"))
 #+end_src
 
 *** display-line-numbers
@@ -1706,114 +1600,71 @@ Allows you to integrate Rich Presence from Discord.
 
 *** emojify
 #+begin_src emacs-lisp 
-  (eval-when-compile
-    (el-clone :repo "iqbalansari/emacs-emojify"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/emojify"))
-    (autoload-if-found '(global-emojify-mode) "emojify")
+  (use-package emojify
+    :ensure t
+    :config
     (add-hook 'after-init-hook #'global-emojify-mode))
 #+end_src
 
 *** lambda-line
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "Lambda-Emacs/lambda-line"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/lambda-line"))
-    (autoload-if-found '(lambda-line-mode) "lambda-line" nil t)
+  (use-package lambda-line
+    :ensure t
+    :config
     (lambda-line-mode)
-    (with-eval-after-load 'lambda-line-mode
-      (lambda-line-icon-time t) ;; requires ClockFace font (see below)
-      (lambda-line-clockface-update-fontset "ClockFaceRect") ;; set clock icon
-      (lambda-line-position 'top) ;; Set position of status-line 
-      (lambda-line-abbrev t) ;; abbreviate major modes
-      (lambda-line-hspace "  ")  ;; add some cushion
-      (lambda-line-prefix t) ;; use a prefix symbol
-      (lambda-line-prefix-padding nil) ;; no extra space for prefix 
-      (lambda-line-status-invert nil)  ;; no invert colors
-      (lambda-line-gui-ro-symbol  " ⨂") ;; symbols
-      (lambda-line-gui-mod-symbol " ⬤") 
-      (lambda-line-gui-rw-symbol  " ◯") 
-      (lambda-line-space-top +.30)  ;; padding on top and bottom of line
-      (lambda-line-space-bottom -.30)
-      (lambda-line-symbol-position 0.1) ;; adjust the vertical placement of symbol
-      ))
+    (lambda-line-icon-time t) ;; requires ClockFace font (see below)
+    (lambda-line-clockface-update-fontset "ClockFaceRect") ;; set clock icon
+    (lambda-line-position 'top) ;; Set position of status-line 
+    (lambda-line-abbrev t) ;; abbreviate major modes
+    (lambda-line-hspace "  ")  ;; add some cushion
+    (lambda-line-prefix t) ;; use a prefix symbol
+    (lambda-line-prefix-padding nil) ;; no extra space for prefix 
+    (lambda-line-status-invert nil)  ;; no invert colors
+    (lambda-line-gui-ro-symbol  " ⨂") ;; symbols
+    (lambda-line-gui-mod-symbol " ⬤") 
+    (lambda-line-gui-rw-symbol  " ◯") 
+    (lambda-line-space-top +.30)  ;; padding on top and bottom of line
+    (lambda-line-space-bottom -.30)
+    (lambda-line-symbol-position 0.1))
 #+end_src
 
 *** mini-echo
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "liuyinz/mini-echo.el"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/mini-echo"))
-    (autoload-if-found '(mini-echo-mode) "mini-echo" nil t)
-    (mini-echo-mode))
+  (use-package mini-echo
+    :ensure t
+    :config (mini-echo-mode))
 #+end_src
 
 *** monokai
-#+Begin_src emacs-lisp :tangle no
-  (eval-when-compile
-    (el-clone :repo "Kyure_A/monokai-emacs"))
-
-  (with-delayed-execution-priority-high
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/monokai-emacs"))
-    (require 'monokai-theme)
-     (with-eval-after-load 'monokai-theme
-       (load-theme 'monokai t)))
+#+Begin_src emacs-lisp
+  (use-package monokai-k
+    :ensure t
+    :config (load-theme 'monokai t))
 #+end_src
 
 *** nano-modeline
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "rougier/nano-modeline"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/nano-modeline"))
-    (autoload-if-found '(nano-modeline-text-mode) "nano-modeline")
-    ;; (nano-modeline-text-mode t)
-    )
+  (use-package nano-modeline :ensure t)
 #+end_src
 
 *** nerd-icons
 **** nerd-icons
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "rainstormstudio/nerd-icons.el"))
-
-  (with-delayed-execution-priority-high
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/nerd-icons"))
-    (require 'nerd-icons))
+  (use-package nerd-icons :ensure t)
 #+end_src
 
 **** nerd-icons-corfu
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "LuigiPiucco/nerd-icons-corfu"))
-
-  (with-delayed-execution-priority-high
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/nerd-icons-corfu"))
-    (autoload-if-found '(nerd-icons-corfu-formatter) "nerd-icons-corfu")
-    (with-eval-after-load 'nerd-icons-corfu
-      (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)
-      ;; (setq nerd-icons-corfu-mapping
-      ;;       '((array :style "cod" :icon "symbol_array" :face font-lock-type-face)
-      ;;         (boolean :style "cod" :icon "symbol_boolean" :face font-lock-builtin-face)
-      ;;         ;; ...
-      ;;         (t :style "cod" :icon "code" :face font-lock-warning-face)))
-      ))
+  (use-package nerd-icons
+    :ensure t
+    :config (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 #+end_src
 
 *** page-break-lines
 #+begin_src emacs-lisp 
-  (eval-when-compile
-    (el-clone :repo "purcell/page-break-lines"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/page-break-lines"))
-    (autoload-if-found '(page-break-lines-mode global-page-break-lines-mode) "page-break-lines")
+  (use-package page-break-lines
+    :ensure t
+    :config
     (global-page-break-lines-mode t))
 #+end_src
 
@@ -1828,46 +1679,28 @@ Allows you to integrate Rich Presence from Discord.
 #+end_src
 
 *** rainbow-mode
-#+begin_src emacs-lisp 
-  (eval-when-compile
-    (el-clone :repo "emacsmirror/rainbow-mode"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/rainbow"))
-    (autoload-if-found '(rainbow-mode) "rainbow")
-    ;; (add-hook 'web-mode-hook #'rainbow-mode)
-    )
+#+begin_src emacs-lisp
+  (use-package rainbow-mode :ensure t)
 #+end_src
 
 *** rainbow-delimiters
 #+begin_src emacs-lisp 
-  (eval-when-compile
-    (el-clone :repo "Fanael/rainbow-delimiters"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/rainbow-delimiters"))
-    (autoload-if-found '(rainbow-delimiters-mode) "rainbow-delimiters")
+  (use-package rainbow-delimiters
+    :ensure t
+    :config
     (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 #+end_src
 
 *** solaire-mode
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "hlissner/emacs-solaire-mode"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/emacs-solaire")))
+  (use-package solaire-mode :ensure t)
 #+end_src
 
 *** yascroll
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "emacsorphanage/yascroll"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/yascroll"))
-    (autoload-if-found '(global-yascroll-bar-mode) "yascroll")
-    (global-yascroll-bar-mode t))
+  (use-package yascroll
+    :ensure t
+    :config (global-yascroll-bar-mode t))
 #+end_src
 
 ** Functions
