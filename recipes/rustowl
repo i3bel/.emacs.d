@@ -1,2 +1,3 @@
 (rustowl :fetcher github
-         :repo "cordx56/rustowl/emacs")
+         :repo "cordx56/rustowl/emacs"
+         :files ("emacs"))
