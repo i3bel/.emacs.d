@@ -1067,15 +1067,6 @@ jdtsmith/eglot-booster
     (add-hook 'sh-mode-hook #'flymake-shellcheck-load))
 #+end_src
 
-#+begin_src emacs-lisp 
-  (use-package modern-sh
-    :mode (("\\.zsh$" . sh-mode)
-           ("\\.sh$" . sh-mode))
-    :ensure t
-    :config
-    (add-hook 'sh-mode-hook #'modern-sh-mode))
-#+end_src
-
 ** Shell
 *** Eat
 #+begin_src emacs-lisp
