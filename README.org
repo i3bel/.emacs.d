@@ -1079,7 +1079,7 @@ jdtsmith/eglot-booster
 ** Shell
 *** Eat
 #+begin_src emacs-lisp
-  (use-package emacs-eat
+  (use-package eat
     :ensure t
     :config
     (defun toggle-eat ()
