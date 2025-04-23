@@ -893,13 +893,6 @@ jdtsmith/eglot-booster
                                         hy-shell-interpreter-args)))))
 #+end_src
 
-*** mcfunction
-#+begin_src emacs-lisp
-  (use-package mcf
-    :mode (("\\.mcfunction$" . mcf-mode))
-    :ensure t)
-#+end_src
-
 *** Nix
 #+begin_src emacs-lisp
   (use-package nix-mode
