@@ -436,7 +436,7 @@ rejeep/ansi
 *** async
 jwiegley/emacs-async
 #+begin_src emacs-lisp
-  (use-package emacs-async :ensure t)
+  (use-package async :ensure t)
 #+end_src
 
 *** async-await
