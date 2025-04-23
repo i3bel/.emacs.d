@@ -17,7 +17,7 @@ inputs: [
     type = "melpa";
     path = inputs.melpa.outPath + "/recipes";
     exclude = [
-      "bbdb"
+      "dired-k"
       "paredit"
     ];
   }
