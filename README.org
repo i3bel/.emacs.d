@@ -2087,6 +2087,20 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+end_src
 
 ** Utilities
+*** Aidermacs
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (el-clone :repo "MatthewZMD/aidermacs"))
+
+  (with-delayed-execution
+    (add-to-list 'load-path (locate-user-emacs-file "el-clone/aidermacs"))
+    (autoload-if-found '(aidermacs-transient-menu) "aidermacs")
+    (global-set-key (kbd "C-c a") 'aidermacs-transient-menu)
+    (setq aidermacs-use-architect-mode t)
+    (setq aidermacs-default-model "openrouter/optimus-alpha")
+    )
+#+end_src
+
 *** Docker
 #+begin_src emacs-lisp
   (eval-when-compile
