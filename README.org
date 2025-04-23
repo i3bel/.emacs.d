@@ -1070,7 +1070,6 @@ jdtsmith/eglot-booster
 
 
 *** shell-script
-
 #+begin_src emacs-lisp 
   (eval-when-compile
     (el-clone :repo "damon-kwok/modern-sh")
@@ -1299,15 +1298,6 @@ jdtsmith/eglot-booster
       (define-key dashboard-mode-map (kbd "f") #'forward-char)))
 #+end_src
 
-*** Daredevil SKK
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "skk-dev/ddskk"))
-
-  (with-delayed-execution-priority-high
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/ddskk"))
-    (autoload-if-found '(skk-mode) "skk-autoloads"))
-#+end_src
 *** dirvish/dired
 **** dirvish
 #+begin_src emacs-lisp
@@ -1423,15 +1413,6 @@ jdtsmith/eglot-booster
     ;; (global-set-key (kbd "C-h B") #'embark-prefix-help-command)
     )
 #+end_src
-*** eval-in-repl
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "kaz-yos/eval-in-repl"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/eval-in-repl")))
-
-#+end_src
 
 *** Flycheck
 #+begin_src emacs-lisp
@@ -1466,15 +1447,6 @@ jdtsmith/eglot-booster
 
   (with-delayed-execution-priority-high
     (add-to-list 'load-path (locate-user-emacs-file "el-clone/hydra")))
-#+end_src
-
-*** imenu-list
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "bmag/imenu-list"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/imenu-list")))
 #+end_src
 
 *** ivy/counsel
@@ -1550,21 +1522,6 @@ jdtsmith/eglot-booster
     (autoload-if-found '(swiper) "swiper"))
 #+end_src
 
-*** minimap
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "dengste/minimap"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/minimap"))
-    (autoload-if-found '(minimap-mode) "minimap")
-    (with-eval-after-load 'minimap
-      (setq minimap-window-location 'right)
-      (setq minimap-update-delay 0.2)
-      (setq minimap-minimum-width 20)
-      (setq minimap-major-modes '(prog-mode org-mode))))
-#+end_src
-
 *** multiple-cursors
 https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+begin_src emacs-lisp
@@ -1580,22 +1537,7 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     (global-set-key (kbd "C-c C-<") #'mc/mark-all-like-this))
 #+end_src
 
-*** neotree
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "jaypei/emacs-neotree"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/emacs-neotree"))
-    ;; (require 'neotree)
-    ;; (autoload-if-found '(neotree-hide neotree-dir neotree-make-executor neo-open-file neo-open-dir) "neotree")
-    (with-eval-after-load 'neotree
-      (setq neo-smart-open t)
-      (setq eo-create-file-auto-open t)
-      (setq neo-theme (if (display-graphic-p) 'icons 'arrow))))
-#+end_src
-
-*** nu-fun
+*** Nu-fun
 #+begin_src emacs-lisp
   (eval-when-compile
     (el-clone :repo "ayanyan/nihongo-util"))
@@ -1675,17 +1617,6 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     (add-to-list 'load-path (locate-user-emacs-file "el-clone/posframe")))
 #+end_src
 
-*** skewer-mode
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "skeeto/skewer-mode")
-    (el-clone :repo "mooz/js2-mode"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/skewer"))
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/js2")))
-#+end_src
-
 *** undo-fu
 #+begin_src emacs-lisp
   (eval-when-compile
@@ -1746,31 +1677,6 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
       (setq yas-snippet-dirs '("~/.emacs.d/snippets"))))
 #+end_src
 
-*** yasnippet-org
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "takeokunn/yasnippet-org"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/yasnippet-org"))
-    (autoload-if-found '(yasnippet-org) "yasnippet-org")
-    (with-eval-after-load 'yasnippet-org
-      (setq yasnippet-org-verbose t)
-      (setq yasnippet-org-file (locate-user-emacs-file "snippets.org"))))
-#+end_src
-
-*** yatemplate
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "mineo/yatemplate"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/yatemplate"))
-    (autoload-if-found '(yatemplate-fill-alist) "yatemplate")
-    (auto-insert-mode t)
-    (yatemplate-fill-alist))
-#+end_src
-
 ** Utilities
 *** Aidermacs
 #+begin_src emacs-lisp
@@ -1795,6 +1701,7 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     (add-to-list 'load-path (locate-user-emacs-file "el-clone/docker"))
     (require 'docker))
 #+end_src
+
 *** Elcord
 Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp 
@@ -1858,67 +1765,6 @@ Allows you to integrate Rich Presence from Discord.
       (minuet-set-optional-options minuet-openai-fim-compatible-options :max_tokens 256)))
 #+end_src
 
-*** Node.js
-**** nodejs-repl
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "abicky/nodejs-repl.el"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/nodejs-repl")))
-#+end_src
-
-**** nvm
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "rejeep/nvm.el"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/nvm")))
-#+end_src
-
-
-*** oj
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "conao3/oj.el"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/oj"))
-    (with-eval-after-load 'oj
-      (setq oj-shell-program "zsh")
-      (setq oj-open-home-dir "~/oj-files/")
-      (setq oj-default-online-judge 'atcoder)
-      (setq oj-compiler-c "gcc")
-      (setq oj-compiler-python "cpython")))
-#+end_src
-
-*** Prettier
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "jscheid/prettier.el"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/prettier"))
-    (add-hook 'after-init-hook #'global-prettier-mode))
-#+end_src
-
-*** quickrun
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "syohex/emacs-quickrun"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/emacs-quickrun"))
-    (autoload-if-found '(quickrun) "emacs-quickrun")
-    (push '("*quickrun*") popwin:special-display-config)
-    (defun quickrun-sc (start end)
-      (interactive "r")
-      (if mark-active
-          (quickrun :start start :end end)
-        (quickrun))))
-#+end_src
-
 *** swagg
 #+begin_src emacs-lisp
   (eval-when-compile
@@ -1980,19 +1826,6 @@ Allows you to integrate Rich Presence from Discord.
     (defalias 'linum-mode 'display-line-numbers-mode))
 #+end_src
 
-*** doom-modeline
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "seagle0128/doom-modeline"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/doom-modeline"))
-    (autoload-if-found '(doom-modeline-mode) "doom-modeline")
-    ;; (doom-modeline-mode t)
-    (with-eval-after-load 'doom-modeline
-      (setq doom-modeline-icon t)))
-#+end_src
-
 *** emojify
 #+begin_src emacs-lisp 
   (eval-when-compile
@@ -2002,15 +1835,6 @@ Allows you to integrate Rich Presence from Discord.
     (add-to-list 'load-path (locate-user-emacs-file "el-clone/emojify"))
     (autoload-if-found '(global-emojify-mode) "emojify")
     (add-hook 'after-init-hook #'global-emojify-mode))
-#+end_src
-
-*** hide-modeline
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "hlissner/emacs-hide-mode-line"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/emacs-hide-mode-line")))
 #+end_src
 
 *** lambda-line
@@ -2051,18 +1875,8 @@ Allows you to integrate Rich Presence from Discord.
     (mini-echo-mode))
 #+end_src
 
-*** mini-modeline
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "kiennq/emacs-mini-modeline"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/emacs-mini-modeline"))
-    (autoload-if-found '(mini-modeline-mode) "mini-modeline" nil t))
-#+end_src
-
 *** monokai
-#+begin_src emacs-lisp :tangle no
+#+Begin_src emacs-lisp :tangle no
   (eval-when-compile
     (el-clone :repo "Kyure_A/monokai-emacs"))
 
@@ -2071,31 +1885,6 @@ Allows you to integrate Rich Presence from Discord.
     (require 'monokai-theme)
      (with-eval-after-load 'monokai-theme
        (load-theme 'monokai t)))
-#+end_src
-
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "Kyure-A/themes"
-              :load-paths `(,(locate-user-emacs-file "el-clone/themes/extensions"))))
-
-  (with-delayed-execution-priority-high
-    (message "Install doom-themes...")
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/themes"))
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/themes/extensions"))
-
-    ;; (autoload-if-found '(doom-themes-enable-org-fontification) "doom-themes-ext-org" nil t)
-    (autoload-if-found '(doom-themes-neotree-config) "doom-themes-ext-neotree" nil t)
-
-    ;; (doom-themes-enable-org-fontification)
-    (doom-themes-neotree-config)
-
-    (when (require 'doom-themes)
-      (load-theme 'doom-monokai-textmate t))
-
-    (with-eval-after-load 'doom-themes
-      (setq doom-themes-padded-modeline t)
-      (setq doom-themes-enable-bold nil)
-      (setq doom-themes-enable-italic nil)))
 #+end_src
 
 *** nano-modeline
@@ -2158,25 +1947,6 @@ Allows you to integrate Rich Presence from Discord.
       (set-face-underline-p 'show-paren-match-face "#ffffff")
       (setq show-paren-delay 0)
       (setq show-paren-style 'expression)))
-#+end_src
-
-*** powerline
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "milkypostman/powerline"))
-
-  (with-delayed-execution-priority-high
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/powerline")))
-#+end_src
-
-*** power-mode
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "elizagamedev/power-mode.el"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/power-mode"))
-    (require 'power-mode))
 #+end_src
 
 *** rainbow-mode
@@ -2249,52 +2019,6 @@ Allows you to integrate Rich Presence from Discord.
   With argument ARG, do this that many times."
     (interactive "p")
     (delete-word (- arg)))
-#+end_src
-
-*** others
-#+begin_src emacs-lisp :tangle no 
-  (defun Kyure_A/echo-choices (list message-str)
-    "Displays choices in the echo area and evaluates the choice"
-    (setq chosen (completing-read "Choose an option: " list))
-    (cl-loop for i
-             below (length list)
-             do (when (equal (car (nth i list)) chosen)
-                  (eval (eval (cdr (nth i list)))) ;; quote を外すのが雑
-                  (cl-return))
-             finally (message message-str)))
-
-    (defun Kyure_A/open-recentf ()
-      "Outputs a list of 10 most recently opened files to the echo area"
-      (interactive)
-      (let* ((recent-opened-files '()))
-        (cl-loop for i below 10
-                 do (push (cons (nth i recentf-list) `(find-file ,(nth i recentf-list))) recent-opened-files))
-        (setq recent-opened-files (reverse recent-opened-files))
-        (Kyure_A/echo-choices recent-opened-files "not found")))
-
-    (defun Kyure_A/open ()
-      (interactive)
-      (let* ((choices '(("dashboard" . (open-dashboard))
-                        ("documents" . (if (file-exists-p "~/documents")
-                                           (find-file "~/documents")
-                                         (find-file "~/Documents")))
-                        ("dotfiles" . (find-file "~/dotfiles"))
-                        (".emacs.d" . (find-file "~/.emacs.d"))
-                        ("elpa" . (find-file package-user-dir))
-                        ("recent" . (open-recentf))
-                        ("wsl" . (find-file "/mnt/c/Users/kyre/")))))
-        (Kyure_A/echo-choices choices "invalid options")))
-
-    (defun Kyure_A/start-repl ()
-      (interactive)
-      (let* ((mode-repl-pair '(("lisp-mode" . (start-sly))
-                               ("hy-mode" . (hy-repl)))))
-        (cl-loop for i
-                 below (length mode-repl-pair)
-                 do (when (equal (car (nth i mode-repl-pair)) (format "%s" major-mode))
-                      (eval (eval (cdr (nth i mode-repl-pair))))
-                      (cl-return))
-                 finally (message (format "[start-repl] couldn't found repl for %s" major-mode)))))
 #+end_src
 
 ** Footer
