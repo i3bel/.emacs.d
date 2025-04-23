@@ -234,7 +234,7 @@ https://github.com/Kyure-A/.emacs.d
 
 *** avy
 #+begin_src emacs-lisp
-  (use-package
+  (use-package avy
     :ensure t
     :config
     (setq avy-all-windows nil)
