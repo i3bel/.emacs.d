@@ -1013,9 +1013,6 @@ jdtsmith/eglot-booster
     :after org
     :config
     (add-hook 'org-mode-hook #'org-ai-mode))
-
-  (eval-when-compile
-      (el-clone :repo "rksm/org-ai"))
 #+end_src
 
 *** VHDL
@@ -1070,21 +1067,20 @@ jdtsmith/eglot-booster
 
 
 *** shell-script
-#+begin_src emacs-lisp 
-  (eval-when-compile
-    (el-clone :repo "damon-kwok/modern-sh")
-    (el-clone :repo "federicotdn/flymake-shellcheck"))
+#+begin_src emacs-lisp
+  (use-package flymake-shellcheck
+    :ensure t
+    :config
+    (add-hook 'sh-mode-hook #'flymake-shellcheck-load))
+#+end_src
 
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/modern-sh"))
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/flymake-shellcheck"))
-    (autoload-if-found '(sh-mode) "sh-mode")
-    (add-to-list 'auto-mode-alist '("\\.sh$" . sh-mode))
-    (add-to-list 'auto-mode-alist '("\\.zsh$" . sh-mode))
-    (autoload-if-found '(flymake-shell-check-load) "flymake-shell-check")
-    (with-eval-after-load 'sh-mode
-      (add-hook 'sh-mode-hook 'flymake-shellcheck-load)
-      (add-hook 'sh-mode-hook #'modern-sh-mode)))
+#+begin_src emacs-lisp 
+  (use-package modern-sh
+    :mode (("\\.zsh$" . sh-mode)
+           ("\\.sh$" . sh-mode))
+    :ensure t
+    :config
+    (add-hook 'sh-mode-hook #'modern-sh-mode))
 #+end_src
 
 ** Shell
@@ -1104,112 +1100,80 @@ jdtsmith/eglot-booster
 
 *** exec-path-from-shell
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "purcell/exec-path-from-shell"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/exec-path-from-shell"))
-    (autoload-if-found '(exec-path-from-shell-initialize) "exec-path-from-shell")
+  (use-package exec-path-from-shell
+    :ensure t
+    :config
     (exec-path-from-shell-initialize)
-    (with-eval-after-load 'exec-path-from-shell
-      (setq exec-path-from-shell-check-startup-files nil)
-      (setq exec-path-from-shell-arguments nil)
-      (setq exec-path-from-shell-variables '("ASDF_CONFIG_FILE" "ASDF_DATA_DIR" "ASDF_DEFAULT_TOOL_VERSIONS_FILENAME" "ASDF_DIR"
-                                          "GPG_AGENT_INFO" "GPG_KEY_ID" "PATH" "SHELL" "TEXMFHOME" "WSL_DISTRO_NAME" "http_proxy"))))
+    (setopt exec-path-from-shell-check-startup-files nil)
+    (setopt exec-path-from-shell-arguments nil)
+    (setopt exec-path-from-shell-variables '("ASDF_CONFIG_FILE" "ASDF_DATA_DIR" "ASDF_DEFAULT_TOOL_VERSIONS_FILENAME" "ASDF_DIR"
+                                           "GPG_AGENT_INFO" "GPG_KEY_ID" "PATH" "SHELL" "TEXMFHOME" "WSL_DISTRO_NAME" "http_proxy")))
 #+end_src
 
 *** mistty
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "szermatt/mistty"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/mistty"))
-    (autoload-if-found '(mistty) "mistty"))
+  (use-package mistty :ensure t)
 #+end_src
 
 ** Extensions
 *** ace-window
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "abo-abo/ace-window"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/ace-window")))
+  (use-package ace-window :ensure t)
 #+end_src
 
 *** aggressive-indent
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "Malabarba/aggressive-indent-mode"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/aggressive-indent-mode"))
-    (autoload-if-found '(aggressive-indent-mode global-aggressive-indent-mode) "aggressive-indent-mode")
-    (require 'aggressive-indent)
+  (use-package aggressive-indent
+    :ensure t
+    :config
     (global-aggressive-indent-mode t))
 #+end_src
 
 *** cape
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "minad/cape"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/cape"))
-    (autoload-if-found '(cape-file cape-dabbrev cape-elisp-block cape-history cape-keyword) "cape")
-    (with-eval-after-load 'minibuffer
-      (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-      (add-to-list 'completion-at-point-functions #'cape-file)
-      (add-to-list 'completion-at-point-functions #'cape-elisp-block)
-      (add-to-list 'completion-at-point-functions #'cape-history)))
+  (use-package cape
+    :ensure t
+    :config
+    (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+    (add-to-list 'completion-at-point-functions #'cape-file)
+    (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+    (add-to-list 'completion-at-point-functions #'cape-history))
     #+end_src
 
 *** Centaur-tabs
 #+begin_src emacs-lisp 
-  (eval-when-compile
-    (el-clone :repo "ema2159/centaur-tabs"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/centaur-tabs"))
-    ;; (autoload-if-found '(centaur-tabs-mode) "centaur-tabs")
-    (require 'centaur-tabs)
+  (use-package centaur-tabs
+    :ensure t
+    :config
     (centaur-tabs-mode)
-    (with-eval-after-load 'centaur-tabs
-      (centaur-tabs-group-by-projectile-project)
-      (centaur-tabs-headline-match)
-      (centaur-tabs-enable-buffer-reordering)
-      (centaur-tabs-change-fonts "arial" 90)
-      (setq centaur-tabs-height 30)
-      (setq centaur-tabs-hide-tabs-hooks nil)
-      (setq centaur-tabs-set-icons t)
-      (setq centaur-tabs-set-bar 'under)
-      (setq x-underline-at-descent-line t)
-      (setq centaur-tabs-style "box")
-      (setq centaur-tabs-set-modified-marker t)
-      (setq centaur-tabs-show-navigation-buttons t)
-      (setq centaur-tabs-adjust-buffer-order t)
-      (setq centaur-tabs-cycle-scope 'groups)))
+    (centaur-tabs-group-by-projectile-project)
+    (centaur-tabs-headline-match)
+    (centaur-tabs-enable-buffer-reordering)
+    (centaur-tabs-change-fonts "arial" 90)
+    (setq centaur-tabs-height 30)
+    (setq centaur-tabs-hide-tabs-hooks nil)
+    (setq centaur-tabs-set-icons t)
+    (setq centaur-tabs-set-bar 'under)
+    (setq x-underline-at-descent-line t)
+    (setq centaur-tabs-style "box")
+    (setq centaur-tabs-set-modified-marker t)
+    (setq centaur-tabs-show-navigation-buttons t)
+    (setq centaur-tabs-adjust-buffer-order t)
+    (setq centaur-tabs-cycle-scope 'groups))
 #+end_src
 
 *** corfu
 **** corfu
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "minad/corfu"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/corfu"))
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/corfu/extensions"))
-    (autoload-if-found '(global-corfu-mode) "corfu")
-    (global-corfu-mode)
-    (with-eval-after-load 'corfu
-      (setq corfu-auto t)
-      (setq corfu-auto-delay 0)
-      (setq corfu-cycle t)
-      (setq corfu-on-exact-match nil))
-    (with-eval-after-load 'indent
-      (setq tab-always-indent 'complete)))
+  (use-package corfu
+    :ensure t
+    :after indent
+    :config
+    (setq corfu-auto t)
+    (setq corfu-auto-delay 0)
+    (setq corfu-cycle t)
+    (setq corfu-on-exact-match nil)
+    (setq tab-always-indent 'complete))
 #+end_src
 
 *** Dashboard
@@ -1256,23 +1220,18 @@ jdtsmith/eglot-booster
 
 **** projectile
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "bbatsov/projectile"))
-
-  (with-delayed-execution-priority-high
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/projectile"))
-    (autoload-if-found '(projectile-mode) "projectile")
+  (use-package projectile
+    :ensure t
+    :config
     (projectile-mode t))
 #+end_src
 
 **** dashboard
 #+begin_src emacs-lisp 
-  (eval-when-compile
-    (el-clone :repo "emacs-dashboard/emacs-dashboard"))
-
-  (with-delayed-execution-priority-high
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/emacs-dashboard"))
-    (autoload-if-found '(dashboard-mode dashboard-open) "dashboard")
+  (use-package dashboard
+    :ensure t
+    :init (open-dashboard)
+    :config
     (setq dashboard-items '((bookmarks . 5)
                             (recents  . 5)
                             (projects . 5)))
@@ -1288,44 +1247,31 @@ jdtsmith/eglot-booster
                                       "「C++ を完全に理解してしまったかもしれない」 - 桜ねね"
                                       "「これでもデバッグはプロ級だし 今はプログラムの知識だってあるんだからまかせてよね！」 - 桜ねね"))
     (setq dashboard-startup-banner (if (or (eq window-system 'x) (eq window-system 'ns) (eq window-system 'w32)) "~/.emacs.d/assets/banner.png" "~/.emacs.d/assets/banner.txt"))
-    (open-dashboard)
-    (with-eval-after-load 'dashboard
-      (dashboard-setup-startup-hook)
-      (define-key dashboard-mode-map (kbd "<f3>") #'quit-dashboard)
-      (define-key dashboard-mode-map (kbd "p") #'previous-line)
-      (define-key dashboard-mode-map (kbd "n") #'next-line)
-      (define-key dashboard-mode-map (kbd "b") #'backward-char)
-      (define-key dashboard-mode-map (kbd "f") #'forward-char)))
+    (dashboard-setup-startup-hook)
+    (define-key dashboard-mode-map (kbd "<f3>") #'quit-dashboard)
+    (define-key dashboard-mode-map (kbd "p") #'previous-line)
+    (define-key dashboard-mode-map (kbd "n") #'next-line)
+    (define-key dashboard-mode-map (kbd "b") #'backward-char)
+    (define-key dashboard-mode-map (kbd "f") #'forward-char))
 #+end_src
 
 *** dirvish/dired
 **** dirvish
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "alexluigit/dirvish"
-              :load-paths `(,(locate-user-emacs-file "el-clone/dirvish/extensions"))))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/dirvish"))
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/dirvish/extensions"))
-
-    (autoload-if-found '(dirvish-override-dired-mode) "dirvish")
+  (use-package dirvish
+    :ensure t
+    :after nerd-icons
+    :config
     (dirvish-override-dired-mode)
-    ;; (autoload-if-found '(dirvish-peek-mode) "dirvish-peek")
-    ;; (dirvish-peek-mode)
-    ;; (autoload-if-found '(dirvish-side-follow-mode) "dirvish-side")
-    ;; (dirvish-side-follow-mode)
-
-    (with-eval-after-load 'dirvish
-      (with-eval-after-load 'nerd-icons
-        (setq dirvish-attributes '(vc-state subtree-state nerd-icons collapse git-msg file-time file-size))
-        (setq dirvish-subtree-state-style 'nerd)
-        (setq dirvish-path-separators (list
-                                       (format "  %s " (nerd-icons-codicon "nf-cod-home"))
-                                       (format "  %s " (nerd-icons-codicon "nf-cod-root_folder"))
-                                       (format " %s " (nerd-icons-faicon "nf-fa-angle_right")))))
-      (setq dirvish-preview-dispatchers (cl-substitute 'pdf-preface 'pdf dirvish-preview-dispatchers))))
+    (setq dirvish-preview-dispatchers (cl-substitute 'pdf-preface 'pdf dirvish-preview-dispatchers))
+    (setq dirvish-attributes '(vc-state subtree-state nerd-icons collapse git-msg file-time file-size))
+    (setq dirvish-subtree-state-style 'nerd)
+    (setq dirvish-path-separators (list
+                                   (format "  %s " (nerd-icons-codicon "nf-cod-home"))
+                                   (format "  %s " (nerd-icons-codicon "nf-cod-root_folder"))
+                                   (format " %s " (nerd-icons-faicon "nf-fa-angle_right")))))
 #+end_src
+
 **** dired
 #+begin_src emacs-lisp
   (with-eval-after-load 'dired
@@ -1335,24 +1281,21 @@ jdtsmith/eglot-booster
     (define-key dired-mode-map (kbd "<left>") #'dired-up-directory)
     (define-key dired-mode-map (kbd "<right>") #'dired-open-in-accordance-with-situation))
 #+end_src
-**** dired-async
-#+begin_src emacs-lisp :tangle no
-  (eval-when-compile
-    (el-clone :repo "jwiegley/emacs-async"))
 
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/emacs-async"))
-    (autoload-if-found '(dired-async-mode) "dired-async")
+**** dired-async
+#+begin_src emacs-lisp
+  (use-package dired-async
+    :after async
+    :config
     (dired-async-mode t))
 #+end_src
-**** dired-k
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "emacsorphanage/dired-k"))
 
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/dired-k"))
-    (autoload-if-found '(dired-k) "dired-k")
+**** dired-k
+highlights dired buffer like supercrabtree/k
+#+begin_src emacs-lisp
+  (use-package dired-k
+    :ensure t
+    :config
     (add-hook 'dired-initial-position-hook #'dired-k))
 #+end_src
 
@@ -1367,159 +1310,110 @@ jdtsmith/eglot-booster
         (dired-find-file))))
 #+end_src
 
-**** dired-preview
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "protesilaos/dired-preview"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/dired-preview"))
-    (autoload-if-found '(dired-preview-global-mode) "dired-preview" nil t)
-    ;; (dired-preview-global-mode t)
-    )
-#+end_src
-
 **** dired-toggle-sudo
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "renard/dired-toggle-sudo"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/dired-toggle-sudo"))
-    (require 'dired-toggle-sudo))
+  (use-package dired-toggle-sudo :ensure t)
 #+end_src
 
 *** editorconfig
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "editorconfig/editorconfig-emacs"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/editorconfig-emacs"))
-    (autoload-if-found '(editorconfig-mode) "editorconfig")
+  (use-package editorconfig
+    :ensure t
+    :config
     (editorconfig-mode t))
 #+end_src
 
 *** embark
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "oantolin/embark"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/embark"))
-
-    (autoload-if-found '(embark-act embark-dwim embark-prefix-help-command) "embark")
+  (use-package embark
+    :ensure t
+    :config
     (global-set-key (kbd "C-.") #'embark-act)
-    ;; (global-set-key (kbd "C-h B") #'embark-prefix-help-command)
-    )
+    (global-set-key (kbd "C-h B") #'embark-prefix-help-command))
 #+end_src
 
 *** Flycheck
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "Kyure-A/flycheck"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/flycheck"))
-    (autoload-if-found '(flycheck-mode flycheck-define-checker) "flycheck")
+  (use-package flycheck
+    :ensure t
+    :config
     (add-hook 'prog-mode-hook #'flycheck-mode)
-    (with-eval-after-load 'flycheck
-      (setq flycheck-idle-change-delay 0)))
+    (setopt flycheck-idle-change-delay 0))
 #+end_src
 
 *** gcmh
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "emacsmirror/gcmh"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/gcmh"))
-    (autoload-if-found '(gcmh-mode) "gcmh")
+  (use-package gcmh
+    :ensure t
+    :config
     (gcmh-mode)
-    (with-eval-after-load 'gcmh
-      (setq gcmh-verbose t)))
+    (setopt gcmh-verbose t))
 #+end_src
 
 *** hydra
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "abo-abo/hydra"))
-
-  (with-delayed-execution-priority-high
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/hydra")))
+  (use-package hydra :ensure t)
 #+end_src
 
 *** ivy/counsel
-**** install
-#+begin_src emacs-lisp
-  ;; ivy, counsel and swiper are managed as monorepo.
-  (eval-when-compile
-    (el-clone :repo "abo-abo/swiper"))
-
-  (with-delayed-execution-priority-high
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/swiper")))
-#+end_src
-
 **** counsel
 #+begin_src emacs-lisp
-  (with-delayed-execution-priority-high
-    (autoload-if-found '(counsel-mode) "counsel")
-    (counsel-mode t)
-    (with-eval-after-load 'counsel
-      (define-key counsel-mode-map [remap find-file] nil)
-      (setq counsel-find-file-ignore-regexp (regexp-opt '("./" "../")))
-      (setq read-file-name-function #'disable-counsel-find-file)))
-
   (defun disable-counsel-find-file (&rest args)
     "Disable `counsel-find-file' and use the original `find-file' with ARGS."
     (let ((completing-read-function #'completing-read-default)
           (completion-in-region-function #'completion--in-region))
       (apply #'read-file-name-default args)))
 
-  (eval-when-compile
-    (el-clone :repo "ericdanan/counsel-projectile"))
+  (use-package counsel
+    :ensure t
+    :config
+    (counsel-mode t)
+    (define-key counsel-mode-map [remap find-file] nil)
+    (setq counsel-find-file-ignore-regexp (regexp-opt '("./" "../")))
+    (setq read-file-name-function #'disable-counsel-find-file))
+#+end_src
 
-  (with-delayed-execution-priority-high
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/counsel-projectile"))
-    (autoload-if-found '(counsel-projectile-mode) "counsel-projectile")
-    (with-eval-after-load 'counsel
-      (add-hook 'counsel-mode-hook #'counsel-projectile-mode)))
+**** counsel-projectile
+#+begin_src emacs-lisp
+  (use-package counsel-projectile
+    :ensure t
+    :config
+    (add-hook 'counsel-mode-hook #'counsel-projectile-mode))
 #+end_src
 
 **** ivy
 #+begin_src emacs-lisp
-  (with-delayed-execution-priority-high
-    (autoload-if-found '(ivy-mode ivy-read ivy-completion-read) "ivy")
-    (with-eval-after-load 'ivy
-      (setq ivy-use-virtual-buffers t)
-      (setq ivy-wrap t)
-      (setq ivy-extra-directories t)
-      (setq enable-recursive-minibuffers t)))
+  (use-package ivy
+    :ensure t
+    :config
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-wrap t)
+    (setq ivy-extra-directories t)
+    (setq enable-recursive-minibuffers t))
+#+end_src
 
-  (eval-when-compile
-    (el-clone :repo "Yevgnen/ivy-rich"))
+**** ivy-rich
+#+begin_src emacs-lisp
+  (use-package ivy-rich
+    :after ivy
+    :ensure t
+    :config
+    (ivy-rich-mode t))
+#+end_src
 
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/ivy-rich"))
-    (autoload-if-found '(ivy-rich-mode) "ivy-rich")
-    (with-eval-after-load 'ivy
-      (ivy-rich-mode t)))
-
-  (eval-when-compile
-    (el-clone :repo "tumashu/ivy-posframe"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/ivy-posframe"))
-    (autoload-if-found '(ivy-posframe-mode) "ivy-posframe")
-    (with-eval-after-load 'ivy
-      (ivy-posframe-mode t)
-      (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))))
+**** ivy-posframe
+#+begin_src emacs-lisp
+  (use-package ivy-posframe
+    :after ivy posframe
+    :ensure t
+    :config
+    (ivy-posframe-mode t)
+      (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center))))
 #+end_src
 
 **** swiper
 #+begin_src emacs-lisp
-  (with-delayed-execution-priority-high
-    (autoload-if-found '(swiper) "swiper"))
+  (use-package swiper :ensure t)
 #+end_src
 
 *** multiple-cursors
