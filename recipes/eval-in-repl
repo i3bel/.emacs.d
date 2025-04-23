@@ -1,0 +1,2 @@
+(eval-in-repl :fetcher github
+              :repo    "kaz-yos/eval-in-repl")
