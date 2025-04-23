@@ -18,6 +18,7 @@ inputs: [
     path = inputs.melpa.outPath + "/recipes";
     exclude = [
       "bbdb"
+      "paredit"
     ];
   }
   {
