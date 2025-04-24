@@ -234,6 +234,7 @@ and disable scroll-bar, tool-bar and menu-bar.
 
 **** C-c
 #+begin_src emacs-lisp
+  (global-set-key (kbd "C-c a") 'aidermacs-transient-menu)
   (global-set-key (kbd "C-c e b") 'eval-buffer)
   (global-set-key (kbd "C-c e m") 'menu-bar-mode)
   (global-set-key (kbd "C-c m") 'minuet-configure-provider)
@@ -265,6 +266,8 @@ and disable scroll-bar, tool-bar and menu-bar.
   (global-set-key (kbd "C-S-z") 'undo-fu-only-redo)
   (global-set-key (kbd "C-/") 'other-window)
   (global-set-key (kbd "C-;") 'smart-hungry-delete-forward-char)
+  (global-set-key (kbd "C-.") 'embark-act)
+;;  (global-set-key (kbd "") #'embark-prefix-help-command)
 #+end_src
 
 **** M-* 
@@ -717,9 +720,8 @@ jdtsmith/eglot-booster
   (use-package eglot-booster
     :after eglot
     :commands (eglot-booster-mode)
-    :ensure t
-    :config
-    (eglot-booster-mode))
+    :hook (eglot . eglot-booster-mode)
+    :ensure t)
 #+end_src
 
 *** C#
@@ -1128,7 +1130,7 @@ jdtsmith/eglot-booster
   (use-package centaur-tabs
     :ensure t
     :commands (centaur-tabs-mode)
-    :init (centaur-tabs-mode)
+    :hook (after-init-hook . centaur-tabs-mode)
     :config
     (centaur-tabs-group-by-projectile-project)
     (centaur-tabs-headline-match)
@@ -1312,11 +1314,7 @@ highlights dired buffer like supercrabtree/k
 
 *** embark
 #+begin_src emacs-lisp
-  (use-package embark
-    :ensure t
-    :config
-    (global-set-key (kbd "C-.") #'embark-act)
-    (global-set-key (kbd "C-h B") #'embark-prefix-help-command))
+  (use-package embark :ensure t)
 #+end_src
 
 *** Flycheck
@@ -1384,8 +1382,7 @@ highlights dired buffer like supercrabtree/k
   (use-package ivy-rich
     :after ivy
     :ensure t
-    :init
-    (ivy-rich-mode t))
+    :hook (after-init-hook . ivy-rich-mode))
 #+end_src
 
 **** ivy-posframe
@@ -1393,8 +1390,8 @@ highlights dired buffer like supercrabtree/k
   (use-package ivy-posframe
     :after ivy posframe
     :ensure t
+    :hook (after-init-hook . ivy-posframe-mode)
     :config
-    (ivy-posframe-mode t)
     (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center))))
 #+end_src
 
@@ -1549,9 +1546,8 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     :ensure t
     :commands (aidermacs-transient-menu)
     :config
-    (global-set-key (kbd "C-c a") 'aidermacs-transient-menu)
-    (setq aidermacs-use-architect-mode t)
-    (setq aidermacs-default-model "openrouter/optimus-alpha"))
+    (setopt aidermacs-use-architect-mode t)
+    (setopt aidermacs-default-model "openrouter/optimus-alpha"))
 #+end_src
 
 *** Docker
@@ -1577,7 +1573,6 @@ Allows you to integrate Rich Presence from Discord.
     :commands (global-git-commit-mode)
     :hook (magit-status-mode-hook . toggle-centaur-tabs-local-mode)
     :config
-    (global-git-commit-mode)
     (setopt magit-repository-directories '(("~/ghq/" . 3))))
 #+end_src
 
@@ -1627,8 +1622,7 @@ Allows you to integrate Rich Presence from Discord.
   (use-package all-the-icons-ivy-rich
     :after ivy all-the-icons
     :ensure t
-    :config
-    (all-the-icons-ivy-rich-mode t))
+    :hook (after-init-hook . all-the-icons-ivy-rich-mode))
 #+end_src
 
 *** beacon
@@ -1658,7 +1652,7 @@ Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp
   (use-package lambda-line
     :ensure t
-    :hook (after-init-hook . lambda-line-mode)
+    :hook (nano-modeline . lambda-line-mode)
     :config
     (setopt lambda-line-icon-time t) ;; requires ClockFace font (see below)
     (setopt lambda-line-clockface-update-fontset "ClockFaceRect") ;; set clock icon
@@ -1688,9 +1682,11 @@ Allows you to integrate Rich Presence from Discord.
     :ensure t
     :commands (doom-themes-neotree-config)
     :init (doom-themes-neotree-config)
+    :hook (after-init-hook . (lambda ()
+                               (progn
+                                 (require 'doom-themes)
+                                 (load-theme 'doom-monokai-textmate t))))
     :config
-    (require 'doom-themes)
-    (load-theme 'doom-monokai-textmate t)
     (setq doom-themes-padded-modeline t)
     (setq doom-themes-enable-bold nil)
     (setq doom-themes-enable-italic nil))
@@ -1719,7 +1715,7 @@ Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp 
   (use-package page-break-lines
     :ensure t
-    :hook (after-init-hook . (lambda () (global-page-break-lines-mode t))))
+    :hook (after-init-hook . global-page-break-lines-mode))
 #+end_src
 
 *** paren
@@ -1754,7 +1750,7 @@ Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp
   (use-package yascroll
     :ensure t
-    :hook (after-init-hook . (lambda () (global-yascroll-bar-mode t))))
+    :hook (after-init-hook . global-yascroll-bar-mode))
 #+end_src
 
 ** Functions
