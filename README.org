@@ -231,31 +231,6 @@ https://github.com/Kyure-A/.emacs.d
 #+begin_src emacs-lisp
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
-
-*** avy
-#+begin_src emacs-lisp
-  (use-package avy
-    :ensure t
-    :config
-    (setq avy-all-windows nil)
-    (setq avy-background t))
-#+end_src
-
-*** mwim
-#+begin_src emacs-lisp
-  (use-package mwim :ensure t)
-#+end_src
-
-*** smart-hungry-delete
-#+begin_src emacs-lisp
-  (use-package smart-hungry-delete :ensure t)
-#+end_src
-
-*** smart-newline
-#+begin_src emacs-lisp
-  (use-package smart-newline :ensure t)
-#+end_src
-
 ** Common
 
 *** Mouse
@@ -1105,6 +1080,15 @@ jdtsmith/eglot-booster
   (use-package ace-window :ensure t)
 #+end_src
 
+*** avy
+#+begin_src emacs-lisp
+  (use-package avy
+    :ensure t
+    :config
+    (setq avy-all-windows nil)
+    (setq avy-background t))
+#+end_src
+
 *** aggressive-indent
 #+begin_src emacs-lisp
   (use-package aggressive-indent
@@ -1406,6 +1390,11 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
   (use-package multiple-cursors :ensure t)
 #+end_src
 
+*** mwim
+#+begin_src emacs-lisp
+  (use-package mwim :ensure t)
+#+end_src
+
 *** Nu-fun
 #+begin_src emacs-lisp
   (use-package nu-fun
@@ -1463,6 +1452,18 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+begin_src emacs-lisp
   (use-package posframe :ensure t)
 #+end_src
+
+*** smart-hungry-delete
+#+begin_src emacs-lisp
+  (use-package smart-hungry-delete :ensure t)
+#+end_src
+
+
+*** smart-newline
+#+begin_src emacs-lisp
+  (use-package smart-newline :ensure t)
+#+end_src
+
 
 *** undo-fu
 #+begin_src emacs-lisp
