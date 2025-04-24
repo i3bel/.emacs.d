@@ -144,10 +144,9 @@ https://github.com/Kyure-A/.emacs.d
 
 *** use-package
 #+begin_src emacs-lisp
-  (eval-and-compile
-    (require 'use-package)
-    (setopt use-package-ensure-function #'(lambda () t))
-    (setopt use-package-always-defer t))
+  (require 'use-package)
+  (setopt use-package-ensure-function #'(lambda () t))
+  (setopt use-package-always-defer t)
 #+end_src
 
 ** Keybindings
