@@ -317,7 +317,7 @@ https://github.com/Kyure-A/.emacs.d
    			  "/\\.emacs\\.d/\\.tmp/")))
 #+end_src
 **** recently
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package recently
     :after recentf
     :ensure t
