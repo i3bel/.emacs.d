@@ -1656,20 +1656,20 @@ Allows you to integrate Rich Presence from Discord.
     :ensure t
     :hook (after-init-hook . lambda-line-mode)
     :config
-    (lambda-line-icon-time t) ;; requires ClockFace font (see below)
-    (lambda-line-clockface-update-fontset "ClockFaceRect") ;; set clock icon
-    (lambda-line-position 'top) ;; Set position of status-line 
-    (lambda-line-abbrev t) ;; abbreviate major modes
-    (lambda-line-hspace "  ")  ;; add some cushion
-    (lambda-line-prefix t) ;; use a prefix symbol
-    (lambda-line-prefix-padding nil) ;; no extra space for prefix 
-    (lambda-line-status-invert nil)  ;; no invert colors
-    (lambda-line-gui-ro-symbol  " ⨂") ;; symbols
-    (lambda-line-gui-mod-symbol " ⬤") 
-    (lambda-line-gui-rw-symbol  " ◯") 
-    (lambda-line-space-top +.30)  ;; padding on top and bottom of line
-    (lambda-line-space-bottom -.30)
-    (lambda-line-symbol-position 0.1))
+    (setopt lambda-line-icon-time t) ;; requires ClockFace font (see below)
+    (setopt lambda-line-clockface-update-fontset "ClockFaceRect") ;; set clock icon
+    (setopt lambda-line-position 'top) ;; Set position of status-line 
+    (setopt lambda-line-abbrev t) ;; abbreviate major modes
+    (setopt lambda-line-hspace "  ")  ;; add some cushion
+    (setopt lambda-line-prefix t) ;; use a prefix symbol
+    (setopt lambda-line-prefix-padding nil) ;; no extra space for prefix 
+    (setopt lambda-line-status-invert nil)  ;; no invert colors
+    (setopt lambda-line-gui-ro-symbol  " ⨂") ;; symbols
+    (setopt lambda-line-gui-mod-symbol " ⬤") 
+    (setopt lambda-line-gui-rw-symbol  " ◯") 
+    (setopt lambda-line-space-top +.30)  ;; padding on top and bottom of line
+    (setopt lambda-line-space-bottom -.30)
+    (setopt lambda-line-symbol-position 0.1))
 #+end_src
 
 *** mini-echo
