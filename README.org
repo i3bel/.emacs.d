@@ -282,33 +282,6 @@ https://github.com/Kyure-A/.emacs.d
   (add-to-list 'display-buffer-alist '("*Async Shell Command*" display-buffer-no-window (nil)))
 #+end_src
 
-*** After save
-#+begin_src emacs-lisp
-  (defun my/compile-init-org ()
-    (shell-command-to-string
-     (mapconcat #'shell-quote-argument
-                `("emacs" "-Q" "--batch" "--eval" "(progn (require 'ob-tangle) (org-babel-tangle-file \"~/.emacs.d/README.org\" \"~/.emacs.d/init.el\" \"emacs-lisp\"))")
-                " ")))
-
-  (defun my/compile-early-init-org ()
-    (shell-command-to-string
-     (mapconcat #'shell-quote-argument
-                `("emacs" "-Q" "--batch" "--eval" "(progn (require 'ob-tangle) (org-babel-tangle-file \"~/.emacs.d/early-init.org\" \"~/.emacs.d/early-init.el\" \"emacs-lisp\"))")
-                " ")))
-
-
-  (defun my/compile-init-files ()
-    (interactive)
-    (my/compile-early-init-org)
-    (my/compile-init-org)
-    (byte-compile-file "~/.emacs.d/early-init.el")
-    (byte-compile-file "~/.emacs.d/init.el"))
-
-  (add-hook 'org-mode-hook
-            (lambda ()
-              (add-hook 'after-save-hook #'my/compile-init-files)))
-#+end_src
-
 *** Show Clock
 #+begin_src emacs-lisp
   (display-time-mode t)
@@ -330,20 +303,24 @@ https://github.com/Kyure-A/.emacs.d
 
 *** recent file
 #+begin_src emacs-lisp
-  (use-package recently
-    :ensure t
+  (use-package recentf
     :config
-    (recently-mode t)
     (recentf-mode t)
-    (setq recently-file (locate-user-emacs-file "recently"))
     (setq recentf-max-saved-items 150)
     (setq recentf-auto-cleanup 'never)
     (setq recentf-exclude '("/recentf"
-  			    "COMMIT_EDITMSG"
-  			    "/.?TAGS"
-  			    "^/sudo:"
-  			    "/\\.emacs\\.d/games/*-scores"
-  			    "/\\.emacs\\.d/\\.tmp/")))
+   			  "COMMIT_EDITMSG"
+   			  "/.?TAGS"
+   			  "^/sudo:"
+   			  "/\\.emacs\\.d/games/*-scores"
+   			  "/\\.emacs\\.d/\\.tmp/"))
+    
+  (use-package recently
+    :after recently
+    :ensure t
+    :config
+    (recently-mode t)
+    (setq recently-file (locate-user-emacs-file "recently")))
 #+end_src
 
 *** load custom.el
