@@ -302,6 +302,7 @@ https://github.com/Kyure-A/.emacs.d
 #+end_src
 
 *** recent file
+**** recentf
 #+begin_src emacs-lisp
   (use-package recentf
     :config
@@ -314,9 +315,11 @@ https://github.com/Kyure-A/.emacs.d
    			  "^/sudo:"
    			  "/\\.emacs\\.d/games/*-scores"
    			  "/\\.emacs\\.d/\\.tmp/")))
-    
+#+end_src
+**** recently
+#+begin_src emacs-lisp
   (use-package recently
-    :after recently
+    :after recentf
     :ensure t
     :config
     (recently-mode t)
