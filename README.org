@@ -246,12 +246,25 @@ https://github.com/Kyure-A/.emacs.d
   (use-package sublimity
     :ensure t
     :config
-    (sublimity-mode t)
-    (setq sublimity-attractive-centering-width 200)
-    (setq sublimity-scroll-weight 15)
-    (setq sublimity-scroll-drift-length 10))
+    (sublimity-mode t))
 #+end_src
 
+**** sublimity-attractive
+#+begin_src emacs-lisp
+  (use-package sublimity-attractive
+    :after sublimity
+    :config
+    (setopt sublimity-attractive-centering-width 200))
+#+end_src
+
+**** sublimity-scroll
+#+begin_src emacs-lisp
+  (use-package sublimity-scroll
+    :after sublimity
+    :config
+    (setopt sublimity-scroll-weight 15)
+    (setopt sublimity-scroll-drift-length 10))
+#+end_src
 *** Indent 
 #+begin_src emacs-lisp 
   (setq-default indent-tabs-mode nil)
