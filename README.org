@@ -786,16 +786,11 @@ jdtsmith/eglot-booster
 *** Flutter
 **** dart
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (el-clone :repo "bradyt/dart-mode"))
-
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/dart-mode"))
-    (autoload-if-found '(dart-mode) "dart-mode")
-    (add-to-list 'auto-mode-alist '("\\.dart$" . dart-mode))
-    (with-eval-after-load 'dart
-      (add-hook 'dart-mode-hook #'flycheck-mode)
-      (setq dart-enable-analysis-server t)))
+  (use-package dart-mode
+    :ensure t
+    :config
+    (add-hook 'dart-mode-hook #'flycheck-mode)
+    (setopt dart-enable-analysis-server t))
 #+end_src
 
 **** flutter
