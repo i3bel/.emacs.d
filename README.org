@@ -1698,7 +1698,7 @@ Allows you to integrate Rich Presence from Discord.
 #+end_src
 
 **** nerd-icons-corfu
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package nerd-icons
     :ensure t
     :commands (nerd-icons-corfu-formatter)
