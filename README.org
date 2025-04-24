@@ -1684,7 +1684,7 @@ Allows you to integrate Rich Presence from Discord.
     :init (doom-themes-neotree-config)
     :hook (after-init-hook . (lambda ()
                                (progn
-                                 (require 'doom-themes)
+                                 (require 'doom-monokai-textmate-theme)
                                  (load-theme 'doom-monokai-textmate t))))
     :config
     (setq doom-themes-padded-modeline t)
