@@ -1676,8 +1676,13 @@ Allows you to integrate Rich Presence from Discord.
     :hook (after-init-hook . mini-echo-mode))
 #+end_src
 
+*** modus
+#+begin_src emacs-lisp
+  (use-package modus :init (load-theme 'modus-vivendi))
+#+end_src
+
 *** monokai
-#+Begin_src emacs-lisp
+#+Begin_src emacs-lisp :tangle no
   (use-package monokai-k
     :ensure t
     :commands (doom-themes-neotree-config)
