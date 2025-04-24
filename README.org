@@ -1129,7 +1129,7 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp 
   (use-package centaur-tabs
     :ensure t
-    :commands (centaur-tabs-mode)
+    ;; :commands (centaur-tabs-mode)
     :hook (after-init-hook . centaur-tabs-mode)
     :config
     (centaur-tabs-group-by-projectile-project)
