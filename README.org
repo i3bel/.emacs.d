@@ -193,7 +193,7 @@ and disable scroll-bar, tool-bar and menu-bar.
 *** cl-lib
 #+begin_src emacs-lisp
   (require 'cl-lib t)
-  (setopt byte-compile-warnings '(cl-functions))
+  (setq byte-compile-warnings '(cl-functions))
 #+end_src
 
 *** use-package
