@@ -967,6 +967,7 @@ jdtsmith/eglot-booster
 **** org-modern
 #+begin_src emacs-lisp
   (use-package org-modern
+    :ensure t
     :after org
     :hook
     (org-mode-hook . org-modern-mode)
@@ -976,6 +977,7 @@ jdtsmith/eglot-booster
 **** org-roam
 #+begin_src emacs-lisp
   (use-package org-roam
+    :ensure t
     :after org
     :hook
     (org-roam-mode-hook . org-roam-ui-mode))
@@ -989,6 +991,7 @@ jdtsmith/eglot-booster
 **** org-ai
 #+begin_src emacs-lisp
   (use-package org-ai
+    :ensure t
     :after org
     :hook
     (org-mode-hook . org-ai-mode))
@@ -1230,6 +1233,7 @@ jdtsmith/eglot-booster
                                       "「C++ を完全に理解してしまったかもしれない」 - 桜ねね"
                                       "「これでもデバッグはプロ級だし 今はプログラムの知識だってあるんだからまかせてよね！」 - 桜ねね"))
     (setq dashboard-startup-banner (if (or (eq window-system 'x) (eq window-system 'ns) (eq window-system 'w32)) "~/.emacs.d/assets/banner.png" "~/.emacs.d/assets/banner.txt"))
+    (open-dashboard)
     (dashboard-setup-startup-hook)
     (define-key dashboard-mode-map (kbd "<f3>") #'quit-dashboard)
     (define-key dashboard-mode-map (kbd "p") #'previous-line)
@@ -1658,7 +1662,6 @@ Allows you to integrate Rich Presence from Discord.
     :config
     (setopt lambda-line-icon-time t) ;; requires ClockFace font (see below)
     (setopt lambda-line-clockface-update-fontset "ClockFaceRect") ;; set clock icon
-    (setopt lambda-line-position 'top) ;; Set position of status-line 
     (setopt lambda-line-abbrev t) ;; abbreviate major modes
     (setopt lambda-line-hspace "  ")  ;; add some cushion
     (setopt lambda-line-prefix t) ;; use a prefix symbol
