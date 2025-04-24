@@ -138,16 +138,14 @@ https://github.com/Kyure-A/.emacs.d
 
 *** cl-lib
 #+begin_src emacs-lisp
-  (setq byte-compile-warnings '(cl-functions))
   (require 'cl-lib t)
+  (setopt byte-compile-warnings '(cl-functions))
 #+end_src
 
 *** use-package
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (require 'use-package))
-
   (eval-and-compile
+    (require 'use-package)
     (setopt use-package-ensure-function #'(lambda () t))
     (setopt use-package-always-defer t))
 #+end_src
