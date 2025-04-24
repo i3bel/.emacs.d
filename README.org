@@ -1683,7 +1683,14 @@ Allows you to integrate Rich Presence from Discord.
 #+Begin_src emacs-lisp
   (use-package monokai-k
     :ensure t
-    :hook (after-init-hook . (lambda () (load-theme 'monokai t))))
+    :commands (doom-themes-neotree-config)
+    :init (doom-themes-neotree-config)
+    :config
+    (require 'doom-themes)
+    (load-theme 'doom-monokai-textmate t)
+    (setq doom-themes-padded-modeline t)
+    (setq doom-themes-enable-bold nil)
+    (setq doom-themes-enable-italic nil))
 #+end_src
 
 *** nano-modeline
