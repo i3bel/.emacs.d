@@ -484,26 +484,23 @@ Kyure-A/el-project
 
 *** eldoc
 #+begin_src emacs-lisp
-  (with-delayed-execution
-    (autoload-if-found '(turn-on-eldoc-mode) "eldoc" nil t)
-
-  (with-eval-after-load 'elisp-mode
-    (add-hook 'emacs-lisp-mode-hook #'turn-on-eldoc-mode)
-    (add-hook 'lisp-interaction-mode-hook #'turn-on-eldoc-mode)))
+  (use-package eldoc
+    :hook ((emacs-lisp-mode-hook . turn-on-eldoc-mode)
+           (lisp-interaction-mode-hook . turn-on-eldoc-mode)))
 #+end_src
 
 *** elsa
 emacs-elsa/Elsa
 #+begin_src emacs-lisp
-  (use-package elsa :ensure t)
+    (use-package elsa :ensure t)
 
-  (use-package flycheck-elsa
-    :after flycheck
-    :ensure t
-    :config
-    (add-hook 'emacs-lisp-mode-hook #'flycheck-mode)
-    (setq flycheck-elsa-backend 'eask)
-    (add-hook 'emacs-lisp-mode-hook #'flycheck-elsa-setup))
+    (use-package flycheck-elsa
+      :after flycheck
+      :hook ((emacs-lisp-mode-hook . flycheck-mode)
+             (emacs-lisp-mode-hook . flycheck-elsa-setup))
+      :ensure t
+      :config
+      (setq flycheck-elsa-backend 'eask))
 #+end_src
 
 *** elquery
@@ -551,7 +548,7 @@ doublep/iter2
 #+begin_src emacs-lisp
   (use-package keg
     :ensure t
-    :config
+    :init
     (add-to-list 'auto-mode-alist '("Keg" . emacs-lisp-mode)))
 #+end_src
 
@@ -719,6 +716,7 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp
   (use-package eglot-booster
     :after eglot
+    :commands (eglot-booster-mode)
     :ensure t
     :config
     (eglot-booster-mode))
@@ -806,6 +804,7 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp
   (use-package arduino-mode
     :mode (("\\.ino$" . arduino-mode))
+    :commands (arduino-mode)
     :ensure t)
 #+end_src
 
@@ -828,6 +827,7 @@ jdtsmith/eglot-booster
 
   (use-package sly
     :ensure t
+    :commands (sly)
     :config
     (setopt inferior-lisp-program "/usr/bin/sbcl"))
 
@@ -843,8 +843,8 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp
   (use-package dart-mode
     :ensure t
+    :hook (dart-mode-hook . flycheck-mode)
     :config
-    (add-hook 'dart-mode-hook #'flycheck-mode)
     (setopt dart-enable-analysis-server t))
 #+end_src
 
@@ -852,17 +852,15 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp
   (use-package flutter
     :ensure t
-    :config
-    (add-hook 'dart-mode (lambda () (add-hook 'after-save-hook #'flutter-run-or-hot-reload nil t))))
+    :hook (dart-mode . (lambda () (add-hook 'after-save-hook #'flutter-run-or-hot-reload nil t))))
 #+end_src
 
 *** Dockerfile
 #+begin_src emacs-lisp 
   (use-package dockerfile-mode
     :mode (("\\Dockerfile$" . dockerfile-mode))
-    :ensure t
-    :config
-    (add-hook 'dockerfile-mode-hook #'flycheck-mode))
+    :hook (dockerfile-mode-hook . flycheck-mode)
+    :ensure t)
 #+end_src
 
 *** F#
@@ -876,8 +874,7 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp 
   (use-package hy-mode
     :ensure t
-    :config
-    (add-hook 'hy-mode (lambda () (setq hy-shell-interpreter-args
+    :hook (hy-mode . (lambda () (setq hy-shell-interpreter-args
                                 (concat "--repl-output-fn=hy.contrib.hy-repr.hy-repr "
                                         hy-shell-interpreter-args)))))
 #+end_src
@@ -971,17 +968,17 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp
   (use-package org-modern
     :after org
-    :config
-    (add-hook 'org-mode-hook #'org-modern-mode)
-    (add-hook 'org-agenda-finalize-hook #'org-modern-agenda))
+    :hook
+    (org-mode-hook . org-modern-mode)
+    (org-agenda-finalize-hook . org-modern-agenda))
 #+end_src
 
 **** org-roam
 #+begin_src emacs-lisp
   (use-package org-roam
     :after org
-    :config
-    (add-hook 'org-roam-mode-hook #'org-roam-ui-mode))
+    :hook
+    (org-roam-mode-hook . org-roam-ui-mode))
 #+end_src
 
 **** org-tempo
@@ -993,8 +990,8 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp
   (use-package org-ai
     :after org
-    :config
-    (add-hook 'org-mode-hook #'org-ai-mode))
+    :hook
+    (org-mode-hook . org-ai-mode))
 #+end_src
 
 *** VHDL
@@ -1008,16 +1005,8 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp
   (use-package web-mode
     :ensure t
-    :config
-    (setopt web-mode-markup-indent-offset 2)
-    (setopt web-mode-enable-auto-pairing t)
-    (setopt web-mode-enable-auto-closing t)
-    (setopt web-mode-tag-auto-close-style 2)
-    (setopt web-mode-enable-auto-quoting nil)
-    (setopt web-mode-enable-current-column-highlight t)
-    (setopt web-mode-enable-current-element-highlight t)
-    (setopt web-mode-comment-style 2)
-    (setopt web-mode-enable-auto-indentation nil)
+    :hook (web-mode-hook . flycheck-mode)
+    :init
     (add-to-list 'auto-mode-alist '("\\.[agj]sp$" . web-mode))
     (add-to-list 'auto-mode-alist '("\\.erb$" . web-mode))
     (add-to-list 'auto-mode-alist '("\\.gsp$" . web-mode))
@@ -1034,17 +1023,26 @@ jdtsmith/eglot-booster
     (add-to-list 'auto-mode-alist '("\\.tsx$" . web-mode))
     (add-to-list 'auto-mode-alist '("\\.mts$" . web-mode))
     (add-to-list 'auto-mode-alist '("\\.cts$" . web-mode))
-    (add-hook 'web-mode-hook #'flycheck-mode))
+    :config
+    (setopt web-mode-markup-indent-offset 2)
+    (setopt web-mode-enable-auto-pairing t)
+    (setopt web-mode-enable-auto-closing t)
+    (setopt web-mode-tag-auto-close-style 2)
+    (setopt web-mode-enable-auto-quoting nil)
+    (setopt web-mode-enable-current-column-highlight t)
+    (setopt web-mode-enable-current-element-highlight t)
+    (setopt web-mode-comment-style 2)
+    (setopt web-mode-enable-auto-indentation nil))
 #+end_src
 
 *** YAML
 #+begin_src emacs-lisp 
   (use-package yaml-mode
     :ensure t
-    :config
+    :hook (yaml-mode-hook . flycheck-mode)
+    :init
     (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
-    (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
-    (add-hook 'yaml-mode-hook #'flycheck-mode))
+    (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode)))
 #+end_src
 
 
@@ -1052,7 +1050,7 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp
   (use-package flymake-shellcheck
     :ensure t
-    :config
+    :init
     (add-hook 'sh-mode-hook #'flymake-shellcheck-load))
 #+end_src
 
@@ -1107,15 +1105,15 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp
   (use-package aggressive-indent
     :ensure t
-    :config
-    (global-aggressive-indent-mode t))
+    :commands (global-aggressive-indent-mode)
+    :init (global-aggressive-indent-mode t))
 #+end_src
 
 *** cape
 #+begin_src emacs-lisp
   (use-package cape
     :ensure t
-    :config
+    :init
     (add-to-list 'completion-at-point-functions #'cape-dabbrev)
     (add-to-list 'completion-at-point-functions #'cape-file)
     (add-to-list 'completion-at-point-functions #'cape-elisp-block)
@@ -1126,22 +1124,23 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp 
   (use-package centaur-tabs
     :ensure t
+    :commands (centaur-tabs-mode)
+    :init (centaur-tabs-mode)
     :config
-    (centaur-tabs-mode)
     (centaur-tabs-group-by-projectile-project)
     (centaur-tabs-headline-match)
     (centaur-tabs-enable-buffer-reordering)
     (centaur-tabs-change-fonts "arial" 90)
-    (setq centaur-tabs-height 30)
-    (setq centaur-tabs-hide-tabs-hooks nil)
-    (setq centaur-tabs-set-icons t)
-    (setq centaur-tabs-set-bar 'under)
-    (setq x-underline-at-descent-line t)
-    (setq centaur-tabs-style "box")
-    (setq centaur-tabs-set-modified-marker t)
-    (setq centaur-tabs-show-navigation-buttons t)
-    (setq centaur-tabs-adjust-buffer-order t)
-    (setq centaur-tabs-cycle-scope 'groups))
+    (setopt centaur-tabs-height 30)
+    (setopt centaur-tabs-hide-tabs-hooks nil)
+    (setopt centaur-tabs-set-icons t)
+    (setopt centaur-tabs-set-bar 'under)
+    (setopt x-underline-at-descent-line t)
+    (setopt centaur-tabs-style "box")
+    (setopt centaur-tabs-set-modified-marker t)
+    (setopt centaur-tabs-show-navigation-buttons t)
+    (setopt centaur-tabs-adjust-buffer-order t)
+    (setopt centaur-tabs-cycle-scope 'groups))
 #+end_src
 
 *** corfu
@@ -1150,12 +1149,14 @@ jdtsmith/eglot-booster
   (use-package corfu
     :ensure t
     :after indent
+    :commands (global-corfu-mode)
+    :init (global-corfu-mode t)
     :config
-    (setq corfu-auto t)
-    (setq corfu-auto-delay 0)
-    (setq corfu-cycle t)
-    (setq corfu-on-exact-match nil)
-    (setq tab-always-indent 'complete))
+    (setopt corfu-auto t)
+    (setopt corfu-auto-delay 0)
+    (setopt corfu-cycle t)
+    (setopt corfu-on-exact-match nil)
+    (setopt tab-always-indent 'complete))
 #+end_src
 
 *** Dashboard
@@ -1243,8 +1244,8 @@ jdtsmith/eglot-booster
   (use-package dirvish
     :ensure t
     :after nerd-icons
+    :hook (after-init-hook . dirvish-override-dired-mode)
     :config
-    (dirvish-override-dired-mode)
     (setq dirvish-preview-dispatchers (cl-substitute 'pdf-preface 'pdf dirvish-preview-dispatchers))
     (setq dirvish-attributes '(vc-state subtree-state nerd-icons collapse git-msg file-time file-size))
     (setq dirvish-subtree-state-style 'nerd)
@@ -1268,7 +1269,7 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp
   (use-package dired-async
     :after async
-    :config
+    :init
     (dired-async-mode t))
 #+end_src
 
@@ -1277,8 +1278,8 @@ highlights dired buffer like supercrabtree/k
 #+begin_src emacs-lisp
   (use-package dired-k
     :ensure t
-    :config
-    (add-hook 'dired-initial-position-hook #'dired-k))
+    :hook
+    (dired-initial-position-hook . dired-k))
 #+end_src
 
 **** dired-open-in-accordance-with-situation
@@ -1301,7 +1302,7 @@ highlights dired buffer like supercrabtree/k
 #+begin_src emacs-lisp
   (use-package editorconfig
     :ensure t
-    :config
+    :init
     (editorconfig-mode t))
 #+end_src
 
@@ -1318,8 +1319,8 @@ highlights dired buffer like supercrabtree/k
 #+begin_src emacs-lisp
   (use-package flycheck
     :ensure t
+    :hook (prog-mode-hook . flycheck-mode)
     :config
-    (add-hook 'prog-mode-hook #'flycheck-mode)
     (setopt flycheck-idle-change-delay 0))
 #+end_src
 
@@ -1327,8 +1328,8 @@ highlights dired buffer like supercrabtree/k
 #+begin_src emacs-lisp
   (use-package gcmh
     :ensure t
+    :hook (after-init-hook . gcmh-mode)
     :config
-    (gcmh-mode)
     (setopt gcmh-verbose t))
 #+end_src
 
@@ -1359,8 +1360,8 @@ highlights dired buffer like supercrabtree/k
 #+begin_src emacs-lisp
   (use-package counsel-projectile
     :ensure t
-    :config
-    (add-hook 'counsel-mode-hook #'counsel-projectile-mode))
+    :hook
+    (counsel-mode-hook . counsel-projectile-mode))
 #+end_src
 
 **** ivy
@@ -1379,7 +1380,7 @@ highlights dired buffer like supercrabtree/k
   (use-package ivy-rich
     :after ivy
     :ensure t
-    :config
+    :init
     (ivy-rich-mode t))
 #+end_src
 
@@ -1390,7 +1391,7 @@ highlights dired buffer like supercrabtree/k
     :ensure t
     :config
     (ivy-posframe-mode t)
-      (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center))))
+    (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center))))
 #+end_src
 
 **** swiper
@@ -1422,11 +1423,12 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+begin_src emacs-lisp
   (use-package orderless
     :after compat
+    :commands (orderless orderless-try-complation orderless-all-completions)
     :ensure t
-    :config
+    :init
     (setq completion-styles '(orderless basic))
-      (setq completion-category-overrides '((file (styles basic partial-completion))))
-      (add-to-list 'completion-styles-alist
+    (setq completion-category-overrides '((file (styles basic partial-completion))))
+    (add-to-list 'completion-styles-alist
              '(orderless
                orderless-try-completion orderless-all-completions
                "Completion of multiple components, in any order.")))
@@ -1441,14 +1443,10 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+begin_src emacs-lisp
   (use-package puni
     :ensure t
-    :config
-    (puni-global-mode)
-    (with-eval-after-load 'lisp-mode
-      (add-hook 'lisp-mode-hook #'puni-disable-puni-mode))
-    (with-eval-after-load 'emacs-lisp-mode
-      (add-hook 'emacs-lisp-mode-hook #'puni-disable-puni-mode))
-    (with-eval-after-load 'lisp-interaction-mode
-      (add-hook 'lisp-interacton-mode-hook #'puni-disable-puni-mode)))
+    :hook ((after-init-hook . puni-global-mode)
+           (lisp-mode-hook . puni-disable-puni-mode)
+           (emacs-lisp-mode-hook . puni-disable-puni-mode)
+           (lisp-interaction-mode-hook . puni-disable-puni-mode)))
 #+end_src
 
 *** popwin
@@ -1471,7 +1469,6 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+begin_src emacs-lisp
   (use-package smart-hungry-delete :ensure t)
 #+end_src
-
 
 *** smart-newline
 #+begin_src emacs-lisp
@@ -1520,14 +1517,14 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+begin_src emacs-lisp
   (use-package which-key
     :ensure t
-    :config (which-key-mode))
+    :hook (after-init-hook . which-key-mode))
 #+end_src
 
 *** which-key-posframe
 #+begin_src emacs-lisp
   (use-package which-key-posframe
     :ensure t
-    :config (which-key-posframe-mode))
+    :hook (which-key-mode . which-key-posframe-mode))
 #+end_src
 
 *** yasnippet
@@ -1537,14 +1534,16 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     :config
     (yas-global-mode t)
     (setopt yas-snippet-dirs '("~/.emacs.d/snippets")))
-  (use-package ivy-yasnippet :ensure t)
+  (use-package ivy-yasnippet :after ivy :ensure t)
 #+end_src
 
 ** Utilities
 *** Aidermacs
 #+begin_src emacs-lisp
   (use-package aidermacs
+    :after transient
     :ensure t
+    :commands (aidermacs-transient-menu)
     :config
     (global-set-key (kbd "C-c a") 'aidermacs-transient-menu)
     (setq aidermacs-use-architect-mode t)
@@ -1571,10 +1570,11 @@ Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp
   (use-package magit
     :ensure t
+    :commands (global-git-commit-mode)
+    :hook (magit-status-mode-hook . toggle-centaur-tabs-local-mode)
     :config
     (global-git-commit-mode)
-    (setopt magit-repository-directories '(("~/ghq/" . 3)))
-    (add-hook 'magit-status-mode-hook #'toggle-centaur-tabs-local-mode))
+    (setopt magit-repository-directories '(("~/ghq/" . 3))))
 #+end_src
 
 *** Minuet
@@ -1612,17 +1612,19 @@ Allows you to integrate Rich Presence from Discord.
 **** all-the-icons-dired
 #+begin_src emacs-lisp
   (use-package all-the-icons-dired
+    :after dired all-the-icons
     :ensure t
-    :config
-    (add-hook 'dired-mode #'all-the-icons-dired-mode))
+    :hook
+    (dired-mode . all-the-icons-dired-mode))
 #+end_src
 
 **** all-the-icons-ivy-rich
 #+begin_src emacs-lisp
   (use-package all-the-icons-ivy-rich
-   :ensure t
-   :config
-   (all-the-icons-ivy-rich-mode t))
+    :after ivy all-the-icons
+    :ensure t
+    :config
+    (all-the-icons-ivy-rich-mode t))
 #+end_src
 
 *** beacon
@@ -1645,15 +1647,15 @@ Allows you to integrate Rich Presence from Discord.
   (use-package emojify
     :ensure t
     :config
-    (add-hook 'after-init-hook #'global-emojify-mode))
+    :hook (after-init-hook . global-emojify-mode))
 #+end_src
 
 *** lambda-line
 #+begin_src emacs-lisp
   (use-package lambda-line
     :ensure t
+    :hook (after-init-hook . lambda-line-mode)
     :config
-    (lambda-line-mode)
     (lambda-line-icon-time t) ;; requires ClockFace font (see below)
     (lambda-line-clockface-update-fontset "ClockFaceRect") ;; set clock icon
     (lambda-line-position 'top) ;; Set position of status-line 
@@ -1674,14 +1676,14 @@ Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp
   (use-package mini-echo
     :ensure t
-    :config (mini-echo-mode))
+    :hook (after-init-hook . mini-echo-mode))
 #+end_src
 
 *** monokai
 #+Begin_src emacs-lisp
   (use-package monokai-k
     :ensure t
-    :config (load-theme 'monokai t))
+    :hook (after-init-hook . (lambda () (load-theme 'monokai t))))
 #+end_src
 
 *** nano-modeline
@@ -1699,15 +1701,15 @@ Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp
   (use-package nerd-icons
     :ensure t
-    :config (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+    :commands (nerd-icons-corfu-formatter)
+    :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 #+end_src
 
 *** page-break-lines
 #+begin_src emacs-lisp 
   (use-package page-break-lines
     :ensure t
-    :config
-    (global-page-break-lines-mode t))
+    :hook (after-init-hook . (lambda () (global-page-break-lines-mode t))))
 #+end_src
 
 *** paren
@@ -1729,8 +1731,8 @@ Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp 
   (use-package rainbow-delimiters
     :ensure t
-    :config
-    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+    :hook
+    (prog-mode-hook . rainbow-delimiters-mode))
 #+end_src
 
 *** solaire-mode
@@ -1742,7 +1744,7 @@ Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp
   (use-package yascroll
     :ensure t
-    :config (global-yascroll-bar-mode t))
+    :hook (after-init-hook . (lambda () (global-yascroll-bar-mode t))))
 #+end_src
 
 ** Functions
