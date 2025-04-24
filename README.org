@@ -239,32 +239,6 @@ https://github.com/Kyure-A/.emacs.d
   (setq scroll-preserve-screen-position 'always)
 #+end_src
 
-*** Scroll
-
-**** sublimity
-#+begin_src emacs-lisp
-  (use-package sublimity
-    :ensure t
-    :config
-    (sublimity-mode t))
-#+end_src
-
-**** sublimity-attractive
-#+begin_src emacs-lisp
-  (use-package sublimity-attractive
-    :after sublimity
-    :config
-    (setopt sublimity-attractive-centering-width 200))
-#+end_src
-
-**** sublimity-scroll
-#+begin_src emacs-lisp
-  (use-package sublimity-scroll
-    :after sublimity
-    :config
-    (setopt sublimity-scroll-weight 15)
-    (setopt sublimity-scroll-drift-length 10))
-#+end_src
 *** Indent 
 #+begin_src emacs-lisp 
   (setq-default indent-tabs-mode nil)
@@ -1475,6 +1449,33 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 *** smart-newline
 #+begin_src emacs-lisp
   (use-package smart-newline :ensure t)
+#+end_src
+
+*** sublimity
+#+begin_src emacs-lisp
+  (use-package sublimity
+    :ensure t
+    :config
+    (sublimity-mode t))
+#+end_src
+
+
+*** sublimity-attractive
+#+begin_src emacs-lisp
+  (use-package sublimity-attractive
+    :after sublimity
+    :config
+    (setopt sublimity-attractive-centering-width 200))
+#+end_src
+
+
+*** sublimity-scroll
+#+begin_src emacs-lisp
+  (use-package sublimity-scroll
+    :after sublimity
+    :config
+    (setopt sublimity-scroll-weight 15)
+    (setopt sublimity-scroll-drift-length 10))
 #+end_src
 
 
