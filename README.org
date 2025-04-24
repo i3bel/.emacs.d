@@ -63,7 +63,7 @@ https://github.com/Kyure-A/.emacs.d
 
 ** Color Scheme
 I love monokai!
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (set-face-background 'default "#272822")
   (set-face-foreground 'default "#F8F8F0")
   (set-face-foreground 'font-lock-keyword-face "#F92672")
@@ -1218,7 +1218,7 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp 
   (use-package dashboard
     :ensure t
-    :init (open-dashboard)
+    :hook (after-init-hook . open-dashboard)
     :config
     (setq dashboard-items '((bookmarks . 5)
                             (recents  . 5)
