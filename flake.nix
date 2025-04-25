@@ -50,6 +50,11 @@
         (system: let
           inherit (nixpkgs) lib;
 
+          formatter = {
+            x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
+            aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-rfc-style;
+          };
+          
           pkgs = import nixpkgs {
             inherit system;
             overlays = [
@@ -70,7 +75,7 @@
             inputOverrides = (import ./nix/inputs.nix {inherit lib;}) // profile.extraInputOverrides;
             registries = (import ./nix/registries.nix inputs) ++ [
               {
-		name = "custom";
+		            name = "custom";
                 type = "melpa";
                 path = profile.extraRecipeDir;
               }
