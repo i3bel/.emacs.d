@@ -4,8 +4,6 @@
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
     
-    systems.url = "github:nix-systems/default";
-    
     twist.url = "github:emacs-twist/twist.nix";
     
     org-babel.url = "github:emacs-twist/org-babel";
@@ -37,16 +35,13 @@
     self,
       nixpkgs,
       flake-utils,
-      systems,
-      twist,
       emacs,
       ...
   } @ inputs:
     let
-      supportedSystems = import systems;
       overlays = import ./nix/overlays.nix;
     in    
-      flake-utils.lib.eachSystem supportedSystems
+      flake-utils.lib.eachDefaultSystem
         (system: let
           inherit (nixpkgs) lib;
           
