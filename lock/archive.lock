@@ -1,0 +1,46 @@
+{
+  "csv-mode": {
+    "archive": {
+      "narHash": "sha256-PtjgfRM88oS0RLE9MMSXdu1LzecMgXbiftH86Qs6R2k=",
+      "type": "tarball",
+      "url": "https://elpa.gnu.org/devel/csv-mode-1.27.0.20250307.75451.tar"
+    },
+    "inventory": {
+      "type": "archive",
+      "url": "https://elpa.gnu.org/devel/"
+    },
+    "packageRequires": {
+      "cl-lib": "0.5",
+      "emacs": "27.1"
+    },
+    "version": "1.27.0.20250307.75451"
+  },
+  "queue": {
+    "archive": {
+      "narHash": "sha256-ajVA/+XvUon+Ph7OdIwIgimlWbykI8V0hPlT8HREiA4=",
+      "type": "tarball",
+      "url": "https://elpa.gnu.org/devel/queue-0.2.0.20210306.173709.tar"
+    },
+    "inventory": {
+      "type": "archive",
+      "url": "https://elpa.gnu.org/devel/"
+    },
+    "packageRequires": {
+      "cl-lib": "0.5"
+    },
+    "version": "0.2.0.20210306.173709"
+  },
+  "rainbow-mode": {
+    "archive": {
+      "narHash": "sha256-XMJ1pjGBISLllFwOcH9nA8xu9qYo1xsiqQ5XH/4XHCU=",
+      "type": "tarball",
+      "url": "https://elpa.gnu.org/devel/rainbow-mode-1.0.6.0.20231215.171141.tar"
+    },
+    "inventory": {
+      "type": "archive",
+      "url": "https://elpa.gnu.org/devel/"
+    },
+    "packageRequires": {},
+    "version": "1.0.6.0.20231215.171141"
+  }
+}
