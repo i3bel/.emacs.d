@@ -11,7 +11,7 @@
     org-babel.url = "github:emacs-twist/org-babel";
 
     elpa = {
-      url = "git+https://git.savannah.gnu.org/git/emacs/elpa.git";
+      url = "github:elpa-mirrors/elpa";
       flake = false;
     };
     
@@ -21,7 +21,7 @@
     };
     
     nongnu = {
-      url = "git+https://git.savannah.gnu.org/git/emacs/nongnu.git";
+      url = "github:elpa-mirrors/nongnu";
       flake = false;
     };
     
@@ -49,7 +49,7 @@
       flake-utils.lib.eachSystem supportedSystems
         (system: let
           inherit (nixpkgs) lib;
-
+          
           pkgs = import nixpkgs {
             inherit system;
             overlays = [
@@ -70,6 +70,7 @@
             inputOverrides = (import ./nix/inputs.nix {inherit lib;}) // profile.extraInputOverrides;
             registries = (import ./nix/registries.nix inputs) ++ [
               {
+		            name = "custom";
                 type = "melpa";
                 path = profile.extraRecipeDir;
               }
@@ -84,9 +85,9 @@
               inputs.twist.homeModules.emacs-twist
             ];
           };
-                    
+          
           apps = package.makeApps {
-            lockDirName = ./lock;
+            lockDirName = "lock";
           };
         });
 }

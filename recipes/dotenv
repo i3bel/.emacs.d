@@ -1,0 +1,2 @@
+(dotenv :fetcher github
+        :repo "pkulev/dotenv.el")

@@ -2,14 +2,8 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - master 
-      - twist-nix
-  pull_request:
-    branches:
-      - master
-      - twist-nix
+  push: {}
+  pull_request: {}
 
 env:
     NIX_VERSION: 2.18.2

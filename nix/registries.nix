@@ -9,7 +9,7 @@ inputs: [
     path = inputs.elpa.outPath + "/elpa-packages";
     auto-sync-only = true;
     exclude = [
-      "bbdb"
+      "lv" # hydra in elpa is missed recipe
     ];
   }
   {
@@ -17,7 +17,8 @@ inputs: [
     type = "melpa";
     path = inputs.melpa.outPath + "/recipes";
     exclude = [
-      "bbdb"
+      "dired-k"
+      "paredit"
     ];
   }
   {
