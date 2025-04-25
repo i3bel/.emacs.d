@@ -49,11 +49,6 @@
       flake-utils.lib.eachSystem supportedSystems
         (system: let
           inherit (nixpkgs) lib;
-
-          formatter = {
-            x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
-            aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-rfc-style;
-          };
           
           pkgs = import nixpkgs {
             inherit system;
@@ -83,6 +78,11 @@
           });
           
         in {
+          formatter = {
+            x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
+            aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-rfc-style;
+          };
+          
           packages.default = package;
 
           homeModules.twist = {
@@ -90,7 +90,7 @@
               inputs.twist.homeModules.emacs-twist
             ];
           };
-                    
+          
           apps = package.makeApps {
             lockDirName = "lock";
           };
