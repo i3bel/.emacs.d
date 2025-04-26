@@ -1606,6 +1606,13 @@ Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp
   (use-package swagg :ensure t)
 #+end_src
+*** twist
+#+begin_src emacs-lisp
+  (use-package twist
+    :ensure t
+    :hook (emacs-startup-hook . twist-watch-mode))
+#+end_src
+
 ** Visual
 *** all-the-icons
 **** all-the-icons
