@@ -7,14 +7,8 @@
   initFiles = [
     (pkgs.tangleOrgBabelFile "init.el" ./README.org {})
   ];
-  extraPackages = [
-    # sitawo komento hazusuto ugokanai
-    # "usePackage"
-    # "pairable"
-    # "readable"
-    # "readable-typo-theme"
-    # "readable-mono-theme"
-  ];
+  exportManifest = true;
+  extraPackages = [];
   extraRecipeDir = ./recipes;
   extraInputOverrides = {};
 }
