@@ -266,7 +266,7 @@ and disable scroll-bar, tool-bar and menu-bar.
   (global-set-key (kbd "C-o") 'nil)
   (global-set-key (kbd "C-u") 'undo-fu-only-undo)
   (global-set-key (kbd "C-r") 'undo-fu-only-redo)
-  (global-set-key (kbd "C-s") 'swiper)
+  (global-set-key (kbd "C-s") 'consult-line)
   (global-set-key (kbd "C-z") 'undo-fu-only-undo)
   (global-set-key (kbd "C-S-z") 'undo-fu-only-redo)
   (global-set-key (kbd "C-/") 'other-window)
@@ -1155,6 +1155,11 @@ jdtsmith/eglot-booster
     (setopt centaur-tabs-cycle-scope 'groups))
 #+end_src
 
+*** consult
+#+begin_src emacs-lisp
+  (use-package consult :ensure t)
+#+end_src
+
 *** corfu
 **** corfu
 #+begin_src emacs-lisp
@@ -1450,10 +1455,16 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     (setopt sublimity-scroll-drift-length 10))
 #+end_src
 
-
 *** undo-fu
 #+begin_src emacs-lisp
   (use-package undo-fu :ensure t)
+#+end_src
+
+*** vertico
+#+begin_src emacs-lisp
+  (use-package vertico
+    :ensure t
+    :hook (after-init-hook . vertico-mode))
 #+end_src
 
 *** visual-regexp
