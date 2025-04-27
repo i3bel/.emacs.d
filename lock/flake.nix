@@ -108,22 +108,22 @@
       repo = "compat";
       type = "github";
     };
+    consult = {
+      flake = false;
+      owner = "minad";
+      repo = "consult";
+      type = "github";
+    };
+    copilot-chat = {
+      flake = false;
+      owner = "chep";
+      repo = "copilot-chat.el";
+      type = "github";
+    };
     corfu = {
       flake = false;
       owner = "minad";
       repo = "corfu";
-      type = "github";
-    };
-    counsel = {
-      flake = false;
-      owner = "abo-abo";
-      repo = "swiper";
-      type = "github";
-    };
-    counsel-projectile = {
-      flake = false;
-      owner = "ericdanan";
-      repo = "counsel-projectile";
       type = "github";
     };
     dart-mode = {
@@ -340,12 +340,6 @@
       repo = "swiper";
       type = "github";
     };
-    ivy-posframe = {
-      flake = false;
-      owner = "tumashu";
-      repo = "ivy-posframe";
-      type = "github";
-    };
     ivy-rich = {
       flake = false;
       owner = "Yevgnen";
@@ -416,6 +410,12 @@
       flake = false;
       owner = "magit";
       repo = "magit";
+      type = "github";
+    };
+    marginalia = {
+      flake = false;
+      owner = "minad";
+      repo = "marginalia";
       type = "github";
     };
     markdown-mode = {
@@ -557,6 +557,12 @@
       repo = "plz-media-type";
       type = "github";
     };
+    polymode = {
+      flake = false;
+      owner = "polymode";
+      repo = "polymode";
+      type = "github";
+    };
     popwin = {
       flake = false;
       owner = "emacsorphanage";
@@ -647,6 +653,12 @@
       repo = "satysfi-ts-mode";
       type = "github";
     };
+    shell-maker = {
+      flake = false;
+      owner = "xenodium";
+      repo = "shell-maker";
+      type = "github";
+    };
     shrink-path = {
       flake = false;
       owner = "bennya";
@@ -713,12 +725,6 @@
       repo = "swagg.el";
       type = "github";
     };
-    swiper = {
-      flake = false;
-      owner = "abo-abo";
-      repo = "swiper";
-      type = "github";
-    };
     tablist = {
       flake = false;
       owner = "emacsorphanage";
@@ -737,6 +743,12 @@
       repo = "trinary-logic";
       type = "github";
     };
+    twist = {
+      flake = false;
+      owner = "emacs-twist";
+      repo = "twist.el";
+      type = "github";
+    };
     undercover = {
       flake = false;
       owner = "undercover-el";
@@ -752,6 +764,18 @@
       flake = false;
       owner = "Malabarba";
       repo = "validate.el";
+      type = "github";
+    };
+    vertico = {
+      flake = false;
+      owner = "minad";
+      repo = "vertico";
+      type = "github";
+    };
+    vertico-posframe = {
+      flake = false;
+      owner = "tumashu";
+      repo = "vertico-posframe";
       type = "github";
     };
     visual-regexp = {

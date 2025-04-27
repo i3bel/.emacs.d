@@ -246,7 +246,7 @@ and disable scroll-bar, tool-bar and menu-bar.
   (global-set-key (kbd "C-c o") 'Kyure_A/open)
   (global-set-key (kbd "C-c p") 'smartparens-global-mode)
   (global-set-key (kbd "C-c s") 'Kyure_A/start-repl)
-  (global-set-key (kbd "C-c t") 'centaur-tabs-counsel-switch-group)
+  ;; (global-set-key (kbd "C-c t") 'centaur-tabs-counsel-switch-group)
   (global-set-key (kbd "C-c r") 'vr/replace)
 #+end_src
 
@@ -266,7 +266,7 @@ and disable scroll-bar, tool-bar and menu-bar.
   (global-set-key (kbd "C-o") 'nil)
   (global-set-key (kbd "C-u") 'undo-fu-only-undo)
   (global-set-key (kbd "C-r") 'undo-fu-only-redo)
-  (global-set-key (kbd "C-s") 'swiper)
+  (global-set-key (kbd "C-s") 'consult-line)
   (global-set-key (kbd "C-z") 'undo-fu-only-undo)
   (global-set-key (kbd "C-S-z") 'undo-fu-only-redo)
   (global-set-key (kbd "C-/") 'other-window)
@@ -283,7 +283,6 @@ and disable scroll-bar, tool-bar and menu-bar.
   (global-set-key (kbd "M-k") 'puni-backward-kill-line)
   (global-set-key (kbd "M-p") 'minuet-previous-suggestion)
   (global-set-key (kbd "M-n") 'minuet-next-suggestion)
-  (global-set-key (kbd "M-x") 'counsel-M-x)
   (global-set-key (kbd "M-y") 'minuet-complete-with-minibuffer)
 #+end_src
 
@@ -1155,6 +1154,11 @@ jdtsmith/eglot-booster
     (setopt centaur-tabs-cycle-scope 'groups))
 #+end_src
 
+*** consult
+#+begin_src emacs-lisp
+  (use-package consult :ensure t)
+#+end_src
+
 *** corfu
 **** corfu
 #+begin_src emacs-lisp
@@ -1347,64 +1351,11 @@ highlights dired buffer like supercrabtree/k
   (use-package hydra :ensure t)
 #+end_src
 
-*** ivy/counsel
-**** counsel
+*** marginalia
 #+begin_src emacs-lisp
-  (defun disable-counsel-find-file (&rest args)
-    "Disable `counsel-find-file' and use the original `find-file' with ARGS."
-    (let ((completing-read-function #'completing-read-default)
-          (completion-in-region-function #'completion--in-region))
-      (apply #'read-file-name-default args)))
-
-  (use-package counsel
+  (use-package marginalia
     :ensure t
-    :config
-    (counsel-mode t)
-    (define-key counsel-mode-map [remap find-file] nil)
-    (setq counsel-find-file-ignore-regexp (regexp-opt '("./" "../")))
-    (setq read-file-name-function #'disable-counsel-find-file))
-#+end_src
-
-**** counsel-projectile
-#+begin_src emacs-lisp
-  (use-package counsel-projectile
-    :ensure t
-    :hook
-    (counsel-mode-hook . counsel-projectile-mode))
-#+end_src
-
-**** ivy
-#+begin_src emacs-lisp
-  (use-package ivy
-    :ensure t
-    :config
-    (setq ivy-use-virtual-buffers t)
-    (setq ivy-wrap t)
-    (setq ivy-extra-directories t)
-    (setq enable-recursive-minibuffers t))
-#+end_src
-
-**** ivy-rich
-#+begin_src emacs-lisp
-  (use-package ivy-rich
-    :after ivy
-    :ensure t
-    :hook (after-init-hook . ivy-rich-mode))
-#+end_src
-
-**** ivy-posframe
-#+begin_src emacs-lisp
-  (use-package ivy-posframe
-    :after ivy posframe
-    :ensure t
-    :hook (after-init-hook . ivy-posframe-mode)
-    :config
-    (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center))))
-#+end_src
-
-**** swiper
-#+begin_src emacs-lisp
-  (use-package swiper :ensure t)
+    :hook (emacs-startup-hook . marginalia-mode))
 #+end_src
 
 *** multiple-cursors
@@ -1491,7 +1442,6 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     (sublimity-mode t))
 #+end_src
 
-
 *** sublimity-attractive
 #+begin_src emacs-lisp
   (use-package sublimity-attractive
@@ -1510,10 +1460,25 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     (setopt sublimity-scroll-drift-length 10))
 #+end_src
 
-
 *** undo-fu
 #+begin_src emacs-lisp
   (use-package undo-fu :ensure t)
+#+end_src
+
+*** vertico
+**** vertico
+#+begin_src emacs-lisp
+  (use-package vertico
+    :ensure t
+    :hook (emacs-startup-hook . vertico-mode))
+#+end_src
+
+**** vertico-posframe
+#+begin_src emacs-lisp
+  (use-package vertico-posframe
+    :commands (vertico-posframe-mode)
+    :ensure t
+    :hook (vertico-mode . vertico-posframe-mode))
 #+end_src
 
 *** visual-regexp
