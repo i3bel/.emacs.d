@@ -1234,7 +1234,7 @@ jdtsmith/eglot-booster
                                       "「えーー！なるっちの担当箇所がバグだらけ！？」 - 桜ねね"
                                       "「C++ を完全に理解してしまったかもしれない」 - 桜ねね"
                                       "「これでもデバッグはプロ級だし 今はプログラムの知識だってあるんだからまかせてよね！」 - 桜ねね"))
-    (setq dashboard-startup-banner (if (or (eq window-system 'x) (eq window-system 'ns) (eq window-system 'w32)) "~/.emacs.d/assets/banner.png" "~/.emacs.d/assets/banner.txt"))
+    (setq dashboard-startup-banner (if (or (eq window-system 'x) (eq window-system 'ns) (eq window-system 'w32)) "~/config/emacs/assets/banner.png" "~/config/emacs/assets/banner.txt"))
     (open-dashboard)
     (dashboard-setup-startup-hook)
     (define-key dashboard-mode-map (kbd "<f3>") #'quit-dashboard)
@@ -1495,7 +1495,7 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     :ensure t
     :config
     (yas-global-mode t)
-    (setopt yas-snippet-dirs '("~/.emacs.d/snippets")))
+    (setopt yas-snippet-dirs '("~/.config/emacs/snippets")))
   (use-package ivy-yasnippet :after ivy :ensure t)
 #+end_src
 

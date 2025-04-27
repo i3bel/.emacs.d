@@ -78,6 +78,7 @@
           homeModules.twist = {
             imports = [
               inputs.twist.homeModules.emacs-twist
+              ./nix/home.nix
             ];
           };
           
