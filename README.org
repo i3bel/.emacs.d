@@ -1136,7 +1136,7 @@ jdtsmith/eglot-booster
   (use-package centaur-tabs
     :ensure t
     ;; :commands (centaur-tabs-mode)
-    :hook (after-init-hook . centaur-tabs-mode)
+    :hook (emacs-startup-hook . centaur-tabs-mode)
     :config
     (centaur-tabs-group-by-projectile-project)
     (centaur-tabs-headline-match)
@@ -1229,7 +1229,7 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp 
   (use-package dashboard
     :ensure t
-    :hook (after-init-hook . open-dashboard)
+    :hook (emacs-startup-hook . open-dashboard)
     :config
     (setq dashboard-items '((bookmarks . 5)
                             (recents  . 5)
@@ -1261,7 +1261,7 @@ jdtsmith/eglot-booster
   (use-package dirvish
     :ensure t
     :after nerd-icons
-    :hook (after-init-hook . dirvish-override-dired-mode)
+    :hook (emacs-startup-hook . dirvish-override-dired-mode)
     :config
     (setq dirvish-preview-dispatchers (cl-substitute 'pdf-preface 'pdf dirvish-preview-dispatchers))
     (setq dirvish-attributes '(vc-state subtree-state nerd-icons collapse git-msg file-time file-size))
@@ -1341,7 +1341,7 @@ highlights dired buffer like supercrabtree/k
 #+begin_src emacs-lisp
   (use-package gcmh
     :ensure t
-    :hook (after-init-hook . gcmh-mode)
+    :hook (emacs-startup-hook . gcmh-mode)
     :config
     (setopt gcmh-verbose t))
 #+end_src
@@ -1402,7 +1402,7 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+begin_src emacs-lisp
   (use-package puni
     :ensure t
-    :hook ((after-init-hook . puni-global-mode)
+    :hook ((emacs-startup-hook . puni-global-mode)
            (lisp-mode-hook . puni-disable-puni-mode)
            (emacs-lisp-mode-hook . puni-disable-puni-mode)
            (lisp-interaction-mode-hook . puni-disable-puni-mode)))
@@ -1490,7 +1490,7 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+begin_src emacs-lisp
   (use-package which-key
     :ensure t
-    :hook (after-init-hook . which-key-mode))
+    :hook (emacs-startup-hook . which-key-mode))
 #+end_src
 
 *** which-key-posframe
@@ -1608,7 +1608,7 @@ Allows you to integrate Rich Presence from Discord.
   (use-package all-the-icons-ivy-rich
     :after ivy all-the-icons
     :ensure t
-    :hook (after-init-hook . all-the-icons-ivy-rich-mode))
+    :hook (emacs-startup-hook . all-the-icons-ivy-rich-mode))
 #+end_src
 
 *** beacon
@@ -1631,7 +1631,7 @@ Allows you to integrate Rich Presence from Discord.
   (use-package emojify
     :ensure t
     :config
-    :hook (after-init-hook . global-emojify-mode))
+    :hook (emacs-startup-hook . global-emojify-mode))
 #+end_src
 
 *** lambda-line
@@ -1659,7 +1659,7 @@ Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp
   (use-package mini-echo
     :ensure t
-    :hook (after-init-hook . mini-echo-mode))
+    :hook (emacs-startup-hook . mini-echo-mode))
 #+end_src
 
 *** modus
@@ -1673,7 +1673,7 @@ Allows you to integrate Rich Presence from Discord.
     :ensure t
     :commands (doom-themes-neotree-config)
     :init (doom-themes-neotree-config)
-    :hook (after-init-hook . (lambda ()
+    :hook (emacs-startup-hook . (lambda ()
                                (progn
                                  (require 'doom-monokai-textmate-theme)
                                  (load-theme 'doom-monokai-textmate t))))
@@ -1706,7 +1706,7 @@ Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp 
   (use-package page-break-lines
     :ensure t
-    :hook (after-init-hook . global-page-break-lines-mode))
+    :hook (emacs-startup-hook . global-page-break-lines-mode))
 #+end_src
 
 *** paren
@@ -1741,7 +1741,7 @@ Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp
   (use-package yascroll
     :ensure t
-    :hook (after-init-hook . global-yascroll-bar-mode))
+    :hook (emacs-startup-hook . global-yascroll-bar-mode))
 #+end_src
 
 ** Functions
