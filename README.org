@@ -1157,7 +1157,9 @@ jdtsmith/eglot-booster
 
 *** consult
 #+begin_src emacs-lisp
-  (use-package consult :ensure t)
+  (use-package consult
+    :commands (consult-M-x)
+    :ensure t)
 #+end_src
 
 *** corfu
