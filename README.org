@@ -1511,7 +1511,6 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 *** Aidermacs
 #+begin_src emacs-lisp
   (use-package aidermacs
-    :after transient
     :ensure t
     :commands (aidermacs-transient-menu)
     :config
@@ -1534,7 +1533,9 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 *** Elcord
 Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp
-  (use-package elcord :ensure t)
+  (use-package elcord
+    :ensure t
+    :hook (emacs-startup-hook . elcord-mode))
 #+end_src
 
 *** Jobcan
