@@ -1353,6 +1353,13 @@ highlights dired buffer like supercrabtree/k
   (use-package hydra :ensure t)
 #+end_src
 
+*** marginalia
+#+begin_src emacs-lisp
+  (use-package marginalia
+    :ensure t
+    :hook (emacs-startup-hook . marginalia-mode))
+#+end_src
+
 *** multiple-cursors
 https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+begin_src emacs-lisp
@@ -1436,7 +1443,6 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     :config
     (sublimity-mode t))
 #+end_src
-
 
 *** sublimity-attractive
 #+begin_src emacs-lisp
