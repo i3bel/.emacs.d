@@ -1514,7 +1514,8 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+begin_src emacs-lisp
   (use-package copilot
     :ensure t
-    :hook (prog-mode-hook . copilot-mode))
+    ;;:hook (prog-mode-hook . copilot-mode)
+)
 #+end_src
 
 *** copilot-chat
