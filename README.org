@@ -1347,66 +1347,6 @@ highlights dired buffer like supercrabtree/k
   (use-package hydra :ensure t)
 #+end_src
 
-*** ivy/counsel
-**** counsel
-#+begin_src emacs-lisp
-  (defun disable-counsel-find-file (&rest args)
-    "Disable `counsel-find-file' and use the original `find-file' with ARGS."
-    (let ((completing-read-function #'completing-read-default)
-          (completion-in-region-function #'completion--in-region))
-      (apply #'read-file-name-default args)))
-
-  (use-package counsel
-    :ensure t
-    :config
-    (counsel-mode t)
-    (define-key counsel-mode-map [remap find-file] nil)
-    (setq counsel-find-file-ignore-regexp (regexp-opt '("./" "../")))
-    (setq read-file-name-function #'disable-counsel-find-file))
-#+end_src
-
-**** counsel-projectile
-#+begin_src emacs-lisp
-  (use-package counsel-projectile
-    :ensure t
-    :hook
-    (counsel-mode-hook . counsel-projectile-mode))
-#+end_src
-
-**** ivy
-#+begin_src emacs-lisp
-  (use-package ivy
-    :ensure t
-    :config
-    (setq ivy-use-virtual-buffers t)
-    (setq ivy-wrap t)
-    (setq ivy-extra-directories t)
-    (setq enable-recursive-minibuffers t))
-#+end_src
-
-**** ivy-rich
-#+begin_src emacs-lisp
-  (use-package ivy-rich
-    :after ivy
-    :ensure t
-    :hook (after-init-hook . ivy-rich-mode))
-#+end_src
-
-**** ivy-posframe
-#+begin_src emacs-lisp
-  (use-package ivy-posframe
-    :after ivy posframe
-    :ensure t
-    :hook (after-init-hook . ivy-posframe-mode)
-    :config
-    (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center))))
-#+end_src
-
-**** swiper
-#+begin_src emacs-lisp
-  (use-package swiper :ensure t)
-#+end_src
-
 *** multiple-cursors
 https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+begin_src emacs-lisp
