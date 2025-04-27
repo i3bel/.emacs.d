@@ -1468,10 +1468,18 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+end_src
 
 *** vertico
+**** vertico
 #+begin_src emacs-lisp
   (use-package vertico
     :ensure t
-    :hook (after-init-hook . vertico-mode))
+    :hook (emacs-start-up-hook . vertico-mode))
+#+end_src
+**** vertico-posframe
+#+begin_src emacs-lisp
+  (use-package vertico-posframe
+    :commands (vertico-posframe-mode)
+    :ensure t
+    :hook (vertico-mode . vertico-posframe-mode))
 #+end_src
 
 *** visual-regexp
