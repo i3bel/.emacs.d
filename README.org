@@ -283,7 +283,6 @@ and disable scroll-bar, tool-bar and menu-bar.
   (global-set-key (kbd "M-k") 'puni-backward-kill-line)
   (global-set-key (kbd "M-p") 'minuet-previous-suggestion)
   (global-set-key (kbd "M-n") 'minuet-next-suggestion)
-  (global-set-key (kbd "M-x") 'consult-M-x)
   (global-set-key (kbd "M-y") 'minuet-complete-with-minibuffer)
 #+end_src
 
