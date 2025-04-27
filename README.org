@@ -1555,6 +1555,13 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     (setopt aidermacs-default-model "openrouter/optimus-alpha"))
 #+end_src
 
+*** copilot-chat
+
+#+begin_src emacs-lisp
+  (use-package copilot-chat :ensure t)
+#+end_src
+
+
 *** Docker
 #+begin_src emacs-lisp
   (use-package docker :ensure t)
