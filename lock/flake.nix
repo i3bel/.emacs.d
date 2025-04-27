@@ -108,6 +108,12 @@
       repo = "compat";
       type = "github";
     };
+    consult = {
+      flake = false;
+      owner = "minad";
+      repo = "consult";
+      type = "github";
+    };
     copilot-chat = {
       flake = false;
       owner = "chep";
@@ -404,6 +410,12 @@
       flake = false;
       owner = "magit";
       repo = "magit";
+      type = "github";
+    };
+    marginalia = {
+      flake = false;
+      owner = "minad";
+      repo = "marginalia";
       type = "github";
     };
     markdown-mode = {
@@ -752,6 +764,18 @@
       flake = false;
       owner = "Malabarba";
       repo = "validate.el";
+      type = "github";
+    };
+    vertico = {
+      flake = false;
+      owner = "minad";
+      repo = "vertico";
+      type = "github";
+    };
+    vertico-posframe = {
+      flake = false;
+      owner = "tumashu";
+      repo = "vertico-posframe";
       type = "github";
     };
     visual-regexp = {

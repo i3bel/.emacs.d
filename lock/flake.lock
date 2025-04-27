@@ -288,6 +288,22 @@
         "type": "github"
       }
     },
+    "consult": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1745709888,
+        "narHash": "sha256-Q1QH51RTUSWcX5eVPXrEi4NivUzoqjxi0qyCqBnPbqg=",
+        "owner": "minad",
+        "repo": "consult",
+        "rev": "42649a652bc3c249d7b909628c15fb4b627977e3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "minad",
+        "repo": "consult",
+        "type": "github"
+      }
+    },
     "copilot-chat": {
       "flake": false,
       "locked": {
@@ -1088,6 +1104,22 @@
         "type": "github"
       }
     },
+    "marginalia": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1745709899,
+        "narHash": "sha256-bqu8qqgFuwTDQhRYliIZnghcwtIiFqrXMTxotR9aF9Q=",
+        "owner": "minad",
+        "repo": "marginalia",
+        "rev": "0308ea04390c86152b5e6f1cee19a41a15e9775b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "minad",
+        "repo": "marginalia",
+        "type": "github"
+      }
+    },
     "markdown-mode": {
       "flake": false,
       "locked": {
@@ -1669,6 +1701,7 @@
         "centaur-tabs": "centaur-tabs",
         "cfrs": "cfrs",
         "compat": "compat",
+        "consult": "consult",
         "copilot-chat": "copilot-chat",
         "corfu": "corfu",
         "dart-mode": "dart-mode",
@@ -1719,6 +1752,7 @@
         "lv": "lv",
         "magit": "magit",
         "magit-section": "magit-section",
+        "marginalia": "marginalia",
         "markdown-mode": "markdown-mode",
         "mermaid-mode": "mermaid-mode",
         "mini-echo": "mini-echo",
@@ -1777,6 +1811,8 @@
         "undercover": "undercover",
         "undo-fu": "undo-fu",
         "validate": "validate",
+        "vertico": "vertico",
+        "vertico-posframe": "vertico-posframe",
         "visual-regexp": "visual-regexp",
         "web-mode": "web-mode",
         "websocket": "websocket",
@@ -2154,6 +2190,38 @@
       "original": {
         "owner": "Malabarba",
         "repo": "validate.el",
+        "type": "github"
+      }
+    },
+    "vertico": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1745709829,
+        "narHash": "sha256-R0FOQ+d1QA760nUmx2LiYkuBstIYa2jAkyS5ISWGIgo=",
+        "owner": "minad",
+        "repo": "vertico",
+        "rev": "4792189bc9a10144b9b0b0edee925c3114095039",
+        "type": "github"
+      },
+      "original": {
+        "owner": "minad",
+        "repo": "vertico",
+        "type": "github"
+      }
+    },
+    "vertico-posframe": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1739236602,
+        "narHash": "sha256-OrbDMcb3R9goAWhM+7N+yyHjczk/ol3/bCwsm8lIOlI=",
+        "owner": "tumashu",
+        "repo": "vertico-posframe",
+        "rev": "c5a8b5f72a582e88a2a696a3bbc2df7af28bd229",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tumashu",
+        "repo": "vertico-posframe",
         "type": "github"
       }
     },
