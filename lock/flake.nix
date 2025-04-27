@@ -114,6 +114,12 @@
       repo = "consult";
       type = "github";
     };
+    copilot = {
+      flake = false;
+      owner = "copilot-emacs";
+      repo = "copilot.el";
+      type = "github";
+    };
     copilot-chat = {
       flake = false;
       owner = "chep";

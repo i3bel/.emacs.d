@@ -304,6 +304,22 @@
         "type": "github"
       }
     },
+    "copilot": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1745381228,
+        "narHash": "sha256-y47yC8+8KnGCCpynTYfer8Hww221/MpyL9mPrAAkOXc=",
+        "owner": "copilot-emacs",
+        "repo": "copilot.el",
+        "rev": "6c8ad4e4b65f5eec026325db2ac5a0aaedd8b22c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "copilot-emacs",
+        "repo": "copilot.el",
+        "type": "github"
+      }
+    },
     "copilot-chat": {
       "flake": false,
       "locked": {
@@ -1702,6 +1718,7 @@
         "cfrs": "cfrs",
         "compat": "compat",
         "consult": "consult",
+        "copilot": "copilot",
         "copilot-chat": "copilot-chat",
         "corfu": "corfu",
         "dart-mode": "dart-mode",
