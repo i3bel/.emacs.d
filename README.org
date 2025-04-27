@@ -37,18 +37,18 @@ https://github.com/Kyure-A/.emacs.d
   ;;; Code:  
 #+end_src
 
-** Suppress auto package loading
+*** Suppress auto package loading
 #+begin_src emacs-lisp
   (setq package-enable-at-startup nil)
 #+end_src
 
-** Disable GC at startup
+*** Disable GC at startup
 #+begin_src emacs-lisp
   (setq gc-cons-threshold most-positive-fixnum)
   (add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold 536870912)))
 #+end_src
 
-** other
+*** other
 #+begin_src emacs-lisp
   (defun display-startup-echo-area-message ())
   (setq inhibit-startup-message t)
@@ -61,15 +61,7 @@ https://github.com/Kyure-A/.emacs.d
   (setq command-line-default-directory "~/")
 #+end_src
 
-** Color Scheme
-I love monokai!
-#+begin_src emacs-lisp :tangle no
-  (set-face-background 'default "#272822")
-  (set-face-foreground 'default "#F8F8F0")
-  (set-face-foreground 'font-lock-keyword-face "#F92672")
-#+end_src
-
-** nano-emacs like style
+*** nano-emacs like style
 [[https://github.com/rougier/nano-emacs/blob/b8631088220dbbcd885ad1353bdc52b569655f85/nano-layout.el#L21][Source]]
 and disable scroll-bar, tool-bar and menu-bar.
 #+begin_src emacs-lisp
@@ -86,12 +78,12 @@ and disable scroll-bar, tool-bar and menu-bar.
   (push '(menu-bar-lines . 0) default-frame-alist)
 #+end_src
 
-** suppress window resize
+*** suppress window resize
 #+begin_src emacs-lisp
   (setq frame-inhibit-implied-resize t)
 #+end_src
 
-** suppress warning
+*** suppress warning
 #+begin_src emacs-lisp
   (setq display-warning-minimum-level :error)
 #+end_src
