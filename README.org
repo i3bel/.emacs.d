@@ -768,28 +768,26 @@ jdtsmith/eglot-booster
 *** TypeScript
 [[https://zenn.dev/hyakt/articles/5c947cc22c4bfa][Source]]
 #+begin_src emacs-lisp
-  (defun deno-project-p ()
-    "Predicate for determining if the open project is a Deno one."
-    (let ((p-root (cdr (project-current))))
-      (or (file-exists-p (concat p-root "deno.json"))
-          (file-exists-p (concat p-root "deno.jsonc")))))
+  (defun project-root* ()
+    (when-let* ((proj (project-current nil)))
+      (project-root proj)))
 
-  (defun node-project-p ()
-    "Predicate for determining if the open project is a Node one."
-    (let ((p-root (cdr (project-current))))
-      (file-exists-p (concat p-root "package.json"))))
+  (defun project-has-file-p (&rest names)
+    (when-let* ((root (project-root*)))
+      (seq-some (lambda (f)
+                  (file-exists-p (expand-file-name f root)))
+                names)))
 
-  (defun bun-project-p ()
-    "Predicate for determining if the open project is a Bun one."
-    (let ((p-root (cdr (project-current))))
-      (file-exists-p (concat p-root "bun.lockb"))))
+  (defun deno-project-p () (project-has-file-p "deno.json" "deno.jsonc"))
+  (defun node-project-p () (project-has-file-p "package.json"))
+  (defun bun-project-p  () (project-has-file-p "bun.lockb"))
 
   (defun es-server-program (_)
-    "Decide which server to use for ECMA Script based on project characteristics."
-    (interactive)
-    (cond ((deno-project-p) '("deno" "lsp" :initializationOptions (:enable t :lint t)))
-          ((or (node-project-p) (bun-project-p) t) '("typescript-language-server" "--stdio"))))
-
+    (cond ((deno-project-p)
+           '("deno" "lsp" :initializationOptions (:enable t :lint t)))
+          ((or (node-project-p) (bun-project-p))
+           '("typescript-language-server" "--stdio"))))
+  
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs '((js-mode web-mode) . es-server-program))
     (add-hook 'web-mode-hook #'eglot-ensure)
