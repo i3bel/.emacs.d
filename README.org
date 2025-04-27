@@ -1157,7 +1157,7 @@ jdtsmith/eglot-booster
 *** consult
 #+begin_src emacs-lisp
   (use-package consult
-    :commands (consult-M-x)
+    :commands
     :ensure t)
 #+end_src
 
@@ -1472,8 +1472,9 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+begin_src emacs-lisp
   (use-package vertico
     :ensure t
-    :hook (emacs-start-up-hook . vertico-mode))
+    :hook (emacs-startup-hook . vertico-mode))
 #+end_src
+
 **** vertico-posframe
 #+begin_src emacs-lisp
   (use-package vertico-posframe
