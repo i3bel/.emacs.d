@@ -1126,11 +1126,7 @@ jdtsmith/eglot-booster
   (use-package centaur-tabs
     :ensure t
     ;; :commands (centaur-tabs-mode)
-    :init
-    (defun centaur-tabs-enable-once-hook ()
-      (centaur-tabs-mode 1)
-      (remove-hook 'buffer-list-update-hook #'centaur-tabs-enable-once-hook))
-    :hook (buffer-list-update-hook . centaur-tabs-enable-once-hook)
+    :hook (dashboard-setup-startup-hook . centaur-tabs-mode)
     :config
     (centaur-tabs-group-by-projectile-project)
     (centaur-tabs-headline-match)
