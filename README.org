@@ -494,15 +494,15 @@ Kyure-A/el-project
 *** elsa
 emacs-elsa/Elsa
 #+begin_src emacs-lisp
-    (use-package elsa :ensure t)
+  (use-package elsa :ensure t)
 
-    (use-package flycheck-elsa
-      :after flycheck
-      :hook ((emacs-lisp-mode-hook . flycheck-mode)
-             (emacs-lisp-mode-hook . flycheck-elsa-setup))
-      :ensure t
-      :config
-      (setq flycheck-elsa-backend 'eask))
+  (use-package flycheck-elsa
+    :after flycheck
+    :hook ((emacs-lisp-mode-hook . flycheck-mode)
+           (emacs-lisp-mode-hook . flycheck-elsa-setup))
+    :ensure t
+    :config
+    (setq flycheck-elsa-backend 'eask))
 #+end_src
 
 *** elquery
@@ -953,7 +953,7 @@ jdtsmith/eglot-booster
 *** Org-mode
 **** org-mode
 #+begin_src emacs-lisp 
-  (use-package org-mode
+  (use-package org
     :config
     (setq org-directory "~/document/org")
     (setq org-latex-pdf-process '("tectonic %f"))
@@ -1274,7 +1274,7 @@ jdtsmith/eglot-booster
 #+end_src
 
 **** dired-async
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package dired-async
     :after async
     :init
@@ -1643,7 +1643,7 @@ Allows you to integrate Rich Presence from Discord.
 
 *** modus
 #+begin_src emacs-lisp
-  (use-package modus
+  (use-package modus-themes
     :hook (after-init-hook . (lambda () (load-theme 'modus-vivendi))))
 #+end_src
 
