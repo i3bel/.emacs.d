@@ -5,18 +5,12 @@
   };
 
   home.activation = {
-  byteCompileInitEl = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    byteCompileInitEl = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     cd ${config.home.homeDirectory}/${config.programs.emacs-twist.directory}
 
-      ${config.programs.emacs-twist.config}/bin/emacs --batch \
-      --eval "(setq package-enable-at-startup t)" \
-      --eval "(package-initialize)" \
-      --eval "(require 'use-package)" \
-      --eval "(eval-and-compile
-                  (setopt use-package-ensure-function #'(lambda (&rest args) t))
-                  (setopt use-package-always-defer t)
-                  (setopt use-package-compute-statistics t))" \
+    ${config.programs.emacs-twist.config}/bin/emacs --batch \
+      --load init.el \
       -f batch-byte-compile init.el
   '';
-};
+  };
 }
