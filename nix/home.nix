@@ -6,11 +6,9 @@
 
   home.activation = {
     byteCompileInitEl = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    cd ${config.home.homeDirectory}/${config.programs.emacs-twist.directory}
-
     ${config.programs.emacs-twist.config}/bin/emacs --batch \
       --load init.el \
-      -f batch-byte-compile init.el
+      -f batch-byte-compile ${config.home.homeDirectory}/.config/emacs/init.el
   '';
   };
 }
