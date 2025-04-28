@@ -1125,7 +1125,7 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp 
   (use-package centaur-tabs
     :ensure t
-    :hook (window-setup-hook . centaur-tabs-mode)
+    :hook (after-init-hook . centaur-tabs-mode)
     :config
     (centaur-tabs-group-by-projectile-project)
     (centaur-tabs-headline-match)
@@ -1154,7 +1154,7 @@ jdtsmith/eglot-booster
   (use-package corfu
     :ensure t
     :commands (global-corfu-mode corfu-mode)
-    :hook (window-setup-hook . global-corfu-mode)
+    :hook (after-init-hook . global-corfu-mode)
     :config
     (setopt corfu-auto t)
     (setopt corfu-auto-delay 0)
@@ -1217,7 +1217,7 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp 
   (use-package dashboard
     :ensure t
-    :hook (window-setup-hook . open-dashboard)
+    :hook (after-init-hook . open-dashboard)
     :config
     (setq dashboard-items '((bookmarks . 5)
                             (recents  . 5)
@@ -1458,7 +1458,7 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+begin_src emacs-lisp
   (use-package vertico
     :ensure t
-    :hook (window-setup-hook . vertico-mode))
+    :hook (after-init-hook . vertico-mode))
 #+end_src
 
 **** vertico-posframe
@@ -1533,7 +1533,7 @@ Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp
   (use-package elcord
     :ensure t
-    :hook (window-setup-hook . elcord-mode))
+    :hook (after-init-hook . elcord-mode))
 #+end_src
 
 *** Jobcan
@@ -1607,7 +1607,7 @@ Allows you to integrate Rich Presence from Discord.
   (use-package emojify
     :ensure t
     :config
-    :hook (window-setup-hook . global-emojify-mode))
+    :hook (after-init-hook . global-emojify-mode))
 #+end_src
 
 *** lambda-line
