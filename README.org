@@ -1607,7 +1607,7 @@ Allows you to integrate Rich Presence from Discord.
   (use-package emojify
     :ensure t
     :config
-    :hook (after-init-hook . global-emojify-mode))
+    :hook (window-setup-hook . global-emojify-mode))
 #+end_src
 
 *** lambda-line
