@@ -494,7 +494,10 @@ Kyure-A/el-project
 *** elsa
 emacs-elsa/Elsa
 #+begin_src emacs-lisp
-  (use-package elsa :ensure t)
+  (use-package elsa
+    :after flycheck
+    :ensure t
+    :hook (prog-mode-hook . elsa-analyser-mode))
 
   (use-package flycheck-elsa
     :after flycheck
@@ -1160,7 +1163,7 @@ jdtsmith/eglot-booster
     :hook (after-init-hook . global-corfu-mode)
     :config
     (setopt corfu-auto t)
-    (setopt corfu-auto-delay 0)
+    (setopt corfu-auto-delay 0.1)
     (setopt corfu-cycle t)
     (setopt corfu-on-exact-match nil)
     (setopt tab-always-indent 'complete))
@@ -1644,7 +1647,7 @@ Allows you to integrate Rich Presence from Discord.
 *** modus
 #+begin_src emacs-lisp
   (use-package modus-themes
-    :hook (after-init-hook . (lambda () (load-theme 'modus-vivendi))))
+    :hook (after-init-hook . (lambda () (load-theme 'modus-vivendi t))))
 #+end_src
 
 *** monokai
