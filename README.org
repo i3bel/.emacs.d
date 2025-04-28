@@ -1126,7 +1126,7 @@ jdtsmith/eglot-booster
   (use-package centaur-tabs
     :ensure t
     ;; :commands (centaur-tabs-mode)
-    :hook (after-init-hook . centaur-tabs-mode)
+    :hook (emacs-startup-hook . centaur-tabs-mode)
     :config
     (centaur-tabs-group-by-projectile-project)
     (centaur-tabs-headline-match)
