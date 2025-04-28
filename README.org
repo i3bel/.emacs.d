@@ -1218,7 +1218,7 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp 
   (use-package dashboard
     :ensure t
-    :hook (after-init-hook . open-dashboard)
+    :hook (emacs-startup-hook . open-dashboard)
     :config
     (setq dashboard-items '((bookmarks . 5)
                             (recents  . 5)
