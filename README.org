@@ -195,10 +195,13 @@ and disable scroll-bar, tool-bar and menu-bar.
 
 *** use-package
 #+begin_src emacs-lisp
-  (require 'use-package-ensure)
-  (setopt use-package-ensure-function #'(lambda (&rest args) t))
-  (setopt use-package-always-defer t)
-  (setopt use-package-compute-statistics t)
+  (eval-when-compile
+    (require 'use-package))
+
+  (eval-and-compile
+    (setopt use-package-ensure-function #'(lambda (&rest args) t))
+    (setopt use-package-always-defer t)
+    (setopt use-package-compute-statistics t))
 #+end_src
 
 ** Keybindings
