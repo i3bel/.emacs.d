@@ -494,10 +494,7 @@ Kyure-A/el-project
 *** elsa
 emacs-elsa/Elsa
 #+begin_src emacs-lisp
-  (use-package elsa
-    :after flycheck
-    :ensure t
-    :hook (prog-mode-hook . elsa-analyser-mode))
+  (use-package elsa :ensure t)
 
   (use-package flycheck-elsa
     :after flycheck
