@@ -265,12 +265,12 @@ and disable scroll-bar, tool-bar and menu-bar.
 
 *** save-place-mode
 #+begin_src emacs-lisp 
-  (save-place-mode t)
+  (use-package save-place-mode :hook (after-init-hook . save-place-mode))
 #+end_src
 
 *** electric-pair-mode
 #+begin_src emacs-lisp 
-  (electric-pair-mode t)
+  (use-package electric-pair-mode :hook (after-init-hook . electric-pair-mode))
 #+end_src
 
 *** System Language Setting
@@ -280,9 +280,9 @@ and disable scroll-bar, tool-bar and menu-bar.
   (set-default 'buffer-file-coding-system 'utf-8)
 #+end_src
 
-*** Overwrite Region
-#+begin_src emacs-lisp 
-  (delete-selection-mode t)
+*** delete-selection-mode
+#+begin_src emacs-lisp
+  (use-package delete-selection-mode :hook (after-init-hook . delete-selection-mode))
 #+end_src
 
 *** auto yes (async-shell-command)
