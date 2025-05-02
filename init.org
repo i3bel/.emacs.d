@@ -139,21 +139,8 @@ and disable scroll-bar, tool-bar and menu-bar.
 *** with-delayed-execution
 [[https://zenn.dev/takeokunn/articles/56010618502ccc#:~:text=%E5%85%83%E8%A8%98%E4%BA%8B%E3%82%92%E5%8F%82%E8%80%83%E3%81%AB%E5%84%AA%E5%85%88%E9%A0%86%E4%BD%8D%E9%AB%98%E3%81%84queue%E3%82%92%E5%87%A6%E7%90%86%E3%81%99%E3%82%8B%E6%A9%9F%E6%A7%8B%E3%82%82%E4%BD%9C%E3%82%8A%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82][Source]]
 #+begin_src emacs-lisp 
-  (defvar my/delayed-priority-high-configurations '())
-  (defvar my/delayed-priority-high-configuration-timer nil)
-
   (defvar my/delayed-priority-low-configurations '())
   (defvar my/delayed-priority-low-configuration-timer nil)
-
-  (setq my/delayed-priority-high-configuration-timer
-        (run-with-timer
-         0.1 0.001
-         (lambda ()
-           (if my/delayed-priority-high-configurations
-               (let ((inhibit-message t))
-                 (eval (pop my/delayed-priority-high-configurations)))
-             (progn
-               (cancel-timer my/delayed-priority-high-configuration-timer))))))
 
   (setq my/delayed-priority-low-configuration-timer
           (run-with-timer
@@ -165,26 +152,10 @@ and disable scroll-bar, tool-bar and menu-bar.
                (progn
                  (cancel-timer my/delayed-priority-low-configuration-timer))))))
 
-  (defmacro with-delayed-execution-priority-high (&rest body)
-    (declare (indent 0))
-    `(setq my/delayed-priority-high-configurations
-           (append my/delayed-priority-high-configurations ',body)))
-
   (defmacro with-delayed-execution (&rest body)
     (declare (indent 0))
     `(setq my/delayed-priority-low-configurations
            (append my/delayed-priority-low-configurations ',body)))
-#+end_src
-
-*** autoload-if-found
-#+begin_src emacs-lisp
-  ;;;###autoload
-  (cl-defun autoload-if-found (functions file &optional docstring (interactive nil) (type t))
-    "set autoload iff. FILE has found."
-    (when (locate-library file)
-      (dolist (f functions)
-        (autoload f file docstring interactive type))
-      t))
 #+end_src
 
 *** cl-lib
@@ -994,13 +965,6 @@ jdtsmith/eglot-booster
     :after org
     :hook
     (org-mode-hook . org-ai-mode))
-#+end_src
-
-*** VHDL
-#+begin_src emacs-lisp 
-  (with-delayed-execution
-    (autoload-if-found '(vhdl-mode) "vhdl")
-    (add-to-list 'auto-mode-alist '("\\.hdl$" . vhdl-mode)))
 #+end_src
 
 *** Web-mode
