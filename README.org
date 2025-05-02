@@ -1600,14 +1600,6 @@ Allows you to integrate Rich Presence from Discord.
     (dired-mode . all-the-icons-dired-mode))
 #+end_src
 
-**** all-the-icons-ivy-rich
-#+begin_src emacs-lisp
-  (use-package all-the-icons-ivy-rich
-    :after ivy all-the-icons
-    :ensure t
-    :hook (after-init-hook . all-the-icons-ivy-rich-mode))
-#+end_src
-
 *** beacon
 #+begin_src emacs-lisp 
   (use-package beacon
