@@ -1538,9 +1538,10 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+end_src
 
 *** copilot-chat
-
 #+begin_src emacs-lisp
-  (use-package copilot-chat :ensure t)
+  (use-package copilot-chat
+    :ensure t
+    :hook (git-commit-setup-hook . copilot-chat-insert-commit-message))
 #+end_src
 
 *** Docker
