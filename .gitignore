@@ -6,6 +6,7 @@
 !/.github/
 !/.github/**
 !/early-init.org
+!/init.org
 !/README.org
 !/default.nix
 !/flake.lock
