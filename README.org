@@ -1079,8 +1079,16 @@ jdtsmith/eglot-booster
     (exec-path-from-shell-initialize)
     (setopt exec-path-from-shell-check-startup-files nil)
     (setopt exec-path-from-shell-arguments nil)
-    (setopt exec-path-from-shell-variables '("ASDF_CONFIG_FILE" "ASDF_DATA_DIR" "ASDF_DEFAULT_TOOL_VERSIONS_FILENAME" "ASDF_DIR"
-                                           "GPG_AGENT_INFO" "GPG_KEY_ID" "PATH" "SHELL" "TEXMFHOME" "WSL_DISTRO_NAME" "http_proxy")))
+    (setopt exec-path-from-shell-variables '("COPILOT_LANGUAGE_SERVER_PATH"
+                                             "GPG_AGENT_INFO"
+                                             "GPG_KEY_ID"
+                                             "PATH"
+                                             "SHELL"
+                                             "SSH_AUTH_SOCK" 
+                                             "TERM"
+                                             "TEXMFHOME"
+                                             "WSL_DISTRO_NAME"
+                                             "http_proxy")))
 #+end_src
 
 *** mistty
