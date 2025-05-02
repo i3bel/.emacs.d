@@ -303,13 +303,15 @@ and disable scroll-bar, tool-bar and menu-bar.
 
 *** Auto revert
 #+begin_src emacs-lisp
-  (global-auto-revert-mode t)
-  (setq auto-revert-interval 1)
+  (use-package auto-revert-mode
+    :hook (after-init-hook . global-auto-revert-mode)
+    :config
+    (setopt auto-revert-interval 1))
 #+end_src
 
-*** which function
+*** which-function-mode
 #+begin_src emacs-lisp
-  (which-function-mode t)
+  (use-package which-function-mode :hook (after-init-hook . which-function-mode))
 #+end_src
 
 *** recent file
