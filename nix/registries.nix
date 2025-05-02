@@ -10,6 +10,7 @@ inputs: [
     auto-sync-only = true;
     exclude = [
       "lv" # hydra in elpa is missed recipe
+      "embark-consult"
     ];
   }
   {

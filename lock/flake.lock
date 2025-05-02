@@ -656,6 +656,22 @@
         "type": "github"
       }
     },
+    "embark-consult": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1745427002,
+        "narHash": "sha256-ANBl7D+rguKp303v1GjSzsTI5foFzVdPFqfq1tTjbow=",
+        "owner": "oantolin",
+        "repo": "embark",
+        "rev": "923d0ec52e2e3e0ae44e497c31c7888e87d08a8f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oantolin",
+        "repo": "embark",
+        "type": "github"
+      }
+    },
     "emojify": {
       "flake": false,
       "locked": {
@@ -1740,6 +1756,7 @@
         "elsa": "elsa",
         "emacsql": "emacsql",
         "embark": "embark",
+        "embark-consult": "embark-consult",
         "emojify": "emojify",
         "epl": "epl",
         "exec-path-from-shell": "exec-path-from-shell",

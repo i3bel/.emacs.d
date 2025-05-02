@@ -245,6 +245,12 @@
       repo = "embark";
       type = "github";
     };
+    embark-consult = {
+      flake = false;
+      owner = "oantolin";
+      repo = "embark";
+      type = "github";
+    };
     emojify = {
       flake = false;
       owner = "iqbalansari";
