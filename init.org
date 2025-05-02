@@ -1627,7 +1627,7 @@ Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp
   (use-package lambda-line
     :ensure t
-    :hook (nano-modeline . lambda-line-mode)
+    :hook (after-init-hook . lambda-line-mode)
     :config
     (setopt lambda-line-icon-time t) ;; requires ClockFace font (see below)
     (setopt lambda-line-clockface-update-fontset "ClockFaceRect") ;; set clock icon
