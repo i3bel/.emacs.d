@@ -1645,7 +1645,7 @@ Allows you to integrate Rich Presence from Discord.
 #+end_src
 
 *** mini-echo
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package mini-echo
     :ensure t
     :hook (after-init-hook . mini-echo-mode))
