@@ -1315,8 +1315,16 @@ highlights dired buffer like supercrabtree/k
 #+end_src
 
 *** embark
+**** embark
 #+begin_src emacs-lisp
   (use-package embark :ensure t)
+#+end_src
+
+**** embark-consult
+#+begin_src emacs-lisp
+  (use-package embark-consult
+    :ensure t
+    :hook (embark-collect-mode . consult-preview-at-point-mode))
 #+end_src
 
 *** Flycheck
