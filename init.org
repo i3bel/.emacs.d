@@ -102,7 +102,7 @@ and disable scroll-bar, tool-bar and menu-bar.
 #+end_src
 
 *** setup tracker
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (defvar setup-tracker--level 0)
   (defvar setup-tracker--parents nil)
   (defvar setup-tracker--times nil)
