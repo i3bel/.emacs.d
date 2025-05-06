@@ -13,8 +13,8 @@ https://github.com/Kyure-A/.emacs.d
 ** Screen shot
 [[file:./assets/emacs_screenshot.png]]
 
-* Configurations
 
+* Configurations
 ** Initialize
 *** Header
 #+begin_src emacs-lisp 
@@ -251,7 +251,6 @@ and disable scroll-bar, tool-bar and menu-bar.
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
 ** Common
-
 *** Mouse
 #+begin_src emacs-lisp 
   (setq mouse-wheel-progressive-speed nil)
@@ -555,7 +554,6 @@ alphapapa/plz.el
 #+begin_src emacs-lisp
   (use-package plz :ensure t)
 #+end_src
-
 
 *** pos-tip
 tjarvstrand/pos-tip
@@ -999,7 +997,6 @@ jdtsmith/eglot-booster
     (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode)))
 #+end_src
 
-
 *** shell-script
 #+begin_src emacs-lisp
   (use-package flymake-shellcheck
@@ -1409,7 +1406,6 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     (setopt sublimity-attractive-centering-width 200))
 #+end_src
 
-
 *** sublimity-scroll
 #+begin_src emacs-lisp
   (use-package sublimity-scroll
@@ -1486,8 +1482,8 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     :ensure t
     :hook (prog-mode-hook . copilot-mode)
     :config
-    (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-    (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+    (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion)
+    (define-key copilot-completion-map (kbd "C-TAB") 'copilot-accept-completion)
     (setopt copilot-server-executable (getenv "COPILOT_LANGUAGE_SERVER_PATH")))
 #+end_src
 
