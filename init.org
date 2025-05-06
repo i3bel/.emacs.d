@@ -176,8 +176,7 @@ and disable scroll-bar, tool-bar and menu-bar.
 #+end_src
 
 ** Keybindings
-*** global-set-key
-**** Special Keys
+*** Special Keys
 #+begin_src emacs-lisp
   (global-set-key (kbd "<f2>") 'mistty)
   (global-set-key (kbd "<f3>") 'dashboard-open)
@@ -191,7 +190,7 @@ and disable scroll-bar, tool-bar and menu-bar.
   (global-set-key (kbd "C-SPC") 'toggle-input-method)
 #+end_src
 
-**** C-x
+*** C-x
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x g") 'magit-status)
   (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
@@ -203,7 +202,7 @@ and disable scroll-bar, tool-bar and menu-bar.
   (global-set-key (kbd "C-x C-c") 'nil)
   #+end_src
 
-**** C-c
+*** C-c
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c a") 'aidermacs-transient-menu)
   (global-set-key (kbd "C-c e b") 'eval-buffer)
@@ -216,13 +215,13 @@ and disable scroll-bar, tool-bar and menu-bar.
   (global-set-key (kbd "C-c r") 'vr/replace)
 #+end_src
 
-**** C-l (eglot)
+*** C-l (eglot)
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-l") 'nil)
   (global-set-key (kbd "C-l C-l") 'eglot)
 #+end_src
 
-**** C-*
+*** C-*
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-a") 'mwim-beginning-of-code-or-line)
   (global-set-key (kbd "C-d") 'smart-hungry-delete-backward-char)
@@ -241,12 +240,14 @@ and disable scroll-bar, tool-bar and menu-bar.
 ;;  (global-set-key (kbd "") #'embark-prefix-help-command)
 #+end_src
 
-**** M-* 
+*** M-* 
 #+begin_src emacs-lisp
   (global-set-key (kbd "M-k") 'puni-backward-kill-line)
+  (global-set-key (kbd "M-.") #'dumb-jump-go)
+  (global-set-key (kbd "M-,") #'dumb-jump-back)
 #+end_src
 
-**** yes/no
+*** yes/no
 #+begin_src emacs-lisp
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
@@ -1069,7 +1070,6 @@ jdtsmith/eglot-booster
     :commands (global-aggressive-indent-mode)
     :init (global-aggressive-indent-mode t))
 #+end_src
-
 *** cape
 #+begin_src emacs-lisp
   (use-package cape
@@ -1263,6 +1263,10 @@ highlights dired buffer like supercrabtree/k
   (use-package dired-toggle-sudo :ensure t)
 #+end_src
 
+*** dumb-jump
+#+begin_src emacs-lisp
+  (use-package dumb-jump :ensure t)
+#+end_src
 *** editorconfig
 #+begin_src emacs-lisp
   (use-package editorconfig
