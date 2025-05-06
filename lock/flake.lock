@@ -96,22 +96,6 @@
         "type": "github"
       }
     },
-    "all-the-icons-ivy-rich": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1741341139,
-        "narHash": "sha256-aQbwuVvqMkyMjj6/nS3juZwkfIC4KFhlTlq2fQ0l5Q0=",
-        "owner": "seagle0128",
-        "repo": "all-the-icons-ivy-rich",
-        "rev": "6b456bfe5d96e2bc69e73493ec8cf4d1e4b51232",
-        "type": "github"
-      },
-      "original": {
-        "owner": "seagle0128",
-        "repo": "all-the-icons-ivy-rich",
-        "type": "github"
-      }
-    },
     "ansi": {
       "flake": false,
       "locked": {
@@ -496,6 +480,22 @@
         "type": "github"
       }
     },
+    "dumb-jump": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1741637648,
+        "narHash": "sha256-8YMb/jcZ63+HDhhapYeoN1XC3gy3B3UeVXZmjGM3INc=",
+        "owner": "jacktasia",
+        "repo": "dumb-jump",
+        "rev": "737267a6139a988369cb95ecd365b2db95e05db0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jacktasia",
+        "repo": "dumb-jump",
+        "type": "github"
+      }
+    },
     "eask": {
       "flake": false,
       "locked": {
@@ -848,22 +848,6 @@
         "url": "https://gitlab.com/koral/gcmh"
       }
     },
-    "hide-mode-line": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1724887320,
-        "narHash": "sha256-IRUhQ4xxqsBggvAcM3O5UwyVyDkHAMt6UjVdhwSyjkc=",
-        "owner": "hlissner",
-        "repo": "emacs-hide-mode-line",
-        "rev": "ddd154f1e04d666cd004bf8212ead8684429350d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hlissner",
-        "repo": "emacs-hide-mode-line",
-        "type": "github"
-      }
-    },
     "ht": {
       "flake": false,
       "locked": {
@@ -941,22 +925,6 @@
       "original": {
         "owner": "abo-abo",
         "repo": "swiper",
-        "type": "github"
-      }
-    },
-    "ivy-rich": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1682432546,
-        "narHash": "sha256-BebFexBD1qpjTur7Id+KozSSUM45Fw3NhKCcIITZwzo=",
-        "owner": "Yevgnen",
-        "repo": "ivy-rich",
-        "rev": "aff9b6bd53e0fdcf350ab83c90e64e651b47dba4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Yevgnen",
-        "repo": "ivy-rich",
         "type": "github"
       }
     },
@@ -1181,22 +1149,6 @@
       "original": {
         "owner": "abrochard",
         "repo": "mermaid-mode",
-        "type": "github"
-      }
-    },
-    "mini-echo": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1745033564,
-        "narHash": "sha256-SwmRWl5IxPkTwLJ5ZrV+Shb/ochRdtFkUJKMFEUuPyQ=",
-        "owner": "eki3z",
-        "repo": "mini-echo.el",
-        "rev": "3209503321303e45cfc55531d3bcf05996cb5705",
-        "type": "github"
-      },
-      "original": {
-        "owner": "eki3z",
-        "repo": "mini-echo.el",
         "type": "github"
       }
     },
@@ -1537,6 +1489,22 @@
         "type": "github"
       }
     },
+    "popup": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1745363547,
+        "narHash": "sha256-l6A0YV3tEbvxPgif18N/lpA8boKFXtwMm2TWOOvMjag=",
+        "owner": "auto-complete",
+        "repo": "popup-el",
+        "rev": "24dd22186403a6566c26ce4996cdb1eedb1cc5cd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "auto-complete",
+        "repo": "popup-el",
+        "type": "github"
+      }
+    },
     "popwin": {
       "flake": false,
       "locked": {
@@ -1721,7 +1689,6 @@
         "aio": "aio",
         "all-the-icons": "all-the-icons",
         "all-the-icons-dired": "all-the-icons-dired",
-        "all-the-icons-ivy-rich": "all-the-icons-ivy-rich",
         "ansi": "ansi",
         "arduino-mode": "arduino-mode",
         "async": "async",
@@ -1746,6 +1713,7 @@
         "docker": "docker",
         "dockerfile-mode": "dockerfile-mode",
         "dotenv": "dotenv",
+        "dumb-jump": "dumb-jump",
         "eask": "eask",
         "eat": "eat",
         "editorconfig": "editorconfig",
@@ -1768,13 +1736,11 @@
         "frame-local": "frame-local",
         "fsharp-mode": "fsharp-mode",
         "gcmh": "gcmh",
-        "hide-mode-line": "hide-mode-line",
         "ht": "ht",
         "hy-mode": "hy-mode",
         "hydra": "hydra",
         "iter2": "iter2",
         "ivy": "ivy",
-        "ivy-rich": "ivy-rich",
         "ivy-yasnippet": "ivy-yasnippet",
         "jobcan": "jobcan",
         "keg": "keg",
@@ -1789,7 +1755,6 @@
         "marginalia": "marginalia",
         "markdown-mode": "markdown-mode",
         "mermaid-mode": "mermaid-mode",
-        "mini-echo": "mini-echo",
         "mistty": "mistty",
         "multiple-cursors": "multiple-cursors",
         "mwim": "mwim",
@@ -1811,6 +1776,7 @@
         "plz-event-source": "plz-event-source",
         "plz-media-type": "plz-media-type",
         "polymode": "polymode",
+        "popup": "popup",
         "popwin": "popwin",
         "pos-tip": "pos-tip",
         "posframe": "posframe",

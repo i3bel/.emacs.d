@@ -49,8 +49,8 @@
             inherit system;
             overlays = [
               inputs.org-babel.overlays.default
-              overlays.emacs
               emacs.overlay
+              overlays.emacs
             ];
           };
 

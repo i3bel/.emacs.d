@@ -37,12 +37,6 @@
       repo = "all-the-icons-dired";
       type = "github";
     };
-    all-the-icons-ivy-rich = {
-      flake = false;
-      owner = "seagle0128";
-      repo = "all-the-icons-ivy-rich";
-      type = "github";
-    };
     ansi = {
       flake = false;
       owner = "rejeep";
@@ -186,6 +180,12 @@
       repo = "dotenv.el";
       type = "github";
     };
+    dumb-jump = {
+      flake = false;
+      owner = "jacktasia";
+      repo = "dumb-jump";
+      type = "github";
+    };
     eask = {
       flake = false;
       owner = "emacs-eask";
@@ -316,12 +316,6 @@
       type = "git";
       url = "https://gitlab.com/koral/gcmh";
     };
-    hide-mode-line = {
-      flake = false;
-      owner = "hlissner";
-      repo = "emacs-hide-mode-line";
-      type = "github";
-    };
     ht = {
       flake = false;
       owner = "Wilfred";
@@ -350,12 +344,6 @@
       flake = false;
       owner = "abo-abo";
       repo = "swiper";
-      type = "github";
-    };
-    ivy-rich = {
-      flake = false;
-      owner = "Yevgnen";
-      repo = "ivy-rich";
       type = "github";
     };
     ivy-yasnippet = {
@@ -440,12 +428,6 @@
       flake = false;
       owner = "abrochard";
       repo = "mermaid-mode";
-      type = "github";
-    };
-    mini-echo = {
-      flake = false;
-      owner = "eki3z";
-      repo = "mini-echo.el";
       type = "github";
     };
     mistty = {
@@ -573,6 +555,12 @@
       flake = false;
       owner = "polymode";
       repo = "polymode";
+      type = "github";
+    };
+    popup = {
+      flake = false;
+      owner = "auto-complete";
+      repo = "popup-el";
       type = "github";
     };
     popwin = {
