@@ -1355,23 +1355,6 @@ jdtsmith/eglot-booster
 #+end_src
 
 *** dirvish/dired
-**** dirvish
-#+begin_src emacs-lisp
-  (use-package dirvish
-    :ensure t
-    :after nerd-icons
-    :hook (after-init-hook . dirvish-override-dired-mode)
-    :config
-    (dirvish-override-dired-mode)
-    (setq dirvish-preview-dispatchers (cl-substitute 'pdf-preface 'pdf dirvish-preview-dispatchers))
-    (setq dirvish-attributes '(vc-state subtree-state nerd-icons collapse git-msg file-time file-size))
-    (setq dirvish-subtree-state-style 'nerd)
-    (setq dirvish-path-separators (list
-                                   (format "  %s " (nerd-icons-codicon "nf-cod-home"))
-                                   (format "  %s " (nerd-icons-codicon "nf-cod-root_folder"))
-                                   (format " %s " (nerd-icons-faicon "nf-fa-angle_right")))))
-#+end_src
-
 **** dired
 #+begin_src emacs-lisp
   (with-eval-after-load 'dired
@@ -1414,6 +1397,23 @@ highlights dired buffer like supercrabtree/k
 #+begin_src emacs-lisp
   (use-package dired-toggle-sudo :ensure t)
 #+end_src
+**** dirvish
+#+begin_src emacs-lisp
+  (use-package dirvish
+    :ensure t
+    :after nerd-icons
+    :hook (after-init-hook . dirvish-override-dired-mode)
+    :config
+    (dirvish-override-dired-mode)
+    (setq dirvish-preview-dispatchers (cl-substitute 'pdf-preface 'pdf dirvish-preview-dispatchers))
+    (setq dirvish-attributes '(vc-state subtree-state nerd-icons collapse git-msg file-time file-size))
+    (setq dirvish-subtree-state-style 'nerd)
+    (setq dirvish-path-separators (list
+                                   (format "  %s " (nerd-icons-codicon "nf-cod-home"))
+                                   (format "  %s " (nerd-icons-codicon "nf-cod-root_folder"))
+                                   (format " %s " (nerd-icons-faicon "nf-fa-angle_right")))))
+#+end_src
+
 
 *** dumb-jump
 #+begin_src emacs-lisp
