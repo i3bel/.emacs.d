@@ -670,6 +670,156 @@ zkry/yaml.el
   (use-package yaml :ensure t)
 #+end_src
 
+** Visual
+*** all-the-icons
+**** all-the-icons
+#+begin_src emacs-lisp
+  (use-package all-the-icons :ensure t)
+#+end_src
+
+**** all-the-icons-dired
+#+begin_src emacs-lisp
+  (use-package all-the-icons-dired
+    :after dired all-the-icons
+    :ensure t
+    :hook
+    (dired-mode . all-the-icons-dired-mode))
+#+end_src
+
+*** beacon
+#+begin_src emacs-lisp 
+  (use-package beacon
+    :ensure t
+    :config
+    (setopt beacon-color "red"))
+#+end_src
+
+*** display-line-numbers
+#+begin_src emacs-lisp
+  (with-delayed-execution
+    (custom-set-variables '(display-line-numbers-width-start t))
+    (defalias 'linum-mode 'display-line-numbers-mode))
+#+end_src
+
+*** emojify
+#+begin_src emacs-lisp 
+  (use-package emojify
+    :ensure t
+    :config
+    :hook (after-init-hook . global-emojify-mode))
+#+end_src
+
+*** lambda-line
+#+begin_src emacs-lisp
+  (use-package lambda-line
+    :ensure t
+    :hook (after-init-hook . lambda-line-mode)
+    :config
+    (setopt lambda-line-icon-time t) ;; requires ClockFace font (see below)
+    (setopt lambda-line-clockface-update-fontset "ClockFaceRect") ;; set clock icon
+    (setopt lambda-line-abbrev t) ;; abbreviate major modes
+    (setopt lambda-line-hspace "  ")  ;; add some cushion
+    (setopt lambda-line-prefix t) ;; use a prefix symbol
+    (setopt lambda-line-prefix-padding nil) ;; no extra space for prefix 
+    (setopt lambda-line-status-invert nil)  ;; no invert colors
+    (setopt lambda-line-gui-ro-symbol  " ⨂") ;; symbols
+    (setopt lambda-line-gui-mod-symbol " ⬤") 
+    (setopt lambda-line-gui-rw-symbol  " ◯") 
+    (setopt lambda-line-space-top +.30)  ;; padding on top and bottom of line
+    (setopt lambda-line-space-bottom -.30)
+    (setopt lambda-line-symbol-position 0.1))
+#+end_src
+
+*** mini-echo
+#+begin_src emacs-lisp :tangle no
+  (use-package mini-echo
+    :ensure t
+    :hook (after-init-hook . mini-echo-mode))
+#+end_src
+
+*** modus
+#+begin_src emacs-lisp
+  (use-package modus-themes
+    :hook (after-init-hook . (lambda () (load-theme 'modus-vivendi t))))
+#+end_src
+
+*** monokai
+#+Begin_src emacs-lisp :tangle no
+  (use-package monokai-k
+    :ensure t
+    :commands (doom-themes-neotree-config)
+    :init (doom-themes-neotree-config)
+    :hook (after-init-hook . (lambda ()
+                               (progn
+                                 (require 'doom-monokai-textmate-theme)
+                                 (load-theme 'doom-monokai-textmate t))))
+    :config
+    (setq doom-themes-padded-modeline t)
+    (setq doom-themes-enable-bold nil)
+    (setq doom-themes-enable-italic nil))
+#+end_src
+
+*** nano-modeline
+#+begin_src emacs-lisp
+  (use-package nano-modeline :ensure t)
+#+end_src
+
+*** nerd-icons
+**** nerd-icons
+#+begin_src emacs-lisp
+  (use-package nerd-icons :ensure t)
+#+end_src
+
+**** nerd-icons-corfu
+#+begin_src emacs-lisp :tangle no
+  (use-package nerd-icons
+    :ensure t
+    :commands (nerd-icons-corfu-formatter)
+    :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+#+end_src
+
+*** page-break-lines
+#+begin_src emacs-lisp 
+  (use-package page-break-lines
+    :ensure t
+    :hook (after-init-hook . global-page-break-lines-mode))
+#+end_src
+
+*** paren
+#+begin_src emacs-lisp
+  (with-delayed-execution
+    (show-paren-mode t)
+    (with-eval-after-load 'show-paren-mode
+      (set-face-underline-p 'show-paren-match-face "#ffffff")
+      (setq show-paren-delay 0)
+      (setq show-paren-style 'expression)))
+#+end_src
+
+*** rainbow-mode
+#+begin_src emacs-lisp
+  (use-package rainbow-mode :ensure t)
+#+end_src
+
+*** rainbow-delimiters
+#+begin_src emacs-lisp 
+  (use-package rainbow-delimiters
+    :ensure t
+    :hook
+    (prog-mode-hook . rainbow-delimiters-mode))
+#+end_src
+
+*** solaire-mode
+#+begin_src emacs-lisp
+  (use-package solaire-mode :ensure t)
+#+end_src
+
+*** yascroll
+#+begin_src emacs-lisp
+  (use-package yascroll
+    :ensure t
+    :hook (after-init-hook . global-yascroll-bar-mode))
+#+end_src
+
 ** Language Server
 *** eglot-booster
 jdtsmith/eglot-booster
@@ -1537,156 +1687,6 @@ Allows you to integrate Rich Presence from Discord.
   (use-package twist
     :ensure t
     :hook (emacs-startup-hook . twist-watch-mode))
-#+end_src
-
-** Visual
-*** all-the-icons
-**** all-the-icons
-#+begin_src emacs-lisp
-  (use-package all-the-icons :ensure t)
-#+end_src
-
-**** all-the-icons-dired
-#+begin_src emacs-lisp
-  (use-package all-the-icons-dired
-    :after dired all-the-icons
-    :ensure t
-    :hook
-    (dired-mode . all-the-icons-dired-mode))
-#+end_src
-
-*** beacon
-#+begin_src emacs-lisp 
-  (use-package beacon
-    :ensure t
-    :config
-    (setopt beacon-color "red"))
-#+end_src
-
-*** display-line-numbers
-#+begin_src emacs-lisp
-  (with-delayed-execution
-    (custom-set-variables '(display-line-numbers-width-start t))
-    (defalias 'linum-mode 'display-line-numbers-mode))
-#+end_src
-
-*** emojify
-#+begin_src emacs-lisp 
-  (use-package emojify
-    :ensure t
-    :config
-    :hook (after-init-hook . global-emojify-mode))
-#+end_src
-
-*** lambda-line
-#+begin_src emacs-lisp
-  (use-package lambda-line
-    :ensure t
-    :hook (after-init-hook . lambda-line-mode)
-    :config
-    (setopt lambda-line-icon-time t) ;; requires ClockFace font (see below)
-    (setopt lambda-line-clockface-update-fontset "ClockFaceRect") ;; set clock icon
-    (setopt lambda-line-abbrev t) ;; abbreviate major modes
-    (setopt lambda-line-hspace "  ")  ;; add some cushion
-    (setopt lambda-line-prefix t) ;; use a prefix symbol
-    (setopt lambda-line-prefix-padding nil) ;; no extra space for prefix 
-    (setopt lambda-line-status-invert nil)  ;; no invert colors
-    (setopt lambda-line-gui-ro-symbol  " ⨂") ;; symbols
-    (setopt lambda-line-gui-mod-symbol " ⬤") 
-    (setopt lambda-line-gui-rw-symbol  " ◯") 
-    (setopt lambda-line-space-top +.30)  ;; padding on top and bottom of line
-    (setopt lambda-line-space-bottom -.30)
-    (setopt lambda-line-symbol-position 0.1))
-#+end_src
-
-*** mini-echo
-#+begin_src emacs-lisp :tangle no
-  (use-package mini-echo
-    :ensure t
-    :hook (after-init-hook . mini-echo-mode))
-#+end_src
-
-*** modus
-#+begin_src emacs-lisp
-  (use-package modus-themes
-    :hook (after-init-hook . (lambda () (load-theme 'modus-vivendi t))))
-#+end_src
-
-*** monokai
-#+Begin_src emacs-lisp :tangle no
-  (use-package monokai-k
-    :ensure t
-    :commands (doom-themes-neotree-config)
-    :init (doom-themes-neotree-config)
-    :hook (after-init-hook . (lambda ()
-                               (progn
-                                 (require 'doom-monokai-textmate-theme)
-                                 (load-theme 'doom-monokai-textmate t))))
-    :config
-    (setq doom-themes-padded-modeline t)
-    (setq doom-themes-enable-bold nil)
-    (setq doom-themes-enable-italic nil))
-#+end_src
-
-*** nano-modeline
-#+begin_src emacs-lisp
-  (use-package nano-modeline :ensure t)
-#+end_src
-
-*** nerd-icons
-**** nerd-icons
-#+begin_src emacs-lisp
-  (use-package nerd-icons :ensure t)
-#+end_src
-
-**** nerd-icons-corfu
-#+begin_src emacs-lisp :tangle no
-  (use-package nerd-icons
-    :ensure t
-    :commands (nerd-icons-corfu-formatter)
-    :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
-#+end_src
-
-*** page-break-lines
-#+begin_src emacs-lisp 
-  (use-package page-break-lines
-    :ensure t
-    :hook (after-init-hook . global-page-break-lines-mode))
-#+end_src
-
-*** paren
-#+begin_src emacs-lisp
-  (with-delayed-execution
-    (show-paren-mode t)
-    (with-eval-after-load 'show-paren-mode
-      (set-face-underline-p 'show-paren-match-face "#ffffff")
-      (setq show-paren-delay 0)
-      (setq show-paren-style 'expression)))
-#+end_src
-
-*** rainbow-mode
-#+begin_src emacs-lisp
-  (use-package rainbow-mode :ensure t)
-#+end_src
-
-*** rainbow-delimiters
-#+begin_src emacs-lisp 
-  (use-package rainbow-delimiters
-    :ensure t
-    :hook
-    (prog-mode-hook . rainbow-delimiters-mode))
-#+end_src
-
-*** solaire-mode
-#+begin_src emacs-lisp
-  (use-package solaire-mode :ensure t)
-#+end_src
-
-*** yascroll
-#+begin_src emacs-lisp
-  (use-package yascroll
-    :ensure t
-    :hook (after-init-hook . global-yascroll-bar-mode))
 #+end_src
 
 ** Functions
