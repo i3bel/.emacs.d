@@ -1232,6 +1232,22 @@
         "type": "github"
       }
     },
+    "nerd-icons-corfu": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1742426556,
+        "narHash": "sha256-3CCdcb7zetHLQAxIpkiiWGx//oSuJGlJcOc8pSG8UUA=",
+        "owner": "LuigiPiucco",
+        "repo": "nerd-icons-corfu",
+        "rev": "55b17ee20a5011c6a9be8beed6a9daf644815b5a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LuigiPiucco",
+        "repo": "nerd-icons-corfu",
+        "type": "github"
+      }
+    },
     "nix-mode": {
       "flake": false,
       "locked": {
@@ -1760,6 +1776,7 @@
         "mwim": "mwim",
         "nano-modeline": "nano-modeline",
         "nerd-icons": "nerd-icons",
+        "nerd-icons-corfu": "nerd-icons-corfu",
         "nix-mode": "nix-mode",
         "nu-fun": "nu-fun",
         "orderless": "orderless",

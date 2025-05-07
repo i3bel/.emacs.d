@@ -460,6 +460,12 @@
       repo = "nerd-icons.el";
       type = "github";
     };
+    nerd-icons-corfu = {
+      flake = false;
+      owner = "LuigiPiucco";
+      repo = "nerd-icons-corfu";
+      type = "github";
+    };
     nix-mode = {
       flake = false;
       owner = "NixOS";
