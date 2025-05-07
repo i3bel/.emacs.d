@@ -1208,10 +1208,10 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp
   (use-package dirvish
     :ensure t
-    ;; :after nerd-icons
+    :after nerd-icons
     :hook (after-init-hook . dirvish-override-dired-mode)
     :config
-    ;; (dirvish-override-dired-mode)
+    (dirvish-override-dired-mode)
     (setq dirvish-preview-dispatchers (cl-substitute 'pdf-preface 'pdf dirvish-preview-dispatchers))
     (setq dirvish-attributes '(vc-state subtree-state nerd-icons collapse git-msg file-time file-size))
     (setq dirvish-subtree-state-style 'nerd)
