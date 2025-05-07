@@ -771,8 +771,9 @@ zkry/yaml.el
 #+end_src
 
 **** nerd-icons-corfu
-#+begin_src emacs-lisp :tangle no
-  (use-package nerd-icons
+#+begin_src emacs-lisp
+  (use-package nerd-icons-corfu
+    :after nerd-icons
     :ensure t
     :commands (nerd-icons-corfu-formatter)
     :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
