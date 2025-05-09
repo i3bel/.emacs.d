@@ -1638,8 +1638,8 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     :ensure t
     :hook (prog-mode-hook . copilot-mode)
     :config
-    (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion)
-    (define-key copilot-completion-map (kbd "C-TAB") 'copilot-accept-completion)
+    (define-key copilot-completion-map (kbd "S-<tab>") 'copilot-accept-completion)
+    (define-key copilot-completion-map (kbd "S-TAB") 'copilot-accept-completion)
     (setopt copilot-server-executable (getenv "COPILOT_LANGUAGE_SERVER_PATH")))
 #+end_src
 
