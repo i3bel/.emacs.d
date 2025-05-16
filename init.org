@@ -243,8 +243,8 @@ and disable scroll-bar, tool-bar and menu-bar.
 *** M-* 
 #+begin_src emacs-lisp
   (global-set-key (kbd "M-k") 'puni-backward-kill-line)
-  (global-set-key (kbd "M-.") #'dumb-jump-go)
-  (global-set-key (kbd "M-,") #'dumb-jump-back)
+  ;; (global-set-key (kbd "M-.") #'dumb-jump-go)
+  ;; (global-set-key (kbd "M-,") #'dumb-jump-back)
 #+end_src
 
 *** yes/no
