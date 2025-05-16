@@ -1417,7 +1417,10 @@ highlights dired buffer like supercrabtree/k
 
 *** dumb-jump
 #+begin_src emacs-lisp
-  (use-package dumb-jump :ensure t)
+  (use-package dumb-jump
+    :ensure t
+    :config
+    (setq dumb-jump-force-searcher 'rg))
 #+end_src
 *** editorconfig
 #+begin_src emacs-lisp
