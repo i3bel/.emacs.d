@@ -158,8 +158,9 @@ and disable scroll-bar, tool-bar and menu-bar.
            (append my/delayed-priority-low-configurations ',body)))
 #+end_src
 
+
 *** cl-lib
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (require 'cl-lib t)
   (setq byte-compile-warnings '(cl-functions))
 #+end_src
@@ -173,6 +174,12 @@ and disable scroll-bar, tool-bar and menu-bar.
     (setopt use-package-ensure-function #'(lambda (&rest args) t))
     (setopt use-package-always-defer t)
     (setopt use-package-compute-statistics t))
+#+end_src
+
+*** secret
+#+begin_src emacs-lisp
+  (when (file-exists-p (locate-user-emacs-file "secret.el"))
+    (load "secret.el"))
 #+end_src
 
 ** Keybindings
@@ -1631,8 +1638,10 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     :ensure t
     :commands (aidermacs-transient-menu)
     :config
+    (when (featurep 'secret)
+      (setenv "OPENAI_API_KEY" openai-api-key))
     (setopt aidermacs-use-architect-mode t)
-    (setopt aidermacs-default-model "openrouter/optimus-alpha"))
+    (setopt aidermacs-default-model "openai"))
 #+end_src
 
 *** copilot.el
