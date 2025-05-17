@@ -177,7 +177,7 @@ and disable scroll-bar, tool-bar and menu-bar.
 #+end_src
 
 *** secret
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (when (file-exists-p (locate-user-emacs-file "secret.el"))
     (load "secret.el"))
 #+end_src
