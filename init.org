@@ -1072,11 +1072,29 @@ jdtsmith/eglot-booster
   (use-package org
     :config
     (setq org-directory "~/document/org")
-    (setq org-latex-pdf-process '("tectonic %f"))
     (setq org-startup-truncated nil)
     (setq org-enforce-todo-dependencies t)
     (setq org-support-shift-select t)
-    (setq org-latex-default-class "ltjsarticle"))
+    (setq org-latex-default-class "ltjsarticle")
+    (add-to-list 'org-latex-classes
+                 '("bxjsarticle"
+                   "\\documentclass[ja=standard,xelatex]{bxjsarticle}"
+                   ("\\section{%s}"        . "\\section*{%s}")
+                   ("\\subsection{%s}"     . "\\subsection*{%s}")
+                   ("\\subsubsection{%s}"  . "\\subsubsection*{%s}")
+                   ("\\paragraph{%s}"      . "\\paragraph*{%s}")
+                   ("\\subparagraph{%s}"   . "\\subparagraph*{%s}")))
+    (setq org-latex-pdf-process
+        '("tectonic -Z shell-escape -Z continue-on-errors \
+                    --synctex --outdir=%o %f"))
+    (setq org-preview-latex-process-alist
+      '((tectonic
+         :programs ("tectonic" "dvisvgm")
+         :image-input-type "xdv"
+         :image-output-type "svg"
+         :latex-compiler     ("tectonic --outfmt xdv --outdir %o %f")
+         :image-converter     ("dvisvgm %f -n -b1 -c 1.15,1.15 -o %O")))
+      (setq org-preview-latex-default-process 'tectonic))
 #+end_src
 
 **** org-modern
