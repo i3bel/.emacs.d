@@ -1075,7 +1075,7 @@ jdtsmith/eglot-booster
     (setq org-startup-truncated nil)
     (setq org-enforce-todo-dependencies t)
     (setq org-support-shift-select t)
-    (setq org-latex-default-class "ltjsarticle")
+    (setq org-latex-default-class "bxjsarticle")
     (setq org-latex-pdf-process
         '("tectonic -Z shell-escape -Z continue-on-errors \
                     --synctex --outdir=%o %f"))
