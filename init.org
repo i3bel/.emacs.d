@@ -1093,8 +1093,8 @@ jdtsmith/eglot-booster
          :image-input-type "xdv"
          :image-output-type "svg"
          :latex-compiler     ("tectonic --outfmt xdv --outdir %o %f")
-         :image-converter     ("dvisvgm %f -n -b1 -c 1.15,1.15 -o %O")))
-      (setq org-preview-latex-default-process 'tectonic)))
+         :image-converter     ("dvisvgm %f -n -b1 -c 1.15,1.15 -o %O"))))
+    (setq org-preview-latex-default-process 'tectonic))
 #+end_src
 
 **** org-modern
