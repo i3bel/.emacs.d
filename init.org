@@ -1076,14 +1076,6 @@ jdtsmith/eglot-booster
     (setq org-enforce-todo-dependencies t)
     (setq org-support-shift-select t)
     (setq org-latex-default-class "ltjsarticle")
-    (add-to-list 'org-latex-classes
-                 '("bxjsarticle"
-                   "\\documentclass[ja=standard,xelatex]{bxjsarticle}"
-                   ("\\section{%s}"        . "\\section*{%s}")
-                   ("\\subsection{%s}"     . "\\subsection*{%s}")
-                   ("\\subsubsection{%s}"  . "\\subsubsection*{%s}")
-                   ("\\paragraph{%s}"      . "\\paragraph*{%s}")
-                   ("\\subparagraph{%s}"   . "\\subparagraph*{%s}")))
     (setq org-latex-pdf-process
         '("tectonic -Z shell-escape -Z continue-on-errors \
                     --synctex --outdir=%o %f"))
@@ -1094,7 +1086,16 @@ jdtsmith/eglot-booster
          :image-output-type "svg"
          :latex-compiler     ("tectonic --outfmt xdv --outdir %o %f")
          :image-converter     ("dvisvgm %f -n -b1 -c 1.15,1.15 -o %O"))))
-    (setq org-preview-latex-default-process 'tectonic))
+    (setq org-preview-latex-default-process 'tectonic)
+    (with-eval-after-load 'ox-latex
+      (add-to-list 'org-latex-classes
+                 '("bxjsarticle"
+                   "\\documentclass[ja=standard,xelatex]{bxjsarticle}"
+                   ("\\section{%s}"        . "\\section*{%s}")
+                   ("\\subsection{%s}"     . "\\subsection*{%s}")
+                   ("\\subsubsection{%s}"  . "\\subsubsection*{%s}")
+                   ("\\paragraph{%s}"      . "\\paragraph*{%s}")
+                   ("\\subparagraph{%s}"   . "\\subparagraph*{%s}")))))
 #+end_src
 
 **** org-modern
