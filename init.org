@@ -822,7 +822,7 @@ zkry/yaml.el
 #+end_src
 
 *** yascroll
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package yascroll
     :ensure t
     :hook (after-init-hook . global-yascroll-bar-mode))
