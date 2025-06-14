@@ -832,12 +832,6 @@
       repo = "yaml-mode";
       type = "github";
     };
-    yascroll = {
-      flake = false;
-      owner = "emacsorphanage";
-      repo = "yascroll";
-      type = "github";
-    };
     yasnippet = {
       flake = false;
       owner = "joaotavora";

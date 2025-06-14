@@ -1838,7 +1838,6 @@
         "with-editor": "with-editor",
         "yaml": "yaml",
         "yaml-mode": "yaml-mode",
-        "yascroll": "yascroll",
         "yasnippet": "yasnippet"
       }
     },
@@ -2367,22 +2366,6 @@
       "original": {
         "owner": "yoshiki",
         "repo": "yaml-mode",
-        "type": "github"
-      }
-    },
-    "yascroll": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1745366591,
-        "narHash": "sha256-i1j24b8sszh6sRhJcDQ7XZbZEiFuR/EPDBh/mnDQC/A=",
-        "owner": "emacsorphanage",
-        "repo": "yascroll",
-        "rev": "786f192794874f9c188ee8f9dc63951f11e9a33f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "emacsorphanage",
-        "repo": "yascroll",
         "type": "github"
       }
     },
