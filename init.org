@@ -1694,6 +1694,11 @@ Allows you to integrate Rich Presence from Discord.
     :hook (after-init-hook . elcord-mode))
 #+end_src
 
+*** gemini-cli
+#+begin_src emacs-lisp
+  (use-package gemini-cli :ensure t :require t)
+#+end_src
+
 *** Jobcan
 #+begin_src emacs-lisp
   (use-package jobcan :ensure t)
