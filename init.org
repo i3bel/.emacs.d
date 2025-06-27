@@ -1696,7 +1696,7 @@ Allows you to integrate Rich Presence from Discord.
 
 *** gemini-cli
 #+begin_src emacs-lisp
-  (use-package gemini-cli :ensure t :require t)
+  (use-package gemini-cli :ensure t)
 #+end_src
 
 *** Jobcan
