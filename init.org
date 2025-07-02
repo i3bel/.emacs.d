@@ -1663,6 +1663,11 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     (setopt aidermacs-default-model "openai"))
 #+end_src
 
+*** claude-code.el
+#+begin_src emacs-lisp
+  (use-package claude-code :ensure t)
+#+end_src
+
 *** copilot.el
 #+begin_src emacs-lisp
   (use-package copilot
@@ -1692,11 +1697,6 @@ Allows you to integrate Rich Presence from Discord.
   (use-package elcord
     :ensure t
     :hook (after-init-hook . elcord-mode))
-#+end_src
-
-*** gemini-cli
-#+begin_src emacs-lisp
-  (use-package gemini-cli :ensure t)
 #+end_src
 
 *** Jobcan
