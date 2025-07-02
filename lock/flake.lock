@@ -256,6 +256,22 @@
         "type": "github"
       }
     },
+    "claude-code": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1751389382,
+        "narHash": "sha256-7ag65HQVL1AX3oqf43VtcmhUiRYXDwDDdqeX5HiMRJc=",
+        "owner": "stevemolitor",
+        "repo": "claude-code.el",
+        "rev": "e06b35fdbd4ea74060e6f2cb41761d5885522e52",
+        "type": "github"
+      },
+      "original": {
+        "owner": "stevemolitor",
+        "repo": "claude-code.el",
+        "type": "github"
+      }
+    },
     "compat": {
       "flake": false,
       "locked": {
@@ -1715,6 +1731,7 @@
         "cape": "cape",
         "centaur-tabs": "centaur-tabs",
         "cfrs": "cfrs",
+        "claude-code": "claude-code",
         "compat": "compat",
         "consult": "consult",
         "copilot": "copilot",
