@@ -60,17 +60,6 @@ and disable scroll-bar, tool-bar and menu-bar.
   (setq frame-inhibit-implied-resize t)
 #+end_src
 
-*** suppress warning
-#+begin_src emacs-lisp
-  (setq display-warning-minimum-level :error)
-#+end_src
-
-*** User Info
-#+begin_src emacs-lisp 
-  (setq user-full-name "Kyure_A")
-  (setq user-mail-address "k@kyre.moe")
-#+end_src
-
 *** Disable Magic File Name at startup
 #+begin_src emacs-lisp
   (defconst init/saved-file-name-handler-alist file-name-handler-alist)

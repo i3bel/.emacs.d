@@ -37,6 +37,17 @@ https://github.com/Kyure-A/.emacs.d
   ;;; Code:  
 #+end_src
 
+*** suppress warning
+#+begin_src emacs-lisp
+  (setq display-warning-minimum-level :error)
+#+end_src
+
+*** User Info
+#+begin_src emacs-lisp 
+  (setq user-full-name "Kyure_A")
+  (setq user-mail-address "k@kyre.moe")
+#+end_src
+
 *** setup tracker
 #+begin_src emacs-lisp :tangle no
   (defvar setup-tracker--level 0)
