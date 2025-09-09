@@ -7,7 +7,7 @@
   initFiles = [
     (pkgs.tangleOrgBabelFile "init.el" ./init.org {})
   ];
-  earlyInitFiles = [
+  earlyInitFile = [
     (pkgs.tangleOrgBabelFile "early-init.el" ./early-init.org {})
   ];
   exportManifest = true;

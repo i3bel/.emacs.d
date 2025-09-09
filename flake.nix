@@ -61,7 +61,7 @@
 
           package = (inputs.twist.lib.makeEnv {
             inherit pkgs;
-            inherit (profile) emacsPackage lockDir initFiles extraPackages;
+            inherit (profile) emacsPackage lockDir initFiles earlyInitFile extraPackages;
             inputOverrides = (import ./nix/inputs.nix {inherit lib;}) // profile.extraInputOverrides;
             registries = (import ./nix/registries.nix inputs) ++ [
               {
