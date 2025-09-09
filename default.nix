@@ -5,7 +5,10 @@
   inherit emacsPackage;
   lockDir = ./lock;
   initFiles = [
-    (pkgs.tangleOrgBabelFile "init.el" ./README.org {})
+    (pkgs.tangleOrgBabelFile "init.el" ./init.org {})
+  ];
+  earlyInitFiles = [
+    (pkgs.tangleOrgBabelFile "early-init.el" ./early-init.org {})
   ];
   exportManifest = true;
   extraPackages = [];
