@@ -1636,7 +1636,11 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     :config
     (yas-global-mode t)
     (setopt yas-snippet-dirs '("~/.config/emacs/snippets")))
-  (use-package ivy-yasnippet :after ivy :ensure t)
+  (use-package consult-yasnippet
+    :ensure t
+    :after (consult yasnippet)
+    :bind
+    (("C-c y" . consult-yasnippet)))
 #+end_src
 
 ** Utilities
