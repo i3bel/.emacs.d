@@ -1549,17 +1549,6 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
            (lisp-interaction-mode-hook . puni-disable-puni-mode)))
 #+end_src
 
-*** popwin
-#+begin_src emacs-lisp
-  (use-package popwin
-    :ensure t
-    :config
-    (popwin-mode t)
-    (setq display-buffer-function 'popwin:display-buffer)
-    (setq popwin:special-display-config t)
-    (setq popwin:popup-window-position 'bottom))
-#+end_src
-
 *** posframe
 #+begin_src emacs-lisp
   (use-package posframe :ensure t)
