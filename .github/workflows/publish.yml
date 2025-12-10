@@ -33,7 +33,7 @@ jobs:
                       (require 'ox-publish)
                       (setq org-publish-project-alist
                             '((\".emacs.d\"
-                               :base-directory \"./org\"
+                               :base-directory \"./\"
                                :base-extension \"org\"
                                :recursive t
                                :publishing-directory \"./public\"
@@ -44,7 +44,7 @@ jobs:
                                :time-stamp-file nil
                                :auto-sitemap t
                                :sitemap-title \".emacs.d configuration\"
-                               :sitemap-filename \"index.org\")))
+                               :sitemap-filename \"init.org\")))
                       (org-publish-all t))"
 
       - name: Upload artifact
