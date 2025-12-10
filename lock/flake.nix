@@ -114,6 +114,12 @@
       repo = "consult";
       type = "github";
     };
+    consult-yasnippet = {
+      flake = false;
+      owner = "mohkale";
+      repo = "consult-yasnippet";
+      type = "github";
+    };
     copilot = {
       flake = false;
       owner = "copilot-emacs";
@@ -346,18 +352,6 @@
       repo = "iter2";
       type = "github";
     };
-    ivy = {
-      flake = false;
-      owner = "abo-abo";
-      repo = "swiper";
-      type = "github";
-    };
-    ivy-yasnippet = {
-      flake = false;
-      owner = "mkcms";
-      repo = "ivy-yasnippet";
-      type = "github";
-    };
     jobcan = {
       flake = false;
       owner = "Kyure-A";
@@ -573,12 +567,6 @@
       flake = false;
       owner = "auto-complete";
       repo = "popup-el";
-      type = "github";
-    };
-    popwin = {
-      flake = false;
-      owner = "emacsorphanage";
-      repo = "popwin";
       type = "github";
     };
     pos-tip = {

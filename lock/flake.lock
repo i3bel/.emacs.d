@@ -304,6 +304,22 @@
         "type": "github"
       }
     },
+    "consult-yasnippet": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1744399352,
+        "narHash": "sha256-clRJa3NQ101ONkrXVaUv/RoX/g77hsL1Ze3M3Gr33zM=",
+        "owner": "mohkale",
+        "repo": "consult-yasnippet",
+        "rev": "a3482dfbdcbe487ba5ff934a1bb6047066ff2194",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mohkale",
+        "repo": "consult-yasnippet",
+        "type": "github"
+      }
+    },
     "copilot": {
       "flake": false,
       "locked": {
@@ -928,38 +944,6 @@
         "type": "github"
       }
     },
-    "ivy": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1744891768,
-        "narHash": "sha256-canJEboQmCJHjBBu3gJOjDTmS2PASorJL4Tlbc5ro/g=",
-        "owner": "abo-abo",
-        "repo": "swiper",
-        "rev": "2529a23f9f510a94efa6c088bd14217aa764dafb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "abo-abo",
-        "repo": "swiper",
-        "type": "github"
-      }
-    },
-    "ivy-yasnippet": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1593846057,
-        "narHash": "sha256-cfQWI2qFPwupBjMhGGHXNyEnFNcek47+x4GoDcdcRB0=",
-        "owner": "mkcms",
-        "repo": "ivy-yasnippet",
-        "rev": "83402d91b4eba5307f71884a72df8e11cc6a994e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mkcms",
-        "repo": "ivy-yasnippet",
-        "type": "github"
-      }
-    },
     "jobcan": {
       "flake": false,
       "locked": {
@@ -1537,22 +1521,6 @@
         "type": "github"
       }
     },
-    "popwin": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1745366586,
-        "narHash": "sha256-bXR18+HHo2Y+Ja7M5VddNAnNpTTHfVLyik4oog9BAzY=",
-        "owner": "emacsorphanage",
-        "repo": "popwin",
-        "rev": "ec77f3f1631cb2666971c57027a64833636ef0f6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "emacsorphanage",
-        "repo": "popwin",
-        "type": "github"
-      }
-    },
     "pos-tip": {
       "flake": false,
       "locked": {
@@ -1734,6 +1702,7 @@
         "claude-code": "claude-code",
         "compat": "compat",
         "consult": "consult",
+        "consult-yasnippet": "consult-yasnippet",
         "copilot": "copilot",
         "copilot-chat": "copilot-chat",
         "corfu": "corfu",
@@ -1773,8 +1742,6 @@
         "hy-mode": "hy-mode",
         "hydra": "hydra",
         "iter2": "iter2",
-        "ivy": "ivy",
-        "ivy-yasnippet": "ivy-yasnippet",
         "jobcan": "jobcan",
         "keg": "keg",
         "lambda-line": "lambda-line",
@@ -1811,7 +1778,6 @@
         "plz-media-type": "plz-media-type",
         "polymode": "polymode",
         "popup": "popup",
-        "popwin": "popwin",
         "pos-tip": "pos-tip",
         "posframe": "posframe",
         "powerline": "powerline",
