@@ -1,0 +1,64 @@
+name: Build and Deploy .emacs.d site
+
+on:
+  push:
+    branches: [ master ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Emacs
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y emacs-nox
+
+      - name: Build site with org-publish
+        run: |
+          emacs -Q --batch \
+            --eval "(progn
+                      (require 'org)
+                      (require 'ox-publish)
+                      (setq org-publish-project-alist
+                            '((\".emacs.d\"
+                               :base-directory \"./org\"
+                               :base-extension \"org\"
+                               :recursive t
+                               :publishing-directory \"./public\"
+                               :publishing-function org-html-publish-to-html
+                               :with-author t
+                               :with-toc t
+                               :section-numbers nil
+                               :time-stamp-file nil
+                               :auto-sitemap t
+                               :sitemap-title \".emacs.d configuration\"
+                               :sitemap-filename \"index.org\")))
+                      (org-publish-all t))"
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
