@@ -1,0 +1,2 @@
+(ai-code-interface :fetcher github
+       :repo "tninja/ai-code-interface.el")
