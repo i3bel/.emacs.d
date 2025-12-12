@@ -15,7 +15,7 @@
     };
     ai-code-interface = {
       flake = false;
-      owner = "tninja";
+      owner = "Kyure-A";
       repo = "ai-code-interface.el";
       type = "github";
     };

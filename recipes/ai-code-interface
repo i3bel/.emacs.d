@@ -1,2 +1,2 @@
 (ai-code-interface :fetcher github
-       :repo "tninja/ai-code-interface.el")
+       :repo "Kyure-A/ai-code-interface.el")
