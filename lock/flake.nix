@@ -239,12 +239,6 @@
       repo = "elquery";
       type = "github";
     };
-    elsa = {
-      flake = false;
-      owner = "emacs-elsa";
-      repo = "Elsa";
-      type = "github";
-    };
     emacsql = {
       flake = false;
       owner = "magit";
@@ -297,12 +291,6 @@
       flake = false;
       owner = "flycheck";
       repo = "flycheck";
-      type = "github";
-    };
-    flycheck-elsa = {
-      flake = false;
-      owner = "emacs-elsa";
-      repo = "flycheck-elsa";
       type = "github";
     };
     flymake-shellcheck = {

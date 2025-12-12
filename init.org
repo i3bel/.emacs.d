@@ -459,7 +459,7 @@ Kyure-A/el-project
 
 *** elsa
 emacs-elsa/Elsa
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package elsa :ensure t)
 
   (use-package flycheck-elsa

@@ -640,22 +640,6 @@
         "type": "github"
       }
     },
-    "elsa": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1742084954,
-        "narHash": "sha256-goXTKWN3HJARztvZXKKZRv5KPIF+Hpc81Piu8tgYaZw=",
-        "owner": "emacs-elsa",
-        "repo": "Elsa",
-        "rev": "4ce89b0cf313143cd6b7614f4f50aa8179354df6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "emacs-elsa",
-        "repo": "Elsa",
-        "type": "github"
-      }
-    },
     "emacsql": {
       "flake": false,
       "locked": {
@@ -797,22 +781,6 @@
       "original": {
         "owner": "flycheck",
         "repo": "flycheck",
-        "type": "github"
-      }
-    },
-    "flycheck-elsa": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1676652041,
-        "narHash": "sha256-BUUkV/VPGc7dCoIkL4tP8LYMDwxiE3HJ7Y0NyA5r6cU=",
-        "owner": "emacs-elsa",
-        "repo": "flycheck-elsa",
-        "rev": "d60db9544d0c4213f2478bcea0fd0e668e31cf34",
-        "type": "github"
-      },
-      "original": {
-        "owner": "emacs-elsa",
-        "repo": "flycheck-elsa",
         "type": "github"
       }
     },
@@ -1723,7 +1691,6 @@
         "el-project": "el-project",
         "elcord": "elcord",
         "elquery": "elquery",
-        "elsa": "elsa",
         "emacsql": "emacsql",
         "embark": "embark",
         "embark-consult": "embark-consult",
@@ -1733,7 +1700,6 @@
         "f": "f",
         "flutter": "flutter",
         "flycheck": "flycheck",
-        "flycheck-elsa": "flycheck-elsa",
         "flymake-shellcheck": "flymake-shellcheck",
         "frame-local": "frame-local",
         "fsharp-mode": "fsharp-mode",
