@@ -1652,6 +1652,11 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     (ai-code-set-backend 'codex))
 #+end_src
 
+*** claude-code
+#+begin_src emacs-lisp
+  (use-package claude-code :ensure t)
+#+end_src
+
 *** copilot.el
 #+begin_src emacs-lisp
   (use-package copilot
