@@ -211,7 +211,7 @@ and disable scroll-bar, tool-bar and menu-bar.
 
 *** C-c
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-c a") 'aidermacs-transient-menu)
+  (global-set-key (kbd "C-c a") 'ai-code-menu)
   (global-set-key (kbd "C-c e b") 'eval-buffer)
   (global-set-key (kbd "C-c e m") 'menu-bar-mode)
   (global-set-key (kbd "C-c m") 'minuet-configure-provider)
@@ -1644,21 +1644,12 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+end_src
 
 ** Utilities
-*** Aidermacs
+*** ai-code-interface
 #+begin_src emacs-lisp
-  (use-package aidermacs
+  (use-package ai-code-interface
     :ensure t
-    :commands (aidermacs-transient-menu)
     :config
-    (when (featurep 'secret)
-      (setenv "OPENAI_API_KEY" openai-api-key))
-    (setopt aidermacs-use-architect-mode t)
-    (setopt aidermacs-default-model "openai"))
-#+end_src
-
-*** claude-code.el
-#+begin_src emacs-lisp
-  (use-package claude-code :ensure t)
+    (ai-code-set-backend 'codex))
 #+end_src
 
 *** copilot.el

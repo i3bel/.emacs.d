@@ -13,10 +13,10 @@
       repo = "aggressive-indent-mode";
       type = "github";
     };
-    aidermacs = {
+    ai-code-interface = {
       flake = false;
-      owner = "MatthewZMD";
-      repo = "aidermacs";
+      owner = "tninja";
+      repo = "ai-code-interface.el";
       type = "github";
     };
     aio = {
@@ -94,12 +94,6 @@
       flake = false;
       owner = "Alexander-Miller";
       repo = "cfrs";
-      type = "github";
-    };
-    claude-code = {
-      flake = false;
-      owner = "stevemolitor";
-      repo = "claude-code.el";
       type = "github";
     };
     compat = {

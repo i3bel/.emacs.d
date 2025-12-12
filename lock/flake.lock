@@ -32,19 +32,19 @@
         "type": "github"
       }
     },
-    "aidermacs": {
+    "ai-code-interface": {
       "flake": false,
       "locked": {
-        "lastModified": 1745544641,
-        "narHash": "sha256-tFiXXeGcrv6DRDmeCU08URvaRZyq3T3JacPHqIjTo1c=",
-        "owner": "MatthewZMD",
-        "repo": "aidermacs",
-        "rev": "e0e4a34d0ecda174b7543c109a09f037370c1e39",
+        "lastModified": 1765475954,
+        "narHash": "sha256-Imw1QMF98MqN6dj3Somu+IS8jCO6p6sp5DYmHvqfSJI=",
+        "owner": "tninja",
+        "repo": "ai-code-interface.el",
+        "rev": "31ea6995fb73732c113411f6135d22aafd740741",
         "type": "github"
       },
       "original": {
-        "owner": "MatthewZMD",
-        "repo": "aidermacs",
+        "owner": "tninja",
+        "repo": "ai-code-interface.el",
         "type": "github"
       }
     },
@@ -253,22 +253,6 @@
       "original": {
         "owner": "Alexander-Miller",
         "repo": "cfrs",
-        "type": "github"
-      }
-    },
-    "claude-code": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1751389382,
-        "narHash": "sha256-7ag65HQVL1AX3oqf43VtcmhUiRYXDwDDdqeX5HiMRJc=",
-        "owner": "stevemolitor",
-        "repo": "claude-code.el",
-        "rev": "e06b35fdbd4ea74060e6f2cb41761d5885522e52",
-        "type": "github"
-      },
-      "original": {
-        "owner": "stevemolitor",
-        "repo": "claude-code.el",
         "type": "github"
       }
     },
@@ -1653,7 +1637,7 @@
       "inputs": {
         "ace-window": "ace-window",
         "aggressive-indent": "aggressive-indent",
-        "aidermacs": "aidermacs",
+        "ai-code-interface": "ai-code-interface",
         "aio": "aio",
         "all-the-icons": "all-the-icons",
         "all-the-icons-dired": "all-the-icons-dired",
@@ -1667,7 +1651,6 @@
         "cape": "cape",
         "centaur-tabs": "centaur-tabs",
         "cfrs": "cfrs",
-        "claude-code": "claude-code",
         "compat": "compat",
         "consult": "consult",
         "consult-yasnippet": "consult-yasnippet",
