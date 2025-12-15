@@ -20,8 +20,8 @@ https://github.com/Kyure-A/.emacs.d
 #+begin_src emacs-lisp 
   ;;; init.el ---  -*- lexical-binding: t -*-
 
-  ;; Author: Kyure_A <twitter.com/@kyureq>
-  ;; Maintainer: Kyure_A <twitter.com/@kyureq>
+  ;; Author: Kyure_A <github.com/Kyure-A>
+  ;; Maintainer: Kyure_A <github.com/Kyure-A>
 
   ;;; Commentary:
 
