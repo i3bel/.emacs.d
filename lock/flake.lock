@@ -35,15 +35,16 @@
     "ai-code-interface": {
       "flake": false,
       "locked": {
-        "lastModified": 1765531666,
-        "narHash": "sha256-NdTQvhi5h4lU/m+GAdq38wltlIltwcSiH3jpCPcrTMI=",
+        "lastModified": 1765932378,
+        "narHash": "sha256-JRihat6Gg6doJjhvg2B9VbWcnMdtsigc+mKp0TDf854=",
         "owner": "Kyure-A",
         "repo": "ai-code-interface.el",
-        "rev": "1554830f091a9d91056a73e120ba2c4d0134fa2b",
+        "rev": "38a98db473561bbe82d51d1f14ac8f78d9acaa47",
         "type": "github"
       },
       "original": {
         "owner": "Kyure-A",
+        "ref": "package-requires",
         "repo": "ai-code-interface.el",
         "type": "github"
       }

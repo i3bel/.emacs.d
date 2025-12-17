@@ -16,6 +16,7 @@
     ai-code-interface = {
       flake = false;
       owner = "Kyure-A";
+      ref = "package-requires";
       repo = "ai-code-interface.el";
       type = "github";
     };
