@@ -215,10 +215,7 @@ and disable scroll-bar, tool-bar and menu-bar.
   (global-set-key (kbd "C-c e b") 'eval-buffer)
   (global-set-key (kbd "C-c e m") 'menu-bar-mode)
   (global-set-key (kbd "C-c m") 'minuet-configure-provider)
-  (global-set-key (kbd "C-c o") 'Kyure_A/open)
   (global-set-key (kbd "C-c p") 'smartparens-global-mode)
-  (global-set-key (kbd "C-c s") 'Kyure_A/start-repl)
-  ;; (global-set-key (kbd "C-c t") 'centaur-tabs-counsel-switch-group)
   (global-set-key (kbd "C-c r") 'vr/replace)
 #+end_src
 
