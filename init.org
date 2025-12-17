@@ -1648,6 +1648,7 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+begin_src emacs-lisp
   (use-package ai-code-interface
     :ensure t
+    :after (claude-code)
     :config
     (ai-code-set-backend 'codex))
 #+end_src
