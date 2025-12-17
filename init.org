@@ -221,8 +221,8 @@ and disable scroll-bar, tool-bar and menu-bar.
 
 *** C-l (eglot)
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-l") 'nil)
-  (global-set-key (kbd "C-l C-l") 'eglot)
+  (global-set-key (kbd "C-l") 'eglot)
+  ;; (global-set-key (kbd "C-l C-l") 'eglot)
 #+end_src
 
 *** C-*
