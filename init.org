@@ -185,12 +185,12 @@ https://github.com/Kyure-A/.emacs.d
 
 *** save-place-mode
 #+begin_src emacs-lisp 
-  (use-package save-place-mode :hook (after-init-hook . save-place-mode))
+  (use-package save-place-mode :hook (window-setup-hook . save-place-mode))
 #+end_src
 
 *** electric-pair-mode
 #+begin_src emacs-lisp 
-  (use-package electric-pair-mode :hook (after-init-hook . electric-pair-mode))
+  (use-package electric-pair-mode :hook (window-setup-hook . electric-pair-mode))
 #+end_src
 
 *** System Language Setting
@@ -202,7 +202,7 @@ https://github.com/Kyure-A/.emacs.d
 
 *** delete-selection-mode
 #+begin_src emacs-lisp
-  (use-package delete-selection-mode :hook (after-init-hook . delete-selection-mode))
+  (use-package delete-selection-mode :hook ( . delete-selection-mode))
 #+end_src
 
 *** auto yes (async-shell-command)
@@ -224,7 +224,7 @@ https://github.com/Kyure-A/.emacs.d
 *** Auto revert
 #+begin_src emacs-lisp
   (use-package auto-revert-mode
-    :hook (after-init-hook . global-auto-revert-mode)
+    :hook (window-setup-hook . global-auto-revert-mode)
     :config
     (setopt auto-revert-interval 1))
 #+end_src
@@ -626,7 +626,7 @@ zkry/yaml.el
   (use-package emojify
     :ensure t
     :config
-    :hook (after-init-hook . global-emojify-mode))
+    :hook (window-setup-hook . global-emojify-mode))
 #+end_src
 
 *** lambda-line
@@ -727,7 +727,7 @@ zkry/yaml.el
             (bg-tab-current "#31294a")
             (bg-tab-other "#221c38")))
     (setq modus-themes-vivendi-palette-overrides modus-themes-common-palette-overrides)
-    :hook (after-init-hook . (lambda () (load-theme 'modus-vivendi t))))
+    :hook (window-setup-hook . (lambda () (load-theme 'modus-vivendi t))))
 #+end_src
 
 *** monokai
@@ -770,7 +770,7 @@ zkry/yaml.el
 #+begin_src emacs-lisp 
   (use-package page-break-lines
     :ensure t
-    :hook (after-init-hook . global-page-break-lines-mode))
+    :hook (window-setup-hook . global-page-break-lines-mode))
 #+end_src
 
 *** paren
@@ -1242,7 +1242,7 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp 
   (use-package centaur-tabs
     :ensure t
-    :hook (after-init-hook . centaur-tabs-mode)
+    :hook (window-setup-hook . centaur-tabs-mode)
     :config
     (centaur-tabs-group-by-projectile-project)
     (centaur-tabs-headline-match)
@@ -1271,7 +1271,7 @@ jdtsmith/eglot-booster
   (use-package corfu
     :ensure t
     :commands (global-corfu-mode corfu-mode)
-    :hook (after-init-hook . global-corfu-mode)
+    :hook (window-setup-hook . global-corfu-mode)
     :config
     (setopt corfu-auto t)
     (setopt corfu-auto-delay 0.1)
@@ -1408,7 +1408,7 @@ highlights dired buffer like supercrabtree/k
   (use-package dirvish
     :ensure t
     :after nerd-icons
-    :hook (after-init-hook . dirvish-override-dired-mode)
+    :hook (dired-mode . dirvish-override-dired-mode)
     :config
     (dirvish-override-dired-mode)
     (setq dirvish-preview-dispatchers (cl-substitute 'pdf-preface 'pdf dirvish-preview-dispatchers))
@@ -1579,7 +1579,7 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+begin_src emacs-lisp
   (use-package vertico
     :ensure t
-    :hook (after-init-hook . vertico-mode))
+    :hook (window-setup-hook . vertico-mode))
 #+end_src
 
 **** vertico-posframe
@@ -1670,7 +1670,7 @@ Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp
   (use-package elcord
     :ensure t
-    :hook (after-init-hook . elcord-mode))
+    :hook (window-setup-hook . elcord-mode))
 #+end_src
 
 *** Jobcan
