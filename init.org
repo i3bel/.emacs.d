@@ -1245,23 +1245,7 @@ jdtsmith/eglot-booster
   (use-package centaur-tabs
     :ensure t
     :defer t
-    :commands (centaur-tabs-mode)
-    :init
-    (defvar my/centaur-tabs--idle-start-timer nil)
-    (defun my/centaur-tabs-start ()
-      (when my/centaur-tabs--idle-start-timer
-        (cancel-timer my/centaur-tabs--idle-start-timer)
-        (setq my/centaur-tabs--idle-start-timer nil))
-      (unless (featurep 'centaur-tabs)
-        (require 'centaur-tabs))
-      (unless centaur-tabs-mode
-        (centaur-tabs-mode 1)))
-    (add-hook
-     'emacs-startup-hook
-     (lambda ()
-       (unless my/centaur-tabs--idle-start-timer
-         (setq my/centaur-tabs--idle-start-timer
-               (run-with-idle-timer 1.0 nil #'my/centaur-tabs-start)))))
+    :hook (window-setup-hook . centaur-tabs-mode)
     :config
     (centaur-tabs-group-by-projectile-project)
     (centaur-tabs-headline-match)
