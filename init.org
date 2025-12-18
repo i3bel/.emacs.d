@@ -11,7 +11,8 @@ Kyure_A
 https://github.com/Kyure-A/.emacs.d
 
 ** Screen shot
-[[file:./assets/emacs_screenshot.png]]
+[[file:./assets/ss1.png]]
+[[file:./assets/ss2.png]]
 
 
 * Configurations
