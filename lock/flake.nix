@@ -109,6 +109,12 @@
       repo = "compat";
       type = "github";
     };
+    cond-let = {
+      flake = false;
+      owner = "tarsius";
+      repo = "cond-let";
+      type = "github";
+    };
     consult = {
       flake = false;
       owner = "minad";
