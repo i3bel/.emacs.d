@@ -71,9 +71,13 @@
               }
             ];
           });
+
+          earlyInitEl = (pkgs.tangleOrgBabelFile "early-init.el" ./early-init.org {});
           
         in {
           packages.default = package;
+
+          earlyInitEl = earlyInitEl;
 
           homeModules.twist = {
             imports = [
