@@ -142,9 +142,10 @@ and disable scroll-bar, tool-bar and menu-bar.
   (defvar my/delayed-priority-low-configurations '())
   (defvar my/delayed-priority-low-configuration-timer nil)
 
+  ;; start a bit later and process in larger chunks to avoid CPUスパイク
   (setq my/delayed-priority-low-configuration-timer
           (run-with-timer
-           0.3 0.001
+           0.5 0.05
            (lambda ()
              (if my/delayed-priority-low-configurations
                  (let ((inhibit-message t))
@@ -710,14 +711,14 @@ zkry/yaml.el
   (use-package emojify
     :ensure t
     :config
-    :hook (after-init-hook . global-emojify-mode))
+    :hook (window-setup-hook . (lambda () (run-with-idle-timer 1.0 nil #'global-emojify-mode))))
 #+end_src
 
 *** lambda-line
 #+begin_src emacs-lisp
   (use-package lambda-line
     :ensure t
-    :hook (after-init-hook . lambda-line-mode)
+    :hook (window-setup-hook . (lambda () (run-with-idle-timer 0.8 nil #'lambda-line-mode)))
     :config
     (setopt lambda-line-icon-time t) ;; requires ClockFace font (see below)
     (setopt lambda-line-clockface-update-fontset "ClockFaceRect") ;; set clock icon
@@ -1259,7 +1260,7 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp 
   (use-package centaur-tabs
     :ensure t
-    :hook (after-init-hook . centaur-tabs-mode)
+    :hook (window-setup-hook . (lambda () (run-with-idle-timer 0.3 nil #'centaur-tabs-mode)))
     :config
     (centaur-tabs-group-by-projectile-project)
     (centaur-tabs-headline-match)
@@ -1288,7 +1289,8 @@ jdtsmith/eglot-booster
   (use-package corfu
     :ensure t
     :commands (global-corfu-mode corfu-mode)
-    :hook (after-init-hook . global-corfu-mode)
+    :hook ((prog-mode-hook . corfu-mode)
+           (text-mode-hook . corfu-mode))
     :config
     (setopt corfu-auto t)
     (setopt corfu-auto-delay 0.1)
@@ -1351,12 +1353,12 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp 
   (use-package dashboard
     :ensure t
-    :hook (after-init-hook . open-dashboard)
+    :commands (open-dashboard dashboard-open)
     :config
     (setq dashboard-items '((bookmarks . 5)
                             (recents  . 5)
                             (projects . 5)))
-    (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+    (setq initial-buffer-choice nil)
     (setq dashboard-center-content t)
     (setq dashboard-set-heading-icons t)
     (setq dashboard-set-file-icons t)
@@ -1368,7 +1370,7 @@ jdtsmith/eglot-booster
                                       "「C++ を完全に理解してしまったかもしれない」 - 桜ねね"
                                       "「これでもデバッグはプロ級だし 今はプログラムの知識だってあるんだからまかせてよね！」 - 桜ねね"))
     (setq dashboard-startup-banner (if (or (eq window-system 'x) (eq window-system 'ns) (eq window-system 'w32)) "~/.config/emacs/assets/banner.png" "~/.config/emacs/assets/banner.txt"))
-    (open-dashboard)
+    (run-with-idle-timer 0.7 nil #'open-dashboard)
     (dashboard-setup-startup-hook)
     (define-key dashboard-mode-map (kbd "<f3>") #'quit-dashboard)
     (define-key dashboard-mode-map (kbd "p") #'previous-line)
@@ -1402,7 +1404,7 @@ highlights dired buffer like supercrabtree/k
   (use-package dired-k
     :ensure t
     :hook
-    (dired-initial-position-hook . dired-k))
+    (dired-mode-hook . dired-k))
 #+end_src
 
 **** dired-open-in-accordance-with-situation
@@ -1425,9 +1427,8 @@ highlights dired buffer like supercrabtree/k
   (use-package dirvish
     :ensure t
     :after nerd-icons
-    :hook (after-init-hook . dirvish-override-dired-mode)
+    :hook (dired-mode-hook . dirvish-override-dired-mode)
     :config
-    (dirvish-override-dired-mode)
     (setq dirvish-preview-dispatchers (cl-substitute 'pdf-preface 'pdf dirvish-preview-dispatchers))
     (setq dirvish-attributes '(vc-state subtree-state nerd-icons collapse git-msg file-time file-size))
     (setq dirvish-subtree-state-style 'nerd)
@@ -1540,7 +1541,7 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+begin_src emacs-lisp
   (use-package puni
     :ensure t
-    :hook ((after-init-hook . puni-global-mode)
+    :hook ((window-setup-hook . (lambda () (run-with-idle-timer 0.6 nil #'puni-global-mode)))
            (lisp-mode-hook . puni-disable-puni-mode)
            (emacs-lisp-mode-hook . puni-disable-puni-mode)
            (lisp-interaction-mode-hook . puni-disable-puni-mode)))
@@ -1616,7 +1617,7 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+begin_src emacs-lisp
   (use-package which-key
     :ensure t
-    :hook (after-init-hook . which-key-mode))
+    :hook (window-setup-hook . (lambda () (run-with-idle-timer 0.4 nil #'which-key-mode))))
 #+end_src
 
 *** which-key-posframe
@@ -1687,7 +1688,7 @@ Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp
   (use-package elcord
     :ensure t
-    :hook (after-init-hook . elcord-mode))
+    :hook (window-setup-hook . (lambda () (run-with-idle-timer 1.2 nil #'elcord-mode))))
 #+end_src
 
 *** Jobcan
