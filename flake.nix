@@ -56,7 +56,7 @@
 
           profile = import ./default.nix {
             inherit pkgs;
-            emacsPackage = pkgs.emacs-git;
+            emacsPackage = pkgs.emacs-unstable;#-git;
           };
 
           package = (inputs.twist.lib.makeEnv {
