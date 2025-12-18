@@ -1427,7 +1427,7 @@ jdtsmith/eglot-booster
     (setq dashboard-center-content t)
     (setq dashboard-set-heading-icons t)
     (setq dashboard-set-file-icons t)
-    (setq dashboard-banner-logo-title "Kyure_A's Emacs")
+    (setq dashboard-banner-logo-title "NEWGAMACS!")
     (setq dashboard-footer-messages '("「今日も一日がんばるぞい！」 - 涼風青葉"
                                       "「なんだかホントに入社した気分です！」 - 涼風青葉"
                                       "「そしてそのバグの程度で実力も知れるわけです」- 阿波根うみこ"
