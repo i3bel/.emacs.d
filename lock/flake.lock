@@ -1060,11 +1060,11 @@
     "magit": {
       "flake": false,
       "locked": {
-        "lastModified": 1745347719,
-        "narHash": "sha256-1TCzFN7RXbVUW8wQVMH1AOHKdH91JOuLXtdPNbVaReA=",
+        "lastModified": 1765996570,
+        "narHash": "sha256-tg9scDIRuxzeMjmtgbFwIr5xiYGASfEnMkaUSIjkSDc=",
         "owner": "magit",
         "repo": "magit",
-        "rev": "64d3aca420254b95cd70e0943a0c1c7c98f06b1b",
+        "rev": "655bc502a3bdd7f07928524515a736e4b8101eaf",
         "type": "github"
       },
       "original": {
@@ -1076,11 +1076,11 @@
     "magit-section": {
       "flake": false,
       "locked": {
-        "lastModified": 1745347719,
-        "narHash": "sha256-1TCzFN7RXbVUW8wQVMH1AOHKdH91JOuLXtdPNbVaReA=",
+        "lastModified": 1765996570,
+        "narHash": "sha256-tg9scDIRuxzeMjmtgbFwIr5xiYGASfEnMkaUSIjkSDc=",
         "owner": "magit",
         "repo": "magit",
-        "rev": "64d3aca420254b95cd70e0943a0c1c7c98f06b1b",
+        "rev": "655bc502a3bdd7f07928524515a736e4b8101eaf",
         "type": "github"
       },
       "original": {
