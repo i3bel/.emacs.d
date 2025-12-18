@@ -202,7 +202,7 @@ https://github.com/Kyure-A/.emacs.d
 
 *** delete-selection-mode
 #+begin_src emacs-lisp
-  (use-package delete-selection-mode :hook ( . delete-selection-mode))
+  (use-package delete-selection-mode :hook (window-setup-hook . delete-selection-mode))
 #+end_src
 
 *** auto yes (async-shell-command)
