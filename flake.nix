@@ -79,11 +79,16 @@
 
           earlyInitEl = earlyInitEl;
 
-          homeModules.twist = {
+          homeModules.twist = { lib, ... }: {
             imports = [
               inputs.twist.homeModules.emacs-twist
               ./nix/home.nix
             ];
+
+            programs.emacs-twist = {
+              config = lib.mkDefault package;
+              earlyInitFile = lib.mkDefault earlyInitEl;
+            };
           };
           
           apps = package.makeApps {
