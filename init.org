@@ -91,7 +91,7 @@ and disable scroll-bar, tool-bar and menu-bar.
 *** User Info
 #+begin_src emacs-lisp 
   (setq user-full-name "Kyure_A")
-  (setq user-mail-address "k@kyre.moe")
+  (setq user-mail-address "49436968+Kyure-A@users.noreply.github.com")
 #+end_src
 
 *** Disable Magic File Name at startup
