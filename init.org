@@ -1673,7 +1673,7 @@ Allows you to integrate Rich Presence from Discord.
   (use-package magit
     :ensure t
     :commands (global-git-commit-mode)
-    :hook (magit-status-mode-hook . toggle-centaur-tabs-local-mode)
+    ;; :hook (magit-status-mode-hook . toggle-centaur-tabs-local-mode)
     :config
     (setopt magit-repository-directories '(("~/ghq/" . 3))))
 #+end_src
