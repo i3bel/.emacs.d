@@ -16,8 +16,8 @@ https://github.com/Kyure-A/.emacs.d
 
 
 * Configurations
-** initialize
-*** setup tracker
+** Initialize
+*** Setup tracker
 #+begin_src emacs-lisp
   (defvar setup-tracker--level 0)
   (defvar setup-tracker--parents nil)
