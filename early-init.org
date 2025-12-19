@@ -99,3 +99,29 @@ and disable scroll-bar, tool-bar and menu-bar.
   (defconst init/saved-file-name-handler-alist file-name-handler-alist)
   (setq file-name-handler-alist nil)
 #+end_src
+
+*** System Language Setting
+#+begin_src emacs-lisp 
+  (set-language-environment "Japanese")
+  (prefer-coding-system 'utf-8)
+  (set-default 'buffer-file-coding-system 'utf-8)
+#+end_src
+
+*** load custom.el
+#+begin_src emacs-lisp
+  (setq custom-file (locate-user-emacs-file "custom.el"))
+#+end_src
+
+*** debug-on-error
+#+begin_src emacs-lisp
+  (setq debug-on-error t)
+#+end_src
+
+*** native compile
+#+begin_src emacs-lisp
+  (custom-set-variables '(warning-suppress-types '((comp))))
+  (with-eval-after-load 'comp
+    (setq native-comp-async-jobs-number 8)
+    (setq native-comp-speed 3)
+    (setq native-comp-always-compile t))
+#+end_src
