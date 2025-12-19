@@ -24,3 +24,4 @@
 !/.gitignore
 !/LICENSE
 !/Makefile
+.DS_Store
