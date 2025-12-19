@@ -107,8 +107,8 @@ https://github.com/Kyure-A/.emacs.d
   (global-set-key (kbd "C-RET") 'newline)
   (global-set-key (kbd "<backspace>") 'smart-hungry-delete-backward-char)
   (global-set-key (kbd "C-<backspace>") 'backward-delete-word)
-  (global-set-key (kbd "C-<left>") 'centaur-tabs-forward)
-  (global-set-key (kbd "C-<right>") 'centaur-tabs-backward)
+  (global-set-key (kbd "C-<left>") 'my/centaur-tabs-forward)
+  (global-set-key (kbd "C-<right>") 'my/centaur-tabs-backward)
   (global-set-key (kbd "C-<return>") 'newline)
   (global-set-key (kbd "C-SPC") 'toggle-input-method)
 #+end_src
@@ -1245,7 +1245,29 @@ jdtsmith/eglot-booster
   (use-package centaur-tabs
     :ensure t
     :defer t
-    :hook (window-setup-hook . centaur-tabs-mode)
+    :commands (centaur-tabs-mode centaur-tabs-forward centaur-tabs-backward)
+    :init
+    (defvar my/centaur-tabs-started nil)
+
+    (defun my/centaur-tabs-ensure-mode ()
+      (unless my/centaur-tabs-started
+        (require 'centaur-tabs)
+        (centaur-tabs-mode 1)
+        (setq my/centaur-tabs-started t)))
+
+    (defun my/centaur-tabs-enable ()
+      (interactive)
+      (my/centaur-tabs-ensure-mode))
+
+    (defun my/centaur-tabs-forward ()
+      (interactive)
+      (my/centaur-tabs-ensure-mode)
+      (call-interactively 'centaur-tabs-forward))
+
+    (defun my/centaur-tabs-backward ()
+      (interactive)
+      (my/centaur-tabs-ensure-mode)
+      (call-interactively 'centaur-tabs-backward))
     :config
     (centaur-tabs-group-by-projectile-project)
     (centaur-tabs-headline-match)
@@ -1706,11 +1728,11 @@ Allows you to integrate Rich Presence from Discord.
 ** Functions
 *** toggle-centaur-tabs-local-mode
 #+begin_src emacs-lisp
-  (with-eval-after-load 'centaur-tabs
-    (defun toggle-centaur-tabs-local-mode()
-      (interactive)
-      (call-interactively 'centaur-tabs-local-mode)
-      (call-interactively 'centaur-tabs-local-mode)))
+  (defun toggle-centaur-tabs-local-mode()
+    (interactive)
+    (my/centaur-tabs-ensure-mode)
+    (call-interactively 'centaur-tabs-local-mode)
+    (call-interactively 'centaur-tabs-local-mode))
 #+end_src
 
 *** delete-word
