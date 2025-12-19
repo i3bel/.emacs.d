@@ -107,8 +107,8 @@ https://github.com/Kyure-A/.emacs.d
   (global-set-key (kbd "C-RET") 'newline)
   (global-set-key (kbd "<backspace>") 'smart-hungry-delete-backward-char)
   (global-set-key (kbd "C-<backspace>") 'backward-delete-word)
-  (global-set-key (kbd "C-<left>") 'my/centaur-tabs-forward)
-  (global-set-key (kbd "C-<right>") 'my/centaur-tabs-backward)
+  (global-set-key (kbd "C-<left>") 'centaur-tabs-forward)
+  (global-set-key (kbd "C-<right>") 'centaur-tabs-backward)
   (global-set-key (kbd "C-<return>") 'newline)
   (global-set-key (kbd "C-SPC") 'toggle-input-method)
 #+end_src
@@ -185,12 +185,12 @@ https://github.com/Kyure-A/.emacs.d
 
 *** save-place-mode
 #+begin_src emacs-lisp 
-  (use-package save-place-mode :hook (window-setup-hook . save-place-mode))
+  (use-package save-place-mode :hook (after-init-hook . save-place-mode))
 #+end_src
 
 *** electric-pair-mode
 #+begin_src emacs-lisp 
-  (use-package electric-pair-mode :hook (window-setup-hook . electric-pair-mode))
+  (use-package electric-pair-mode :hook (after-init-hook . electric-pair-mode))
 #+end_src
 
 *** System Language Setting
@@ -202,7 +202,7 @@ https://github.com/Kyure-A/.emacs.d
 
 *** delete-selection-mode
 #+begin_src emacs-lisp
-  (use-package delete-selection-mode :hook (window-setup-hook . delete-selection-mode))
+  (use-package delete-selection-mode :hook (after-init-hook . delete-selection-mode))
 #+end_src
 
 *** auto yes (async-shell-command)
@@ -224,7 +224,7 @@ https://github.com/Kyure-A/.emacs.d
 *** Auto revert
 #+begin_src emacs-lisp
   (use-package auto-revert-mode
-    :hook (window-setup-hook . global-auto-revert-mode)
+    :hook (after-init-hook . global-auto-revert-mode)
     :config
     (setopt auto-revert-interval 1))
 #+end_src
@@ -594,10 +594,8 @@ zkry/yaml.el
 *** all-the-icons
 **** all-the-icons
 #+begin_src emacs-lisp
-  (use-package all-the-icons
-    :ensure t
-    :defer t)
-#+End_src
+  (use-package all-the-icons :ensure t)
+#+end_src
 
 **** all-the-icons-dired
 #+begin_src emacs-lisp
@@ -627,29 +625,15 @@ zkry/yaml.el
 #+begin_src emacs-lisp 
   (use-package emojify
     :ensure t
-    :defer t
-    :commands (global-emojify-mode)
-    :init
-    (defvar my/emojify--idle-start-timer nil)
-    (defun my/emojify-start ()
-      (when my/emojify--idle-start-timer
-        (cancel-timer my/emojify--idle-start-timer)
-        (setq my/emojify--idle-start-timer nil))
-      (global-emojify-mode 1))
-    (add-hook
-     'emacs-startup-hook
-     (lambda ()
-       (unless my/emojify--idle-start-timer
-         (setq my/emojify--idle-start-timer
-               (run-with-idle-timer 1.5 nil #'my/emojify-start)))))
-    :config)
+    :config
+    :hook (after-init-hook . global-emojify-mode))
 #+end_src
 
 *** lambda-line
 #+begin_src emacs-lisp
   (use-package lambda-line
     :ensure t
-    :hook (window-setup-hook . lambda-line-mode)
+    :hook (after-init-hook . lambda-line-mode)
     :config
     (setopt lambda-line-icon-time t) ;; requires ClockFace font (see below)
     (setopt lambda-line-clockface-update-fontset "ClockFaceRect") ;; set clock icon
@@ -743,7 +727,7 @@ zkry/yaml.el
             (bg-tab-current "#31294a")
             (bg-tab-other "#221c38")))
     (setq modus-themes-vivendi-palette-overrides modus-themes-common-palette-overrides)
-    :hook (window-setup-hook . (lambda () (load-theme 'modus-vivendi t))))
+    :hook (after-init-hook . (lambda () (load-theme 'modus-vivendi t))))
 #+end_src
 
 *** monokai
@@ -786,7 +770,7 @@ zkry/yaml.el
 #+begin_src emacs-lisp 
   (use-package page-break-lines
     :ensure t
-    :hook (window-setup-hook . global-page-break-lines-mode))
+    :hook (after-init-hook . global-page-break-lines-mode))
 #+end_src
 
 *** paren
@@ -1258,30 +1242,7 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp 
   (use-package centaur-tabs
     :ensure t
-    :defer t
-    :commands (centaur-tabs-mode centaur-tabs-forward centaur-tabs-backward)
-    :init
-    (defvar my/centaur-tabs-started nil)
-
-    (defun my/centaur-tabs-ensure-mode ()
-      (unless my/centaur-tabs-started
-        (require 'centaur-tabs)
-        (centaur-tabs-mode 1)
-        (setq my/centaur-tabs-started t)))
-
-    (defun my/centaur-tabs-enable ()
-      (interactive)
-      (my/centaur-tabs-ensure-mode))
-
-    (defun my/centaur-tabs-forward ()
-      (interactive)
-      (my/centaur-tabs-ensure-mode)
-      (call-interactively 'centaur-tabs-forward))
-
-    (defun my/centaur-tabs-backward ()
-      (interactive)
-      (my/centaur-tabs-ensure-mode)
-      (call-interactively 'centaur-tabs-backward))
+    :hook (after-init-hook . centaur-tabs-mode)
     :config
     (centaur-tabs-group-by-projectile-project)
     (centaur-tabs-headline-match)
@@ -1310,7 +1271,7 @@ jdtsmith/eglot-booster
   (use-package corfu
     :ensure t
     :commands (global-corfu-mode corfu-mode)
-    :hook (window-setup-hook . global-corfu-mode)
+    :hook (after-init-hook . global-corfu-mode)
     :config
     (setopt corfu-auto t)
     (setopt corfu-auto-delay 0.1)
@@ -1373,19 +1334,7 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp 
   (use-package dashboard
     :ensure t
-    :init
-    (defvar my/dashboard--idle-start-timer nil)
-    (defun my/dashboard-start ()
-      (when my/dashboard--idle-start-timer
-        (cancel-timer my/dashboard--idle-start-timer)
-        (setq my/dashboard--idle-start-timer nil))
-      (open-dashboard))
-    (add-hook
-     'emacs-startup-hook
-     (lambda ()
-       (unless my/dashboard--idle-start-timer
-         (setq my/dashboard--idle-start-timer
-               (run-with-idle-timer 0.5 nil #'my/dashboard-start)))))
+    :hook (after-init-hook . open-dashboard)
     :config
     (setq dashboard-items '((bookmarks . 5)
                             (recents  . 5)
@@ -1459,7 +1408,7 @@ highlights dired buffer like supercrabtree/k
   (use-package dirvish
     :ensure t
     :after nerd-icons
-    :hook (dired-mode . dirvish-override-dired-mode)
+    :hook (after-init-hook . dirvish-override-dired-mode)
     :config
     (dirvish-override-dired-mode)
     (setq dirvish-preview-dispatchers (cl-substitute 'pdf-preface 'pdf dirvish-preview-dispatchers))
@@ -1630,7 +1579,7 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+begin_src emacs-lisp
   (use-package vertico
     :ensure t
-    :hook (window-setup-hook . vertico-mode))
+    :hook (after-init-hook . vertico-mode))
 #+end_src
 
 **** vertico-posframe
@@ -1721,7 +1670,7 @@ Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp
   (use-package elcord
     :ensure t
-    :hook (window-setup-hook . elcord-mode))
+    :hook (after-init-hook . elcord-mode))
 #+end_src
 
 *** Jobcan
@@ -1754,11 +1703,11 @@ Allows you to integrate Rich Presence from Discord.
 ** Functions
 *** toggle-centaur-tabs-local-mode
 #+begin_src emacs-lisp
-  (defun toggle-centaur-tabs-local-mode()
-    (interactive)
-    (my/centaur-tabs-ensure-mode)
-    (call-interactively 'centaur-tabs-local-mode)
-    (call-interactively 'centaur-tabs-local-mode))
+  (with-eval-after-load 'centaur-tabs
+    (defun toggle-centaur-tabs-local-mode()
+      (interactive)
+      (call-interactively 'centaur-tabs-local-mode)
+      (call-interactively 'centaur-tabs-local-mode)))
 #+end_src
 
 *** delete-word
