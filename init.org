@@ -1731,8 +1731,9 @@ Allows you to integrate Rich Presence from Discord.
 
 ** Footer
 #+begin_src emacs-lisp 
+  (setq file-name-handler-alist init/saved-file-name-handler-alist)
   (provide 'init)
-  
+
   ;; End:
   ;;; init.el ends here
 #+end_src

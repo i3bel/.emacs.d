@@ -37,10 +37,9 @@ https://github.com/Kyure-A/.emacs.d
   (setq package-enable-at-startup nil)
 #+end_src
 
-*** Disable GC at startup
+*** Decrease GC
 #+begin_src emacs-lisp
-  (setq gc-cons-threshold most-positive-fixnum)
-  (add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold 536870912)))
+  (setq gc-cons-threshold (* 512 1024 1024))
 #+end_src
 
 *** other
@@ -93,5 +92,4 @@ and disable scroll-bar, tool-bar and menu-bar.
 #+begin_src emacs-lisp
   (defconst init/saved-file-name-handler-alist file-name-handler-alist)
   (setq file-name-handler-alist nil)
-  (add-hook 'emacs-startup-hook (lambda () (setq file-name-handler-alist init/saved-file-name-handler-alist)))
 #+end_src
