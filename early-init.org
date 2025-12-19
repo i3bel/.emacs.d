@@ -1,4 +1,4 @@
-#+title: init.org
+#+title: early-init.org
 #+description: Kyure_A's Emacs config
 #+author: Kyure_A
  
