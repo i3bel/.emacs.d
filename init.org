@@ -1227,7 +1227,7 @@ jdtsmith/eglot-booster
     #+end_src
 
 *** Centaur-tabs
-#+begin_src emacs-lisp 
+#+begin_src emacs-lisp :tangle no 
   (use-package centaur-tabs
     :ensure t
     :commands (centaur-tabs-mode centaur-tabs-local-mode)
