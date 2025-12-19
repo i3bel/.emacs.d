@@ -18,7 +18,7 @@ https://github.com/Kyure-A/.emacs.d
 * Configurations
 ** initialize
 *** setup tracker
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (defvar setup-tracker--level 0)
   (defvar setup-tracker--parents nil)
   (defvar setup-tracker--times nil)
@@ -1729,9 +1729,15 @@ Allows you to integrate Rich Presence from Discord.
     (delete-word (- arg)))
 #+end_src
 
+** Finalize
+#+begin_src emacs-lisp
+  (setq file-name-handler-alist init/saved-file-name-handler-alist)
+  (profiler-report)
+  (profiler-stop)
+#+end_src
+
 ** Footer
 #+begin_src emacs-lisp 
-  (setq file-name-handler-alist init/saved-file-name-handler-alist)
   (provide 'init)
 
   ;; End:

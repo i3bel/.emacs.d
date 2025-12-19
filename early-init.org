@@ -32,6 +32,12 @@ https://github.com/Kyure-A/.emacs.d
   ;;; Code:  
 #+end_src
 
+*** profiler
+#+begin_src emacs-lisp
+  (require 'profiler)
+  (profiler-start 'cpu)
+#+end_src
+
 *** Suppress auto package loading
 #+begin_src emacs-lisp
   (setq package-enable-at-startup nil)
