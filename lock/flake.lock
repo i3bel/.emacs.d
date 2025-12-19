@@ -945,22 +945,6 @@
         "type": "github"
       }
     },
-    "jobcan": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1706891680,
-        "narHash": "sha256-xvIqSq4DeqsikipDd8RbDo1gZzmET9qMXnVCiXVmxR0=",
-        "owner": "Kyure-A",
-        "repo": "jobcan.el",
-        "rev": "9901b0c2ab8dfbaca01aabcd1c9f6c1e70294816",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Kyure-A",
-        "repo": "jobcan.el",
-        "type": "github"
-      }
-    },
     "keg": {
       "flake": false,
       "locked": {
@@ -1743,7 +1727,6 @@
         "hydra": "hydra",
         "inheritenv": "inheritenv",
         "iter2": "iter2",
-        "jobcan": "jobcan",
         "keg": "keg",
         "lambda-line": "lambda-line",
         "lgr": "lgr",

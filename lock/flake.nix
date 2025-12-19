@@ -353,12 +353,6 @@
       repo = "iter2";
       type = "github";
     };
-    jobcan = {
-      flake = false;
-      owner = "Kyure-A";
-      repo = "jobcan.el";
-      type = "github";
-    };
     keg = {
       flake = false;
       owner = "conao3";
