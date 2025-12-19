@@ -1,1 +1,0 @@
-(jobcan :repo "Kyure-A/jobcan.el" :fetcher github)

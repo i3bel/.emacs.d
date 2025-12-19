@@ -1668,11 +1668,6 @@ Allows you to integrate Rich Presence from Discord.
     :hook (after-init-hook . elcord-mode))
 #+end_src
 
-*** Jobcan
-#+begin_src emacs-lisp
-  (use-package jobcan :ensure t)
-#+end_src
-
 *** Magit
 #+begin_src emacs-lisp
   (use-package magit
