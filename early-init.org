@@ -33,7 +33,7 @@ https://github.com/Kyure-A/.emacs.d
 #+end_src
 
 *** profiler
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (require 'profiler)
   (profiler-start 'cpu)
 #+end_src

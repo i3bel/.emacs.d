@@ -1715,8 +1715,13 @@ Allows you to integrate Rich Presence from Discord.
 #+end_src
 
 ** Finalize
+*** Magic File name
 #+begin_src emacs-lisp
   (setq file-name-handler-alist init/saved-file-name-handler-alist)
+#+end_src
+
+*** profiler
+#+begin_src emacs-lisp :tangle no
   (profiler-report)
   (profiler-stop)
 #+end_src
