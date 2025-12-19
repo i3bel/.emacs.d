@@ -1234,6 +1234,10 @@ jdtsmith/eglot-booster
     :hook ((prog-mode-hook . centaur-tabs-mode)
            (text-mode-hook . centaur-tabs-mode))
     :config
+    (defun toggle-centaur-tabs-local-mode()
+      (interactive)
+      (call-interactively 'centaur-tabs-local-mode)
+      (call-interactively 'centaur-tabs-local-mode))
     (centaur-tabs-group-by-projectile-project)
     (centaur-tabs-headline-match)
     (centaur-tabs-enable-buffer-reordering)
@@ -1691,15 +1695,6 @@ Allows you to integrate Rich Presence from Discord.
 #+end_src
 
 ** Functions
-*** toggle-centaur-tabs-local-mode
-#+begin_src emacs-lisp
-  (with-eval-after-load 'centaur-tabs
-    (defun toggle-centaur-tabs-local-mode()
-      (interactive)
-      (call-interactively 'centaur-tabs-local-mode)
-      (call-interactively 'centaur-tabs-local-mode)))
-#+end_src
-
 *** delete-word
 [[https://qiita.com/ballforest/items/5a76f284af254724144a][Source]]
 #+begin_src emacs-lisp
