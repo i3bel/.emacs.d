@@ -621,7 +621,9 @@ zkry/yaml.el
 #+begin_src emacs-lisp
   (use-package lambda-line
     :ensure t
-    :hook (after-init-hook . lambda-line-mode)
+    :hook ((prog-mode-hook . lambda-line-mode)
+           (text-mode-hook . lambda-line-mode)
+           (dired-mode-hook . lambda-line-mode))
     :config
     (setopt lambda-line-icon-time t) ;; requires ClockFace font (see below)
     (setopt lambda-line-clockface-update-fontset "ClockFaceRect") ;; set clock icon
