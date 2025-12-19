@@ -627,8 +627,22 @@ zkry/yaml.el
 #+begin_src emacs-lisp 
   (use-package emojify
     :ensure t
-    :config
-    :hook (window-setup-hook . global-emojify-mode))
+    :defer t
+    :commands (global-emojify-mode)
+    :init
+    (defvar my/emojify--idle-start-timer nil)
+    (defun my/emojify-start ()
+      (when my/emojify--idle-start-timer
+        (cancel-timer my/emojify--idle-start-timer)
+        (setq my/emojify--idle-start-timer nil))
+      (global-emojify-mode 1))
+    (add-hook
+     'emacs-startup-hook
+     (lambda ()
+       (unless my/emojify--idle-start-timer
+         (setq my/emojify--idle-start-timer
+               (run-with-idle-timer 1.5 nil #'my/emojify-start)))))
+    :config)
 #+end_src
 
 *** lambda-line
@@ -1359,7 +1373,19 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp 
   (use-package dashboard
     :ensure t
-    :hook (after-init-hook . open-dashboard)
+    :init
+    (defvar my/dashboard--idle-start-timer nil)
+    (defun my/dashboard-start ()
+      (when my/dashboard--idle-start-timer
+        (cancel-timer my/dashboard--idle-start-timer)
+        (setq my/dashboard--idle-start-timer nil))
+      (open-dashboard))
+    (add-hook
+     'emacs-startup-hook
+     (lambda ()
+       (unless my/dashboard--idle-start-timer
+         (setq my/dashboard--idle-start-timer
+               (run-with-idle-timer 0.5 nil #'my/dashboard-start)))))
     :config
     (setq dashboard-items '((bookmarks . 5)
                             (recents  . 5)
