@@ -1233,8 +1233,7 @@ jdtsmith/eglot-booster
   (use-package centaur-tabs
     :ensure t
     :commands (centaur-tabs-mode centaur-tabs-local-mode)
-    :hook ((prog-mode-hook . centaur-tabs-mode)
-           (text-mode-hook . centaur-tabs-mode))
+    :hook (after-init-hook . centaur-tabs-mode)
     :config
     (defun toggle-centaur-tabs-local-mode()
       (interactive)
