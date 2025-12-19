@@ -14,9 +14,29 @@ https://github.com/Kyure-A/.emacs.d
 [[file:./assets/ss1.png]]
 [[file:./assets/ss2.png]]
 
-
 * Configurations
 ** Initialize
+*** Header
+#+begin_src emacs-lisp 
+  ;;; init.el ---  -*- lexical-binding: t -*-
+
+  ;; Author: Kyure_A <github.com/Kyure-A>
+  ;; Maintainer: Kyure_A <github.com/Kyure-A>
+
+  ;;; Commentary:
+
+  ;;              .mmmmmmmmmmmmmm.                   .cccccccc!                .(.
+  ;;  .+eeeee.   .??:   +m<   <mm.    .aaaaaaaa.    ccC!           .+sssss{    (!!
+  ;; .ee:        .mm:   +mm   .mm_   .aa>   (aaA    cCC           .ss>         1!:
+  ;; .ee_        .mm:   +mm   .mm_   .aa{    aaA    ccC           .sss.        !!
+  ;; .ee_ <ee    .mm:   +mm   .mm_   .aa{ .(AaaA    cCC`           .<sssss    .!:
+  ;; .ee_        .mm:   +mm   .mm_   .aa{ .??aaA    cCCc......         .ss:   ..
+  ;; .eee....    .<<!   ?<<   .<<`   .aa{    aaA     ?CCCCCCC!    ....(s=: .!!-
+  ;;  .?eeeee`                       .AA!    AAA                  .ssss<s!   .!!
+
+  ;;; Code:  
+#+end_src
+
 *** Setup tracker
 #+begin_src emacs-lisp
   (defvar setup-tracker--level 0)
