@@ -131,7 +131,7 @@ https://github.com/Kyure-A/.emacs.d
   (global-set-key (kbd "C-x g") 'magit-status)
   (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
   (global-set-key (kbd "C-x i") 'nil)
-  (global-set-key (kbd "C-x i i") 'ivy-yasnippet)
+  (global-set-key (kbd "C-x i i") 'consult-yasnippet)
   (global-set-key (kbd "C-x i n") 'yas-new-snippet)
   (global-set-key (kbd "C-x u") 'nil)
   (global-set-key (kbd "C-x C-z") 'nil)
@@ -1613,9 +1613,7 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     (setopt yas-snippet-dirs '("~/.config/emacs/snippets")))
   (use-package consult-yasnippet
     :ensure t
-    :after (consult yasnippet)
-    :bind
-    (("C-c y" . consult-yasnippet)))
+    :after (consult yasnippet))
 #+end_src
 
 ** Utilities
