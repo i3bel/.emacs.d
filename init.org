@@ -1678,6 +1678,13 @@ Allows you to integrate Rich Presence from Discord.
     (setopt magit-repository-directories '(("~/ghq/" . 3))))
 #+end_src
 
+**** magit-prime
+#+begin_src emacs-lisp
+  (use-package magit-prime
+    :ensure t
+    :hook (magit-pre-refresh-hook . magit-prime-refresh-cache))
+#+end_src
+
 *** swagg
 #+begin_src emacs-lisp
   (use-package swagg :ensure t)
