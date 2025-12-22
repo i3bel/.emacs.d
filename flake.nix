@@ -62,7 +62,6 @@
           package = (inputs.twist.lib.makeEnv {
             inherit pkgs;
             inherit (profile) emacsPackage lockDir initFiles extraPackages;
-            nativeCompileAheadDefault = true;
             inputOverrides = (import ./nix/inputs.nix {inherit lib;}) // profile.extraInputOverrides;
             registries = (import ./nix/registries.nix inputs) ++ [
               {
@@ -89,7 +88,6 @@
             programs.emacs-twist = {
               config = lib.mkDefault package;
               earlyInitFile = lib.mkDefault earlyInitEl;
-              createInitFile = lib.mkDefault true;
             };
           };
           
