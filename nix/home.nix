@@ -12,7 +12,10 @@
 
       if [ -x "$emacs_bin" ] && [ -d "$init_dir" ]; then
         mkdir -p "$cache_dir"
-        find "$init_dir" -name '*.el' -not -path "$cache_dir/*" -print0 |
+        find "$init_dir" -name '*.el' \
+          -not -path "$cache_dir/*" \
+          -not -path "$init_dir/transient/*" \
+          -print0 |
           xargs -0 "$emacs_bin" --batch -Q \
             --eval "(setq native-compile-target-directory \"$cache_dir\")" \
             --eval "(setq native-comp-eln-load-path (list \"$cache_dir\"))" \
