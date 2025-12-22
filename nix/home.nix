@@ -16,6 +16,15 @@
           -not -path "$cache_dir/*" \
           -not -path "$init_dir/transient/*" \
           -print0 |
+          xargs -0 "$emacs_bin" --batch -Q -L "$init_dir" \
+            --eval "(defvar init/saved-file-name-handler-alist)" \
+            --eval "(setq use-package-compute-statistics nil)" \
+            -f batch-byte-compile
+
+        find "$init_dir" -name '*.el' \
+          -not -path "$cache_dir/*" \
+          -not -path "$init_dir/transient/*" \
+          -print0 |
           xargs -0 "$emacs_bin" --batch -Q \
             --eval "(setq native-compile-target-directory \"$cache_dir\")" \
             --eval "(setq native-comp-eln-load-path (list \"$cache_dir\"))" \
