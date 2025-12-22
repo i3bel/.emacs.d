@@ -20,15 +20,6 @@
       cache_dir="$init_dir/eln-cache"
 
       if [ -x "$emacs_bin" ] && [ -d "$init_dir" ]; then
-        # Replace symlinks with real files so comp uses a stable user path
-        for f in init.el early-init.el; do
-          if [ -e "$init_dir/$f" ]; then
-            tmpfile=$(mktemp)
-            cp -fL "$init_dir/$f" "$tmpfile"
-            mv "$tmpfile" "$init_dir/$f"
-          fi
-        done
-
         mkdir -p "$cache_dir"
         find "$init_dir" -name '*.el' \
           -not -path "$cache_dir/*" \
