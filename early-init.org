@@ -40,12 +40,7 @@ https://github.com/Kyure-A/.emacs.d
 
 *** native comp
 #+begin_src emacs-lisp
-  (let* ((base (expand-file-name "eln-cache/" user-emacs-directory))
-         (abi  (format "%s-%s/" emacs-version (comp-abi-hash)))
-         (dir  (expand-file-name abi base)))
-    ;; Ensure the ABI-specific eln dir is searched first.
-    (add-to-list 'native-comp-eln-load-path dir)
-    (add-to-list 'native-comp-eln-load-path base t))
+  (push (expand-file-name "eln-cache/" user-emacs-directory) native-comp-eln-load-path)
   (custom-set-variables '(warning-suppress-types '((comp))))
   (with-eval-after-load 'comp
     (setq native-comp-async-jobs-number 8)
