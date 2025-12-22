@@ -4,9 +4,6 @@
     ".config/emacs/snippets".source = ../snippets;
   };
 
-  home.file.".config/emacs/init.el".copy = true;
-  home.file.".config/emacs/early-init.el".copy = true;
-
   home.sessionVariables.EMACSNATIVELOADPATH =
     let
       base = "${config.home.homeDirectory}/${config.programs.emacs-twist.directory}/eln-cache";
