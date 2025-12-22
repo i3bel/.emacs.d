@@ -1258,9 +1258,9 @@ jdtsmith/eglot-booster
     (run-with-idle-timer
      1 nil
      (lambda ()
-       (when (require 'nerd-icons nil t)
+       (when (require 'all-the-icons nil t)
          (setq centaur-tabs-set-icons t
-               centaur-tabs-icon-type 'nerd-icons)
+               centaur-tabs-icon-type 'all-the-icons)
          (force-window-update t)))))
 #+end_src
 
