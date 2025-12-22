@@ -45,7 +45,6 @@ https://github.com/Kyure-A/.emacs.d
   (with-eval-after-load 'comp
     (setq native-comp-async-jobs-number 8)
     (setq native-comp-speed 3)
-    (setq native-comp-verbose 2)
     (setq native-comp-always-compile t)
     (setq native-comp-jit-compilation-deny-list '(".*-loaddefs.el.gz")))
 #+end_src
