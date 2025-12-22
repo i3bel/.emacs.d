@@ -124,4 +124,9 @@ and disable scroll-bar, tool-bar and menu-bar.
     (setq native-comp-async-jobs-number 8)
     (setq native-comp-speed 3)
     (setq native-comp-always-compile t))
+  (when (boundp 'native-comp-jit-compilation-deny-list)
+    (dolist (re '("cl-loaddefs\\.el\\(\\.gz\\)?\\'"
+                  "tramp-loaddefs\\.el\\(\\.gz\\)?\\'"))
+      (add-to-list 'native-comp-jit-compilation-deny-list re)))
+
 #+end_src
