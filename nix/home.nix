@@ -8,7 +8,7 @@
     let
       base = "${config.home.homeDirectory}/${config.programs.emacs-twist.directory}/eln-cache";
       parent = builtins.getEnv "EMACSNATIVELOADPATH";
-    in "${base}/current:${base}:${parent}";
+    in "${base}:${parent}";
 
   home.activation.nativeCompileInit =
     lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -35,14 +35,6 @@
             --eval "(setq native-compile-target-directory \"$cache_dir\")" \
             --eval "(setq native-comp-eln-load-path (list \"$cache_dir\"))" \
             -f batch-native-compile
-
-        # Create a stable symlink to the current ABI-specific eln dir
-        abi=$("$emacs_bin" --batch -Q \
-          --eval "(require 'comp)" \
-          --eval "(princ comp-abi-hash)")
-        if [ -n "$abi" ] && [ -d "$cache_dir/$abi" ]; then
-          ln -sfn "$cache_dir/$abi" "$cache_dir/current"
-        fi
       fi
     '';
 }
