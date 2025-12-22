@@ -401,6 +401,12 @@
       repo = "magit";
       type = "github";
     };
+    magit-prime = {
+      flake = false;
+      owner = "Azkae";
+      repo = "magit-prime";
+      type = "github";
+    };
     magit-section = {
       flake = false;
       owner = "magit";

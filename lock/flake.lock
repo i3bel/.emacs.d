@@ -1073,6 +1073,22 @@
         "type": "github"
       }
     },
+    "magit-prime": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1754322929,
+        "narHash": "sha256-meQCHfDeKZJtXAFPM9lSmFEV6w4nk+Xt2DC7Rsb2VUA=",
+        "owner": "Azkae",
+        "repo": "magit-prime",
+        "rev": "c0d4d2b38c422d56ebd82fa9628b899dfd8ea09c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Azkae",
+        "repo": "magit-prime",
+        "type": "github"
+      }
+    },
     "magit-section": {
       "flake": false,
       "locked": {
@@ -1735,6 +1751,7 @@
         "lsp-mode": "lsp-mode",
         "lv": "lv",
         "magit": "magit",
+        "magit-prime": "magit-prime",
         "magit-section": "magit-section",
         "marginalia": "marginalia",
         "markdown-mode": "markdown-mode",
