@@ -38,6 +38,17 @@ https://github.com/Kyure-A/.emacs.d
   (profiler-start 'cpu)
 #+end_src
 
+*** native comp
+#+begin_src emacs-lisp
+  (push (expand-file-name "eln-cache/" user-emacs-directory) native-comp-eln-load-path)
+  (custom-set-variables '(warning-suppress-types '((comp))))
+  (with-eval-after-load 'comp
+    (setq native-comp-async-jobs-number 8)
+    (setq native-comp-speed 3)
+    (setq native-comp-always-compile t)
+    (setq native-comp-jit-compilation-deny-list '(".*-loaddefs.el.gz")))
+#+end_src
+
 *** Suppress auto package loading
 #+begin_src emacs-lisp
   (setq package-enable-at-startup nil)
@@ -115,14 +126,4 @@ and disable scroll-bar, tool-bar and menu-bar.
 *** debug-on-error
 #+begin_src emacs-lisp
   (setq debug-on-error t)
-#+end_src
-
-*** native compile
-#+begin_src emacs-lisp
-  (custom-set-variables '(warning-suppress-types '((comp))))
-  (with-eval-after-load 'comp
-    (setq native-comp-async-jobs-number 8)
-    (setq native-comp-speed 3)
-    (setq native-comp-always-compile t)
-    (setq native-comp-jit-compilation-deny-list '(".*-loaddefs.el.gz")))
 #+end_src
