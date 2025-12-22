@@ -4,10 +4,6 @@
     ".config/emacs/snippets".source = ../snippets;
   };
 
-  home.sessionVariables.EMACSNATIVELOADPATH =
-    "${config.home.homeDirectory}/${config.programs.emacs-twist.directory}/eln-cache:"
-    + ''${EMACSNATIVELOADPATH}'';
-
   home.activation.nativeCompileInit =
     lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       emacs_bin="${config.programs.emacs-twist.wrapper}/bin/${config.programs.emacs-twist.name}"
