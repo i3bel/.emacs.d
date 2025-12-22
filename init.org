@@ -811,11 +811,19 @@ jdtsmith/eglot-booster
 
 *** C#
 #+begin_src emacs-lisp
+  (defun my/eglot-csharp-server (_)
+    (or (when-let ((cmd (executable-find "omnisharp")))
+          (list cmd "-lsp"))
+        (when-let ((cmd (executable-find "OmniSharp")))
+          (list cmd "-lsp"))
+        (when-let ((cmd (executable-find "csharp-ls")))
+          (list cmd))))
+
   (with-eval-after-load 'eglot
-    (add-to-list 'eglot-server-programs '(csharp-mode . ("OmniSharp")))
-    (add-to-list 'eglot-server-programs '(csharp-ts-mode . ("OmniSharp")))
-    (add-hook 'csharp-mode-hook #'eglot-ensure)
-    (add-hook 'csharp-ts-mode-hook #'eglot-ensure))
+    (add-to-list 'eglot-server-programs
+                 '((csharp-mode csharp-ts-mode) . my/eglot-csharp-server))
+    (dolist (hook '(csharp-mode-hook csharp-ts-mode-hook))
+      (add-hook hook #'eglot-ensure)))
 #+end_src
 
 *** Nix
@@ -946,6 +954,17 @@ jdtsmith/eglot-booster
     :mode (("\\Dockerfile$" . dockerfile-mode))
     :hook (dockerfile-mode-hook . flycheck-mode)
     :ensure t)
+#+end_src
+
+*** C#
+#+begin_src emacs-lisp
+  (use-package csharp-mode
+    :mode (("\\.cs$" . csharp-mode))
+    :init
+    (when (and (fboundp 'treesit-available-p)
+               (treesit-available-p))
+      (add-to-list 'major-mode-remap-alist
+                   '(csharp-mode . csharp-ts-mode))))
 #+end_src
 
 *** F#

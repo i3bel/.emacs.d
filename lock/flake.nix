@@ -145,6 +145,12 @@
       repo = "corfu";
       type = "github";
     };
+    csharp-mode = {
+      flake = false;
+      owner = "emacs-csharp";
+      repo = "csharp-mode";
+      type = "github";
+    };
     dart-mode = {
       flake = false;
       owner = "emacsorphanage";

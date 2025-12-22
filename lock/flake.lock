@@ -385,6 +385,22 @@
         "type": "github"
       }
     },
+    "csharp-mode": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1670264381,
+        "narHash": "sha256-EA7oTN6AVZHfsDTfL82yvkgimk9+lAi6pQcFn/8WvcY=",
+        "owner": "emacs-csharp",
+        "repo": "csharp-mode",
+        "rev": "02c61c219b2c22491eff9b7315fed661fab423d4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "emacs-csharp",
+        "repo": "csharp-mode",
+        "type": "github"
+      }
+    },
     "dart-mode": {
       "flake": false,
       "locked": {
@@ -1708,6 +1724,7 @@
         "copilot": "copilot",
         "copilot-chat": "copilot-chat",
         "corfu": "corfu",
+        "csharp-mode": "csharp-mode",
         "dart-mode": "dart-mode",
         "dash": "dash",
         "dashboard": "dashboard",
