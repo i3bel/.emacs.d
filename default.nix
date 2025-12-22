@@ -8,7 +8,7 @@
     (pkgs.tangleOrgBabelFile "init.el" ./README.org {})
   ];
   exportManifest = true;
-  extraPackages = ["claude-code"];
+  extraPackages = [ ];
   extraRecipeDir = ./recipes;
   extraInputOverrides = {};
 }
