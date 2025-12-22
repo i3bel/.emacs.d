@@ -5,8 +5,10 @@
   };
 
   home.sessionVariables.EMACSNATIVELOADPATH =
-    "${config.home.homeDirectory}/${config.programs.emacs-twist.directory}/eln-cache:"
-    + ''${EMACSNATIVELOADPATH}'';
+    let
+      base = "${config.home.homeDirectory}/${config.programs.emacs-twist.directory}/eln-cache";
+      parent = builtins.getEnv "EMACSNATIVELOADPATH";
+    in "${base}:${parent}";
 
   home.activation.nativeCompileInit =
     lib.hm.dag.entryAfter [ "writeBoundary" ] ''
