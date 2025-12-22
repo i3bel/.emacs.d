@@ -1234,6 +1234,9 @@ jdtsmith/eglot-booster
     :ensure t
     :commands (centaur-tabs-mode centaur-tabs-local-mode)
     :hook (after-init-hook . centaur-tabs-mode)
+    :init
+    (setq centaur-tabs-set-icons nil
+          centaur-tabs-icon-type nil)
     :config
     (defun toggle-centaur-tabs-local-mode()
       (interactive)
@@ -1245,7 +1248,6 @@ jdtsmith/eglot-booster
     (centaur-tabs-change-fonts "arial" 90)
     (setopt centaur-tabs-height 30)
     (setopt centaur-tabs-hide-tabs-hooks nil)
-    (setopt centaur-tabs-set-icons nil)
     (setopt centaur-tabs-set-bar 'under)
     (setopt x-underline-at-descent-line t)
     (setopt centaur-tabs-style "box")
@@ -1256,9 +1258,10 @@ jdtsmith/eglot-booster
     (run-with-idle-timer
      1 nil
      (lambda ()
-       (setq centaur-tabs-set-icons t
-             centaur-tabs-icon-type 'nerd-icons)
-       (force-window-update t))))
+       (when (require 'nerd-icons nil t)
+         (setq centaur-tabs-set-icons t
+               centaur-tabs-icon-type 'nerd-icons)
+         (force-window-update t)))))
 #+end_src
 
 *** consult
