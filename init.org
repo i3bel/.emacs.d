@@ -748,7 +748,7 @@ zkry/yaml.el
 #+end_src
 
 **** nerd-icons-corfu
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package nerd-icons-corfu
     :after nerd-icons
     :ensure t
