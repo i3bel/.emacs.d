@@ -69,6 +69,7 @@ and disable scroll-bar, tool-bar and menu-bar.
   (push '(min-width . 1) default-frame-alist)
   (push '(height . 45) default-frame-alist)
   (push '(width . 81) default-frame-alist)
+  (push '(internal-border-width . 24) default-frame-alist)
   (push '(vertical-scroll-bars . nil) default-frame-alist)
   (push '(left-fringe . 1) default-frame-alist)
   (push '(right-fringe . 1) default-frame-alist)
@@ -77,20 +78,8 @@ and disable scroll-bar, tool-bar and menu-bar.
   (push '(menu-bar-lines . 0) default-frame-alist)
 #+end_src
 
-*** internal-border-width for top-level frames only
-#+begin_src emacs-lisp
-  (add-hook 'after-make-frame-functions
-            (lambda (frame)
-              (when (not (frame-parent frame))
-                (set-frame-parameter frame 'internal-border-width 24))))
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              (when (not (frame-parent (selected-frame)))
-                (set-frame-parameter (selected-frame) 'internal-border-width 24))))
-#+end_src
-
 *** suppress window resize
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (setq frame-inhibit-implied-resize t)
 #+end_src
 
