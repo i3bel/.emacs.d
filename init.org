@@ -1300,7 +1300,20 @@ jdtsmith/eglot-booster
     (setopt corfu-auto-delay 0.1)
     (setopt corfu-cycle t)
     (setopt corfu-on-exact-match nil)
-    (setopt tab-always-indent 'complete))
+    (setopt tab-always-indent 'complete)
+    (advice-add
+     'corfu--popup-show
+     :around
+     (lambda (orig pos off width lines &optional curr lo bar)
+       (let ((default-font-width (if (and (display-graphic-p)
+                                          (<= (default-font-width) 2))
+                                     (frame-char-width)
+                                   (default-font-width)))
+             (default-line-height (if (and (display-graphic-p)
+                                           (<= (default-line-height) 2))
+                                      (frame-char-height)
+                                    (default-line-height))))
+         (funcall orig pos off width lines curr lo bar)))))
 #+end_src
 
 
