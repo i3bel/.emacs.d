@@ -83,6 +83,15 @@ and disable scroll-bar, tool-bar and menu-bar.
   (setq frame-inhibit-implied-resize t)
 #+end_src
 
+*** pixelwise resize for child frames
+#+begin_src emacs-lisp
+  (setq frame-resize-pixelwise t)
+  (setq window-resize-pixelwise t)
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (setq frame-inhibit-implied-resize nil)))
+#+end_src
+
 *** suppress warning
 #+begin_src emacs-lisp
   (setq display-warning-minimum-level :error)

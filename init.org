@@ -1303,14 +1303,6 @@ jdtsmith/eglot-booster
     (setopt tab-always-indent 'complete))
 #+end_src
 
-**** corfu-terminal
-#+begin_src emacs-lisp
-  (use-package corfu-terminal
-    :ensure t
-    :after corfu
-    :config
-    (corfu-terminal-mode +1))
-#+end_src
 
 *** Dashboard
 **** dashboard-recover-layout-p
