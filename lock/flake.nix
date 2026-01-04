@@ -145,12 +145,6 @@
       repo = "corfu";
       type = "github";
     };
-    csharp-mode = {
-      flake = false;
-      owner = "emacs-csharp";
-      repo = "csharp-mode";
-      type = "github";
-    };
     dart-mode = {
       flake = false;
       owner = "emacsorphanage";
@@ -465,12 +459,6 @@
       flake = false;
       owner = "rainstormstudio";
       repo = "nerd-icons.el";
-      type = "github";
-    };
-    nerd-icons-corfu = {
-      flake = false;
-      owner = "LuigiPiucco";
-      repo = "nerd-icons-corfu";
       type = "github";
     };
     nix-mode = {
