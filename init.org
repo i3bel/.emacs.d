@@ -748,7 +748,7 @@ zkry/yaml.el
 #+end_src
 
 **** nerd-icons-corfu
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
   (use-package nerd-icons-corfu
     :after nerd-icons
     :ensure t
@@ -1290,7 +1290,7 @@ jdtsmith/eglot-booster
 
 *** corfu
 **** corfu
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
   (use-package corfu
     :ensure t
     :commands (global-corfu-mode corfu-mode)

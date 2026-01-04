@@ -139,6 +139,12 @@
       repo = "copilot-chat.el";
       type = "github";
     };
+    corfu = {
+      flake = false;
+      owner = "minad";
+      repo = "corfu";
+      type = "github";
+    };
     dart-mode = {
       flake = false;
       owner = "emacsorphanage";
@@ -453,6 +459,12 @@
       flake = false;
       owner = "rainstormstudio";
       repo = "nerd-icons.el";
+      type = "github";
+    };
+    nerd-icons-corfu = {
+      flake = false;
+      owner = "LuigiPiucco";
+      repo = "nerd-icons-corfu";
       type = "github";
     };
     nix-mode = {

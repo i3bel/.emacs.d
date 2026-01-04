@@ -369,6 +369,22 @@
         "type": "github"
       }
     },
+    "corfu": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767274642,
+        "narHash": "sha256-jTdeOm/U8MVVwCIwpZyUiGmWaXoj2Fhwz2pAPaIphG4=",
+        "owner": "minad",
+        "repo": "corfu",
+        "rev": "5d7c697613ed2399c71e34e9f1cbd1ce8f8324cc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "minad",
+        "repo": "corfu",
+        "type": "github"
+      }
+    },
     "dart-mode": {
       "flake": false,
       "locked": {
@@ -1217,6 +1233,22 @@
         "type": "github"
       }
     },
+    "nerd-icons-corfu": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1753803866,
+        "narHash": "sha256-QayHcSE786PcvJ+I6Yx86awqqn7D6rJ7sRBnjnkh1ww=",
+        "owner": "LuigiPiucco",
+        "repo": "nerd-icons-corfu",
+        "rev": "f821e953b1a3dc9b381bc53486aabf366bf11cb1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LuigiPiucco",
+        "repo": "nerd-icons-corfu",
+        "type": "github"
+      }
+    },
     "nix-mode": {
       "flake": false,
       "locked": {
@@ -1675,6 +1707,7 @@
         "consult-yasnippet": "consult-yasnippet",
         "copilot": "copilot",
         "copilot-chat": "copilot-chat",
+        "corfu": "corfu",
         "dart-mode": "dart-mode",
         "dash": "dash",
         "dashboard": "dashboard",
@@ -1728,6 +1761,7 @@
         "mwim": "mwim",
         "nano-modeline": "nano-modeline",
         "nerd-icons": "nerd-icons",
+        "nerd-icons-corfu": "nerd-icons-corfu",
         "nix-mode": "nix-mode",
         "nu-fun": "nu-fun",
         "orderless": "orderless",
