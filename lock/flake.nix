@@ -139,12 +139,6 @@
       repo = "copilot-chat.el";
       type = "github";
     };
-    corfu = {
-      flake = false;
-      owner = "minad";
-      repo = "corfu";
-      type = "github";
-    };
     dart-mode = {
       flake = false;
       owner = "emacsorphanage";

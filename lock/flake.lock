@@ -369,22 +369,6 @@
         "type": "github"
       }
     },
-    "corfu": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1745307940,
-        "narHash": "sha256-BZD5UjiaHDJG733Ild9mGSeqygPXVuC/zHhzb5H00FA=",
-        "owner": "minad",
-        "repo": "corfu",
-        "rev": "6db826974963f8fb5d8b9832e7c09da2fea3296a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "minad",
-        "repo": "corfu",
-        "type": "github"
-      }
-    },
     "dart-mode": {
       "flake": false,
       "locked": {
@@ -1691,7 +1675,6 @@
         "consult-yasnippet": "consult-yasnippet",
         "copilot": "copilot",
         "copilot-chat": "copilot-chat",
-        "corfu": "corfu",
         "dart-mode": "dart-mode",
         "dash": "dash",
         "dashboard": "dashboard",

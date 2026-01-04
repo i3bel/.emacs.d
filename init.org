@@ -1290,7 +1290,7 @@ jdtsmith/eglot-booster
 
 *** corfu
 **** corfu
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package corfu
     :ensure t
     :commands (global-corfu-mode corfu-mode)
