@@ -4,9 +4,9 @@
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
     
-    twist.url = "github:emacs-twist/twist.nix";
+    twist.url = "github:Kyure-A/twist.nix";
     
-    org-babel.url = "github:emacs-twist/org-babel";
+    org-babel.url = "github:Kyure-A/org-babel";
 
     elpa = {
       url = "github:elpa-mirrors/elpa";
