@@ -63,13 +63,7 @@
             inherit pkgs;
             inherit (profile) emacsPackage lockDir initFiles extraPackages;
             inputOverrides = (import ./nix/inputs.nix {inherit lib;}) // profile.extraInputOverrides;
-            registries = (import ./nix/registries.nix inputs) ++ [
-              {
-		            name = "custom";
-                type = "melpa";
-                path = profile.extraRecipeDir;
-              }
-            ];
+            registries = (import ./nix/registries.nix inputs);
           });
 
           earlyInitEl = (pkgs.tangleOrgBabelFile "early-init.el" ./early-init.org {});
