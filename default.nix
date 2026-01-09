@@ -1,8 +1,8 @@
 {
   pkgs,
-  emacsPackage,
+  emacsPackage ? pkgs.emacs-git,
 }: {
-  emacsPackage = pkgs.emacs-git;
+  emacsPackage = emacsPackage;
   lockDir = ./lock;
   initFiles = [
     (pkgs.tangleOrgBabelFile "init.el" ./README.org {})
