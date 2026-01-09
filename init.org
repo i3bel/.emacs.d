@@ -1659,6 +1659,13 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
   (use-package claude-code :ensure t)
 #+end_src
 
+*** comment-translate
+#+begin_src emacs-lisp
+  (use-package comment-translate
+    :ensure t
+    :hook (prog-mode-hook . comment-translate-mode))
+#+end_src
+
 *** copilot.el
 #+begin_src emacs-lisp
   (use-package copilot
