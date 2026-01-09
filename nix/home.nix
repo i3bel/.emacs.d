@@ -1,4 +1,10 @@
-{ config, lib, pkgs, ... } : {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
   home.file = {
     ".config/emacs/assets/".source = ../assets;
     ".config/emacs/snippets".source = ../snippets;
