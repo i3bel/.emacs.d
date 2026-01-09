@@ -103,6 +103,12 @@
       repo = "claude-code.el";
       type = "github";
     };
+    comment-translate = {
+      flake = false;
+      owner = "Kyure-A";
+      repo = "emacs-comment-translate";
+      type = "github";
+    };
     compat = {
       flake = false;
       owner = "emacs-compat";

@@ -273,6 +273,22 @@
         "type": "github"
       }
     },
+    "comment-translate": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767932288,
+        "narHash": "sha256-k04iPtMUrso53CaRD2VE0rfobwOmwF28RjfBbYhk6AI=",
+        "owner": "Kyure-A",
+        "repo": "emacs-comment-translate",
+        "rev": "04402811e010151e2c05f690de21e7b2555cb56c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Kyure-A",
+        "repo": "emacs-comment-translate",
+        "type": "github"
+      }
+    },
     "compat": {
       "flake": false,
       "locked": {
@@ -1701,6 +1717,7 @@
         "centaur-tabs": "centaur-tabs",
         "cfrs": "cfrs",
         "claude-code": "claude-code",
+        "comment-translate": "comment-translate",
         "compat": "compat",
         "cond-let": "cond-let",
         "consult": "consult",
