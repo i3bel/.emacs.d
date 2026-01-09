@@ -228,11 +228,11 @@
     "centaur-tabs": {
       "flake": false,
       "locked": {
-        "lastModified": 1767038105,
-        "narHash": "sha256-CpXTX0Fm4/m6t3JPKDVTIri73spDlKzjecflVFWrEdM=",
+        "lastModified": 1745368034,
+        "narHash": "sha256-/BpjpBpUNi+3p85Gql69PrKI1dFogwpuPzPsQuU13og=",
         "owner": "ema2159",
         "repo": "centaur-tabs",
-        "rev": "7e8fe031a49eec56decb0af8cd160f5acef42da9",
+        "rev": "a790dc8fb6215e28685643e4d79252287adfde24",
         "type": "github"
       },
       "original": {
