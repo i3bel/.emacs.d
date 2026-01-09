@@ -56,7 +56,6 @@
 
           profile = import ./default.nix {
             inherit pkgs;
-            emacsPackage = pkgs.emacs-git;
           };
 
           package = (inputs.twist.lib.makeEnv {
@@ -66,7 +65,7 @@
             registries = (import ./nix/registries.nix inputs);
           });
 
-          earlyInitEl = (pkgs.tangleOrgBabelFile "early-init.el" ./early-init.org {});
+          earlyInitEl = profile.earlyInitFile;
           
         in {
           packages.default = package;
