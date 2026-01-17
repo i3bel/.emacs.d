@@ -1702,6 +1702,7 @@ Allows you to integrate Rich Presence from Discord.
 #+end_src
 
 *** Magit
+**** Magit
 #+begin_src emacs-lisp
   (use-package magit
     :ensure t
@@ -1716,6 +1717,13 @@ Allows you to integrate Rich Presence from Discord.
   (use-package magit-prime
     :ensure t
     :hook (magit-pre-refresh-hook . magit-prime-refresh-cache))
+#+end_src
+
+**** forge
+#+begin_src emacs-lisp
+  (use-package forge
+    :after magit
+    :ensure t)
 #+end_src
 
 *** swagg
