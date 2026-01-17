@@ -13,4 +13,5 @@
   extraPackages = [ ];
   extraRecipeDir = ./recipes;
   extraInputOverrides = { };
+  systemPackages = [ "git" ]; 
 }

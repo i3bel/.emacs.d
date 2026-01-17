@@ -68,7 +68,8 @@
               lockDir
               initFiles
               extraPackages
-              ;
+              systemPackages
+            ;
             inputOverrides = (import ./nix/inputs.nix { inherit lib; }) // profile.extraInputOverrides;
             registries = (import ./nix/registries.nix inputs);
           }
