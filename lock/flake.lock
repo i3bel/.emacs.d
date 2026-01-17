@@ -273,6 +273,22 @@
         "type": "github"
       }
     },
+    "closql": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767292115,
+        "narHash": "sha256-ulygpKzBeWGZgpArdRI91oGaZxD6/qNqYqxHffnP/SM=",
+        "owner": "magit",
+        "repo": "closql",
+        "rev": "947426d0c93e5ad5374c464b2f121c36cdaf2132",
+        "type": "github"
+      },
+      "original": {
+        "owner": "magit",
+        "repo": "closql",
+        "type": "github"
+      }
+    },
     "comment-translate": {
       "flake": false,
       "locked": {
@@ -833,6 +849,22 @@
         "type": "github"
       }
     },
+    "forge": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1768317115,
+        "narHash": "sha256-mGZuqMkoMiBa2ggR7XOokyAmeZEkKMOF39P6IYcmIHI=",
+        "owner": "magit",
+        "repo": "forge",
+        "rev": "68eabd05ce0650bce0539b2933d0b5ab5944fbd4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "magit",
+        "repo": "forge",
+        "type": "github"
+      }
+    },
     "frame-local": {
       "flake": false,
       "locked": {
@@ -879,6 +911,22 @@
       "original": {
         "type": "git",
         "url": "https://gitlab.com/koral/gcmh"
+      }
+    },
+    "ghub": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767487247,
+        "narHash": "sha256-n/KYC3dlIop0EHG74+oIenM2Kvki79MYsfuUkBc3Q5c=",
+        "owner": "magit",
+        "repo": "ghub",
+        "rev": "21e042438537bf2bbfdd2d25a58f5ab5c799a8f6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "magit",
+        "repo": "ghub",
+        "type": "github"
       }
     },
     "ht": {
@@ -1150,6 +1198,22 @@
       "original": {
         "owner": "jrblevin",
         "repo": "markdown-mode",
+        "type": "github"
+      }
+    },
+    "mcp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1766114050,
+        "narHash": "sha256-GDhiZ7jiWe2fOSZ2yxo16kq6zt59hwxRKLTat4G8Kgs=",
+        "owner": "lizqwerscott",
+        "repo": "mcp.el",
+        "rev": "125e0a4478ff1404880ea4e593f5e4ff0122cb83",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lizqwerscott",
+        "repo": "mcp.el",
         "type": "github"
       }
     },
@@ -1717,6 +1781,7 @@
         "centaur-tabs": "centaur-tabs",
         "cfrs": "cfrs",
         "claude-code": "claude-code",
+        "closql": "closql",
         "comment-translate": "comment-translate",
         "compat": "compat",
         "cond-let": "cond-let",
@@ -1752,9 +1817,11 @@
         "flutter": "flutter",
         "flycheck": "flycheck",
         "flymake-shellcheck": "flymake-shellcheck",
+        "forge": "forge",
         "frame-local": "frame-local",
         "fsharp-mode": "fsharp-mode",
         "gcmh": "gcmh",
+        "ghub": "ghub",
         "ht": "ht",
         "hy-mode": "hy-mode",
         "hydra": "hydra",
@@ -1772,6 +1839,7 @@
         "magit-section": "magit-section",
         "marginalia": "marginalia",
         "markdown-mode": "markdown-mode",
+        "mcp": "mcp",
         "mermaid-mode": "mermaid-mode",
         "mistty": "mistty",
         "multiple-cursors": "multiple-cursors",
@@ -1824,6 +1892,7 @@
         "swagg": "swagg",
         "tablist": "tablist",
         "transient": "transient",
+        "treepy": "treepy",
         "trinary": "trinary",
         "twist": "twist",
         "undercover": "undercover",
@@ -2127,6 +2196,22 @@
       "original": {
         "owner": "magit",
         "repo": "transient",
+        "type": "github"
+      }
+    },
+    "treepy": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1727681311,
+        "narHash": "sha256-FtvWt5usbaNYXHZZ73+EuhOu0+4QcO3msPPpscLSZHg=",
+        "owner": "volrath",
+        "repo": "treepy.el",
+        "rev": "651e2634f01f346da9ec8a64613c51f54b444bc3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "volrath",
+        "repo": "treepy.el",
         "type": "github"
       }
     },

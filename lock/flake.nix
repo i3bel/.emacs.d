@@ -103,6 +103,12 @@
       repo = "claude-code.el";
       type = "github";
     };
+    closql = {
+      flake = false;
+      owner = "magit";
+      repo = "closql";
+      type = "github";
+    };
     comment-translate = {
       flake = false;
       owner = "Kyure-A";
@@ -312,6 +318,12 @@
       repo = "flymake-shellcheck";
       type = "github";
     };
+    forge = {
+      flake = false;
+      owner = "magit";
+      repo = "forge";
+      type = "github";
+    };
     frame-local = {
       flake = false;
       owner = "sebastiencs";
@@ -328,6 +340,12 @@
       flake = false;
       type = "git";
       url = "https://gitlab.com/koral/gcmh";
+    };
+    ghub = {
+      flake = false;
+      owner = "magit";
+      repo = "ghub";
+      type = "github";
     };
     ht = {
       flake = false;
@@ -429,6 +447,12 @@
       flake = false;
       owner = "jrblevin";
       repo = "markdown-mode";
+      type = "github";
+    };
+    mcp = {
+      flake = false;
+      owner = "lizqwerscott";
+      repo = "mcp.el";
       type = "github";
     };
     mermaid-mode = {
@@ -742,6 +766,12 @@
       flake = false;
       owner = "magit";
       repo = "transient";
+      type = "github";
+    };
+    treepy = {
+      flake = false;
+      owner = "volrath";
+      repo = "treepy.el";
       type = "github";
     };
     trinary = {
