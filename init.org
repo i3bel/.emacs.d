@@ -1723,7 +1723,10 @@ Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp
   (use-package forge
     :after magit
-    :ensure t)
+    :ensure t
+    :config
+    (use-package git  
+      :ensure-system-package git))
 #+end_src
 
 *** swagg
