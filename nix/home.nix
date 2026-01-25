@@ -11,8 +11,8 @@
   };
 
   home.packages = with pkgs; [
-    dotnet-sdk
-    omnisharp-roslyn
+    #dotnet-sdk
+    #omnisharp-roslyn
     nixd
     nodePackages.typescript-language-server
     rust-analyzer
