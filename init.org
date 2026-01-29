@@ -1685,7 +1685,7 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     :hook (git-commit-setup . copilot-chat-insert-commit-message)
     :config
     (setopt copilot-chat-default-model "gpt-5.2")
-    (setopt copilot-chat-commit-model "gpt-5.2"))
+    (setopt copilot-chat-commit-model "gpt-4.1"))
 #+end_src
 
 *** Docker
