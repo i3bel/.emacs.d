@@ -577,22 +577,6 @@
         "type": "github"
       }
     },
-    "eat": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1738802687,
-        "narHash": "sha256-9xG2rMlaMFY77JzUQ3JFrc7XKILZSL8TbP/BkzvBvMk=",
-        "ref": "refs/heads/master",
-        "rev": "c8d54d649872bfe7b2b9f49ae5c2addbf12d3b99",
-        "revCount": 249,
-        "type": "git",
-        "url": "https://codeberg.org/akib/emacs-eat"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://codeberg.org/akib/emacs-eat"
-      }
-    },
     "editorconfig": {
       "flake": false,
       "locked": {
@@ -1185,19 +1169,19 @@
         "type": "github"
       }
     },
-    "mistty": {
+    "multi-vterm": {
       "flake": false,
       "locked": {
-        "lastModified": 1752693292,
-        "narHash": "sha256-QoSEtbyw/CUJ8IY2lV2+JcERYzteRMKtnaGd8ZBp/Zo=",
-        "owner": "szermatt",
-        "repo": "mistty",
-        "rev": "bfb17611cff6c845270050a0756a38489cdf4ed6",
+        "lastModified": 1667196630,
+        "narHash": "sha256-J2Isim4v4W06c+e28OrVkMprvk0XLfRSIkzo2UzVfgY=",
+        "owner": "suonlight",
+        "repo": "multi-vterm",
+        "rev": "36746d85870dac5aaee6b9af4aa1c3c0ef21a905",
         "type": "github"
       },
       "original": {
-        "owner": "szermatt",
-        "repo": "mistty",
+        "owner": "suonlight",
+        "repo": "multi-vterm",
         "type": "github"
       }
     },
@@ -1752,7 +1736,6 @@
         "dotenv": "dotenv",
         "dumb-jump": "dumb-jump",
         "eask": "eask",
-        "eat": "eat",
         "editorconfig": "editorconfig",
         "eglot-booster": "eglot-booster",
         "el-project": "el-project",
@@ -1790,7 +1773,7 @@
         "markdown-mode": "markdown-mode",
         "mcp": "mcp",
         "mermaid-mode": "mermaid-mode",
-        "mistty": "mistty",
+        "multi-vterm": "multi-vterm",
         "multiple-cursors": "multiple-cursors",
         "mwim": "mwim",
         "nano-modeline": "nano-modeline",
@@ -1849,6 +1832,7 @@
         "vertico": "vertico",
         "vertico-posframe": "vertico-posframe",
         "visual-regexp": "visual-regexp",
+        "vterm": "vterm",
         "web-mode": "web-mode",
         "websocket": "websocket",
         "which-key": "which-key",
@@ -2272,6 +2256,22 @@
       "original": {
         "owner": "benma",
         "repo": "visual-regexp.el",
+        "type": "github"
+      }
+    },
+    "vterm": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1763571189,
+        "narHash": "sha256-F6lPLL3iPfFhysPpfZr8flQxc1uAb5wndLZEMA19Fkk=",
+        "owner": "akermu",
+        "repo": "emacs-libvterm",
+        "rev": "a01a2894a1c1e81a39527835a9169e35b7ec5dec",
+        "type": "github"
+      },
+      "original": {
+        "owner": "akermu",
+        "repo": "emacs-libvterm",
         "type": "github"
       }
     },

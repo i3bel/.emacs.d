@@ -158,7 +158,7 @@ In this repository, =.#update= and =.#lock= require =--impure=.
 ** Keybindings
 *** Special Keys
 #+begin_src emacs-lisp
-  (global-set-key (kbd "<f2>") 'mistty)
+  (global-set-key (kbd "C-x t") 'toggle-vterm)
   (global-set-key (kbd "<f3>") 'dashboard-open)
   (global-set-key (kbd "RET") 'smart-newline)
   (global-set-key (kbd "C-RET") 'newline)
@@ -1217,18 +1217,22 @@ jdtsmith/eglot-booster
 #+end_src
 
 ** Shell
-*** Eat
+*** vterm
 #+begin_src emacs-lisp
-  (use-package eat
+  (use-package vterm
     :ensure t
+    :commands (vterm))
+
+  (use-package multi-vterm
+    :ensure t
+    :after vterm
+    :commands (multi-vterm multi-vterm-next multi-vterm-prev multi-vterm-dedicated-toggle)
+    :init
+    (defun toggle-vterm ()
+      (interactive)
+      (multi-vterm-dedicated-toggle))
     :config
-    (defun toggle-eat ()
-        (interactive)
-        (let ((kill-buffer-query-functions nil))
-          (if (get-buffer "*eat*")
-            (progn (kill-buffer "*eat*")
-                   (eat))
-          (eat)))))
+    (setopt multi-vterm-dedicated-window-height-percent 30))
 #+end_src
 
 *** exec-path-from-shell
@@ -1249,13 +1253,6 @@ jdtsmith/eglot-booster
                                              "TEXMFHOME"
                                              "WSL_DISTRO_NAME"
                                              "http_proxy")))
-#+end_src
-
-*** mistty
-#+begin_src emacs-lisp
-  (use-package mistty
-    :commands mistty
-    :ensure t)
 #+end_src
 
 ** Extensions

@@ -217,11 +217,6 @@
       repo = "eask";
       type = "github";
     };
-    eat = {
-      flake = false;
-      type = "git";
-      url = "https://codeberg.org/akib/emacs-eat";
-    };
     editorconfig = {
       flake = false;
       owner = "editorconfig";
@@ -443,10 +438,10 @@
       repo = "mermaid-mode";
       type = "github";
     };
-    mistty = {
+    multi-vterm = {
       flake = false;
-      owner = "szermatt";
-      repo = "mistty";
+      owner = "suonlight";
+      repo = "multi-vterm";
       type = "github";
     };
     multiple-cursors = {
@@ -795,6 +790,12 @@
       flake = false;
       owner = "benma";
       repo = "visual-regexp.el";
+      type = "github";
+    };
+    vterm = {
+      flake = false;
+      owner = "akermu";
+      repo = "emacs-libvterm";
       type = "github";
     };
     web-mode = {

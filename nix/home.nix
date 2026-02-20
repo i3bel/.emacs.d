@@ -52,6 +52,7 @@ in
   home.packages = with pkgs; [
     #dotnet-sdk
     #omnisharp-roslyn
+    libvterm
     nixd
     nodePackages.typescript-language-server
     rust-analyzer

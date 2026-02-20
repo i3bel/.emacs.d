@@ -12,4 +12,9 @@ with builtins;
       "swiper.el"
     ];
   };
+  multi-vterm = _: _: {
+    # `multi-vterm.el` requires `vterm` at top-level, which triggers
+    # an interactive prompt during batch byte-compilation.
+    dontByteCompile = true;
+  };
 }
