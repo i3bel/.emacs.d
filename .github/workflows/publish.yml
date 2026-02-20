@@ -27,28 +27,24 @@ jobs:
 
       - name: Build site with org-publish
         run: |
-          emacs -Q --batch \
-            --eval "(progn
-                      (require 'org)
-                      (require 'ox-publish)
-                      (setq org-publish-project-alist
-                            '((\".emacs.d\"
-                               :base-directory \"./\"
-                               :base-extension \"org\"
-                               :recursive t
-                               :exclude \"README\\\\.org\"
-                               :publishing-directory \"./public\"
-                               :publishing-function org-html-publish-to-html
-                               :with-author t
-                               :with-sub-superscript nil
-                               :with-toc t
-                               :section-numbers nil
-                               :html-validation-link nil
-                               :time-stamp-file nil
-                               :auto-sitemap t
-                               :sitemap-title \".emacs.d configuration\"
-                               :sitemap-filename \"index.org\")))
-                      (org-publish-all t))"
+          emacs -Q --batch -l ./.github/scripts/publish-site.el
+
+      - name: Add README.html redirect
+        run: |
+          cat > ./public/README.html <<'EOF'
+          <!doctype html>
+          <html lang="en">
+            <head>
+              <meta charset="utf-8" />
+              <meta http-equiv="refresh" content="0; url=./init.html" />
+              <link rel="canonical" href="./init.html" />
+              <title>Redirecting...</title>
+            </head>
+            <body>
+              <a href="./init.html">Go to init.html</a>
+            </body>
+          </html>
+          EOF
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
