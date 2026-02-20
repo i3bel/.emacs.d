@@ -1237,12 +1237,29 @@ jdtsmith/eglot-booster
 
 *** exec-path-from-shell
 #+begin_src emacs-lisp
+  (defun my/add-to-path (dir)
+    (when (and (stringp dir)
+               (file-directory-p dir))
+      (let ((path-items (split-string (or (getenv "PATH") "") path-separator t)))
+        (unless (member dir path-items)
+          (setenv "PATH" (concat dir path-separator (or (getenv "PATH") "")))))
+      (add-to-list 'exec-path dir)))
+
+  ;; GUI launch (e.g. from Emacs.app) may miss Nix profile paths.
+  (dolist (dir (list (expand-file-name "~/.nix-profile/bin")
+                     (format "/etc/profiles/per-user/%s/bin" (user-login-name))
+                     "/run/current-system/sw/bin"
+                     "/nix/var/nix/profiles/default/bin"))
+    (my/add-to-path dir))
+
   (use-package exec-path-from-shell
     :ensure t
+    :demand t
+    :if (memq window-system '(mac ns x))
     :config
     (exec-path-from-shell-initialize)
     (setopt exec-path-from-shell-check-startup-files nil)
-    (setopt exec-path-from-shell-arguments nil)
+    (setopt exec-path-from-shell-arguments '("-l"))
     (setopt exec-path-from-shell-variables '("COPILOT_LANGUAGE_SERVER_PATH"
                                              "GPG_AGENT_INFO"
                                              "GPG_KEY_ID"
@@ -1712,12 +1729,19 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
   (use-package copilot
     :ensure t
     :hook (prog-mode-hook . copilot-mode)
+    :init
+    (let* ((user-profile-bin (format "/etc/profiles/per-user/%s/bin/copilot-language-server"
+                                     (user-login-name)))
+           (nix-profile-bin (expand-file-name "~/.nix-profile/bin/copilot-language-server"))
+           (server-executable (or (getenv "COPILOT_LANGUAGE_SERVER_PATH")
+                                  (and (file-executable-p user-profile-bin) user-profile-bin)
+                                  (and (file-executable-p nix-profile-bin) nix-profile-bin)
+                                  (executable-find "copilot-language-server"))))
+      (when server-executable
+        (setopt copilot-server-executable server-executable)))
     :config
     (define-key copilot-completion-map (kbd "S-<tab>") 'copilot-accept-completion)
-    (define-key copilot-completion-map (kbd "S-TAB") 'copilot-accept-completion)
-    (when-let* ((server-executable (or (getenv "COPILOT_LANGUAGE_SERVER_PATH")
-                                       (executable-find "copilot-language-server"))))
-      (setopt copilot-server-executable server-executable)))
+    (define-key copilot-completion-map (kbd "S-TAB") 'copilot-accept-completion))
 #+end_src
 
 *** copilot-chat

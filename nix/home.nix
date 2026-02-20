@@ -38,6 +38,7 @@ let
     rm -f "$app/Contents/MacOS/Emacs"
     cat > "$app/Contents/MacOS/Emacs" <<EOF
     #!${pkgs.runtimeShell}
+    export PATH="$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:$PATH"
     exec "${cfg.config.emacs}/bin/emacsclient" -n -c -a "${cfg.wrapper}/bin/${cfg.name}"
     EOF
 
