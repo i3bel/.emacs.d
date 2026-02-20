@@ -14,6 +14,50 @@ https://github.com/Kyure-A/.emacs.d
 [[file:./assets/ss1.png]]
 [[file:./assets/ss2.png]]
 
+* Commands
+
+** Run My Emacs
+#+begin_src sh
+nix run .#default
+#+end_src
+Launches Emacs from this flake.
+
+** Update flake.lock
+#+begin_src sh
+nix run --impure .#lock
+#+end_src
+Regenerates lock data and updates =lock/flake.lock=.
+
+
+** Update Package Metadata
+#+begin_src sh
+nix run --impure .#update
+#+end_src
+Refreshes archive-based package metadata under =lock/=.
+
+** Hot-reload Packages (inside Emacs)
+#+begin_src text
+M-x twist-update
+#+end_src
+Applies updated package set without restarting Emacs.
+
+** Format Repository
+#+begin_src sh
+nix fmt
+#+end_src
+Formats files using =treefmt= and =nixfmt-rfc-style=.
+
+** Show Available Flake Outputs
+#+begin_src sh
+nix flake show --all-systems
+#+end_src
+Lists exported flake outputs (=packages=, =apps=, =formatter=, etc.).
+
+#+begin_quote
+In this repository, =.#update= and =.#lock= require =--impure=.
+#+end_quote
+ 
+
 * Configurations
 ** Initialize
 *** Header
