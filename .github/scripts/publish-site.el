@@ -5,8 +5,13 @@
 
 (setq org-html-doctype "html5")
 (setq org-html-html5-fancy t)
-;; htmlize is not installed in CI; disable syntax highlighting instead of warning.
-(setq org-html-htmlize-output-type nil)
+
+(if (require 'htmlize nil t)
+    (progn
+      (setq org-src-fontify-natively t)
+      (setq org-html-htmlize-output-type 'css))
+  (setq org-html-htmlize-output-type nil)
+  (message "htmlize unavailable; source blocks will be exported as plain text"))
 
 (defconst kyre/site-theme
   (concat
