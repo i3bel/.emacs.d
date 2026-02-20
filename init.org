@@ -158,6 +158,10 @@ In this repository, =.#update= and =.#lock= require =--impure=.
 ** Keybindings
 *** Special Keys
 #+begin_src emacs-lisp
+  (defun toggle-vterm ()
+    (interactive)
+    (multi-vterm-dedicated-toggle))
+
   (global-set-key (kbd "C-x t") 'toggle-vterm)
   (global-set-key (kbd "<f3>") 'dashboard-open)
   (global-set-key (kbd "RET") 'smart-newline)
@@ -1227,10 +1231,6 @@ jdtsmith/eglot-booster
     :ensure t
     :after vterm
     :commands (multi-vterm multi-vterm-next multi-vterm-prev multi-vterm-dedicated-toggle)
-    :init
-    (defun toggle-vterm ()
-      (interactive)
-      (multi-vterm-dedicated-toggle))
     :config
     (setopt multi-vterm-dedicated-window-height-percent 30))
 #+end_src
