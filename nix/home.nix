@@ -14,6 +14,7 @@ let
 
     if [ -d "$sourceApp" ]; then
       cp -R "$sourceApp" "$app"
+      chmod -R u+w "$app"
     else
       mkdir -p "$app/Contents/MacOS"
       cat > "$app/Contents/Info.plist" <<'EOF'
