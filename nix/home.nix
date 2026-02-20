@@ -8,10 +8,15 @@ let
   cfg = config.programs.emacs-twist;
 
   dockApp = pkgs.runCommandLocal "emacs-app" { } ''
-        app="$out/Applications/Emacs.app"
-        mkdir -p "$app/Contents/MacOS"
+    app="$out/Applications/Emacs.app"
+    sourceApp="${cfg.config.emacs}/Applications/Emacs.app"
+    mkdir -p "$out/Applications"
 
-        cat > "$app/Contents/Info.plist" <<'EOF'
+    if [ -d "$sourceApp" ]; then
+      cp -R "$sourceApp" "$app"
+    else
+      mkdir -p "$app/Contents/MacOS"
+      cat > "$app/Contents/Info.plist" <<'EOF'
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">
@@ -27,13 +32,15 @@ let
       </dict>
     </plist>
     EOF
+    fi
 
-        cat > "$app/Contents/MacOS/Emacs" <<EOF
+    rm -f "$app/Contents/MacOS/Emacs"
+    cat > "$app/Contents/MacOS/Emacs" <<EOF
     #!${pkgs.runtimeShell}
     exec "${cfg.config.emacs}/bin/emacsclient" -n -c -a "${cfg.wrapper}/bin/${cfg.name}"
     EOF
 
-        chmod +x "$app/Contents/MacOS/Emacs"
+    chmod +x "$app/Contents/MacOS/Emacs"
   '';
 in
 {

@@ -1715,7 +1715,9 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
     :config
     (define-key copilot-completion-map (kbd "S-<tab>") 'copilot-accept-completion)
     (define-key copilot-completion-map (kbd "S-TAB") 'copilot-accept-completion)
-    (setopt copilot-server-executable (getenv "COPILOT_LANGUAGE_SERVER_PATH")))
+    (when-let* ((server-executable (or (getenv "COPILOT_LANGUAGE_SERVER_PATH")
+                                       (executable-find "copilot-language-server"))))
+      (setopt copilot-server-executable server-executable)))
 #+end_src
 
 *** copilot-chat
