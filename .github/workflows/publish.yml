@@ -47,6 +47,12 @@ jobs:
                                :sitemap-filename \"init.org\")))
                       (org-publish-all t))"
 
+      - name: Ensure index.html exists
+        run: |
+          if [ -f ./public/init.html ] && [ ! -f ./public/index.html ]; then
+            cp ./public/init.html ./public/index.html
+          fi
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
