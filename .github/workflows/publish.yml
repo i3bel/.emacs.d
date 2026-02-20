@@ -36,22 +36,19 @@ jobs:
                                :base-directory \"./\"
                                :base-extension \"org\"
                                :recursive t
+                               :exclude \"README\\\\.org\"
                                :publishing-directory \"./public\"
                                :publishing-function org-html-publish-to-html
                                :with-author t
+                               :with-sub-superscript nil
                                :with-toc t
                                :section-numbers nil
+                               :html-validation-link nil
                                :time-stamp-file nil
                                :auto-sitemap t
                                :sitemap-title \".emacs.d configuration\"
-                               :sitemap-filename \"init.org\")))
+                               :sitemap-filename \"index.org\")))
                       (org-publish-all t))"
-
-      - name: Ensure index.html exists
-        run: |
-          if [ -f ./public/init.html ] && [ ! -f ./public/index.html ]; then
-            cp ./public/init.html ./public/index.html
-          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
