@@ -78,8 +78,8 @@ in
   home.packages =
     with pkgs;
     [
-      #dotnet-sdk
-      #omnisharp-roslyn
+      cmake
+      libtool
       nixd
       nodePackages.typescript-language-server
       rust-analyzer
