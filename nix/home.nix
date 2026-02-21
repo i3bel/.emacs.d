@@ -46,7 +46,7 @@ EOF
 
     cat > "$app/Contents/MacOS/Emacs" <<EOF
 #!${pkgs.runtimeShell}
-export PATH="$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:$PATH"
+export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:$PATH"
 exec "${cfg.wrapper}/bin/${cfg.name}" "\$@"
 EOF
 
