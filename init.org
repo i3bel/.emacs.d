@@ -1254,12 +1254,11 @@ jdtsmith/eglot-booster
 
   (use-package exec-path-from-shell
     :ensure t
-    :demand t
     :if (memq window-system '(mac ns x))
     :config
     (exec-path-from-shell-initialize)
     (setopt exec-path-from-shell-check-startup-files nil)
-    (setopt exec-path-from-shell-arguments '("-l"))
+    (setopt exec-path-from-shell-arguments nil)
     (setopt exec-path-from-shell-variables '("COPILOT_LANGUAGE_SERVER_PATH"
                                              "GPG_AGENT_INFO"
                                              "GPG_KEY_ID"
