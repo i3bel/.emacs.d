@@ -93,6 +93,7 @@
             programs.emacs-twist = {
               config = lib.mkDefault package;
               earlyInitFile = lib.mkDefault earlyInitEl;
+              createManifestFile = lib.mkDefault true;
             };
           };
 
