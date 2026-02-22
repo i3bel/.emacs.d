@@ -1,10 +1,5 @@
 { inputs, flake, ... }:
 { lib, pkgs, ... }:
-let
-  profile = import ../../../default.nix {
-    inherit pkgs;
-  };
-in
 {
   imports = [
     inputs.twist.homeModules.emacs-twist
@@ -13,7 +8,7 @@ in
 
   programs.emacs-twist = {
     config = lib.mkDefault flake.packages.${pkgs.stdenv.hostPlatform.system}.default;
-    earlyInitFile = lib.mkDefault profile.earlyInitFile;
+    earlyInitFile = lib.mkDefault flake.earlyInitEl.${pkgs.stdenv.hostPlatform.system};
     createManifestFile = lib.mkDefault true;
   };
 }
