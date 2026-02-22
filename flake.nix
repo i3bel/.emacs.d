@@ -2,7 +2,7 @@
   description = "Kyure_A's Emacs";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/7d853e518814cca2a657b72eeba67ae20ebf7059";
+    nixpkgs.url = "github:NixOS/nixpkgs";
 
     blueprint = {
       url = "github:numtide/blueprint";
