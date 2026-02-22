@@ -2,7 +2,7 @@ inputs: [
   {
     name = "local";
     type = "melpa";
-    path = ../recipes;
+    path = ../../recipes;
   }
   {
     name = "gnu";

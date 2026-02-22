@@ -55,8 +55,8 @@ EOF
 in
 {
   home.file = {
-    ".config/emacs/assets/".source = ../assets;
-    ".config/emacs/snippets".source = ../snippets;
+    ".config/emacs/assets/".source = ../../../assets;
+    ".config/emacs/snippets".source = ../../../snippets;
   }
   // lib.optionalAttrs pkgs.stdenv.isDarwin {
     "Applications/Emacs.app" = {
