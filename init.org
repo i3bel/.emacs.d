@@ -874,6 +874,12 @@ jdtsmith/eglot-booster
       (add-hook hook #'eglot-ensure)))
 #+end_src
 
+*** MoonBit
+#+begin_src emacs-lisp
+  (use-package moonbit-mode
+    :ensure t)
+#+end_src
+
 *** Nix
 #+begin_src emacs-lisp
   (with-eval-after-load 'eglot
@@ -937,6 +943,7 @@ jdtsmith/eglot-booster
         '((astro "https://github.com/virchau13/tree-sitter-astro")
           (css "https://github.com/tree-sitter/tree-sitter-css")
           (csharp "https://github.com/tree-sitter/tree-sitter-c-sharp")
+          (moonbit "https://github.com/moonbitlang/tree-sitter-moonbit")
           (satysfi "https://github.com/monaqa/tree-sitter-satysfi")))
 #+end_src
 
