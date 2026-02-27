@@ -1253,19 +1253,17 @@ jdtsmith/eglot-booster
           found)))
 
   (defun vterm-local--build-command ()
-    (let ((cmake (vterm-local--find-executable "cmake"))
-          (nix (vterm-local--find-executable "nix")))
+    (let ((nix (vterm-local--find-executable "nix")))
       (cond
-       (cmake
-        "cmake -G 'Unix Makefiles' -DUSE_SYSTEM_LIBVTERM=On . && make")
        (nix
         (concat
          nix
          " shell nixpkgs#cmake nixpkgs#gnumake nixpkgs#gcc"
          " --command sh -lc "
-         (shell-quote-argument "cmake -G 'Unix Makefiles' -DUSE_SYSTEM_LIBVTERM=On . && make")))
+         (shell-quote-argument
+          "cmake -G 'Unix Makefiles' -DCMAKE_PREFIX_PATH=/opt/homebrew -DUSE_SYSTEM_LIBVTERM=On . && make")))
        (t
-        (error "vterm build needs `cmake` (or `nix` to provision it)")))))
+        (error "vterm build needs `nix` to provision build dependencies")))))
 
   (defun vterm-local-ensure-module ()
     (let* ((src-lib (locate-library "vterm.el" t))
