@@ -876,8 +876,7 @@ jdtsmith/eglot-booster
 
 *** MoonBit
 #+begin_src emacs-lisp
-  (use-package moonbit-mode
-    :ensure t)
+  (use-package moonbit-mode :ensure t)
 #+end_src
 
 *** Nix
