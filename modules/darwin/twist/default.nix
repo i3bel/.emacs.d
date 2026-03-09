@@ -1,11 +1,11 @@
-{ inputs, flake, ... }:
-{ config, lib, pkgs, ... }:
+{ flake, ... }:
+{ lib, pkgs, ... }:
 let
-  cfg = config.programs.emacs-twist;
+  emacsPackage = flake.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
   dockApp = pkgs.runCommandLocal "emacs-app" { } ''
     app="$out/Applications/Emacs.app"
-    iconSource="${cfg.config.emacs}/Applications/Emacs.app/Contents/Resources/Emacs.icns"
+    iconSource="${emacsPackage}/Applications/Emacs.app/Contents/Resources/Emacs.icns"
 
     mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
 
@@ -43,24 +43,14 @@ EOF
     cat > "$app/Contents/MacOS/Emacs" <<EOF
 #!${pkgs.runtimeShell}
 export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:$PATH"
-exec "${cfg.wrapper}/bin/${cfg.name}" "\$@"
+exec "${emacsPackage}/bin/emacs" "\$@"
 EOF
 
     chmod +x "$app/Contents/MacOS/Emacs"
   '';
 in
 {
-  imports = [
-    inputs.twist.homeModules.emacs-twist
-  ];
-
-  programs.emacs-twist = {
-    config = lib.mkDefault flake.packages.${pkgs.stdenv.hostPlatform.system}.default;
-    earlyInitFile = lib.mkDefault flake.earlyInitEl.${pkgs.stdenv.hostPlatform.system};
-    createManifestFile = lib.mkDefault true;
-  };
-
-  system.activationScripts.emacsApp.text = lib.mkIf cfg.enable ''
+  system.activationScripts.emacsApp.text = ''
     app_source="${dockApp}/Applications/Emacs.app"
     app_target="/Applications/Emacs.app"
 
