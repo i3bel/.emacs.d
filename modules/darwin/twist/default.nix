@@ -1,9 +1,5 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ inputs, flake, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.programs.emacs-twist;
 
@@ -54,39 +50,23 @@ EOF
   '';
 in
 {
-  home.file = {
-    ".config/emacs/assets/".source = ../../../assets;
-    ".config/emacs/snippets".source = ../../../snippets;
-  }
-  // lib.optionalAttrs pkgs.stdenv.isDarwin {
-    "Applications/Emacs.app" = {
-      source = "${dockApp}/Applications/Emacs.app";
-      recursive = true;
-    };
+  imports = [
+    inputs.twist.homeModules.emacs-twist
+  ];
+
+  programs.emacs-twist = {
+    config = lib.mkDefault flake.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    earlyInitFile = lib.mkDefault flake.earlyInitEl.${pkgs.stdenv.hostPlatform.system};
+    createManifestFile = lib.mkDefault true;
   };
 
-  home.activation.refreshEmacsAppRegistration = lib.mkIf pkgs.stdenv.isDarwin (
-    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      app="$HOME/Applications/Emacs.app"
-      if [ -d "$app" ]; then
-        /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "$app" >/dev/null 2>&1 || true
-        /usr/bin/touch "$app" || true
-      fi
-    ''
-  );
+  system.activationScripts.emacsApp.text = lib.mkIf cfg.enable ''
+    app_source="${dockApp}/Applications/Emacs.app"
+    app_target="/Applications/Emacs.app"
 
-  home.packages =
-    with pkgs;
-    [
-      cmake
-      libtool
-      nixd
-      nodePackages.typescript-language-server
-      rust-analyzer
-      tree-sitter
-    ]
-    # `libvterm` in nixpkgs is Linux-only. On Darwin, Emacs `vterm` also uses
-    # `libvterm-neovim`, so include that package instead.
-    ++ lib.optional pkgs.stdenv.isLinux libvterm
-    ++ lib.optional pkgs.stdenv.isDarwin libvterm-neovim;
+    rm -rf "$app_target"
+    cp -R "$app_source" "$app_target"
+    /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "$app_target" >/dev/null 2>&1 || true
+    /usr/bin/touch "$app_target" || true
+  '';
 }
