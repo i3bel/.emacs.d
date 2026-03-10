@@ -50,7 +50,7 @@ EOF
   '';
 in
 {
-  system.activationScripts.emacsApp.text = ''
+  system.activationScripts.postActivation.text = lib.mkAfter ''
     app_source="${dockApp}/Applications/Emacs.app"
     app_target="/Applications/Emacs.app"
 
