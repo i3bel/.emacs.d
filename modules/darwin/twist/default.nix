@@ -1,49 +1,26 @@
 { flake, ... }:
 { lib, pkgs, ... }:
 let
-  emacsPackage = flake.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  wrappedEmacs = flake.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
   dockApp = pkgs.runCommandLocal "emacs-app" { } ''
+    raw_emacs="$(cd "$(dirname "$(readlink "${wrappedEmacs}/bin/emacsclient")")/.." && pwd)"
+    base_app="$raw_emacs/Applications/Emacs.app"
     app="$out/Applications/Emacs.app"
-    iconSource="${emacsPackage}/Applications/Emacs.app/Contents/Resources/Emacs.icns"
 
-    mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
-
-    if [ ! -f "$iconSource" ]; then
-      echo "Missing Emacs icon file: $iconSource" >&2
+    if [ ! -d "$base_app" ]; then
+      echo "Missing Emacs.app bundle: $base_app" >&2
       exit 1
     fi
-    cp "$iconSource" "$app/Contents/Resources/Emacs.icns"
 
-    cat > "$app/Contents/Info.plist" <<'EOF'
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-  <dict>
-    <key>CFBundleName</key>
-    <string>Emacs</string>
-    <key>CFBundleDisplayName</key>
-    <string>Emacs</string>
-    <key>CFBundleIdentifier</key>
-    <string>moe.kyre.emacs</string>
-    <key>CFBundleExecutable</key>
-    <string>Emacs</string>
-    <key>CFBundleIconFile</key>
-    <string>Emacs.icns</string>
-    <key>CFBundlePackageType</key>
-    <string>APPL</string>
-    <key>NSHighResolutionCapable</key>
-    <true/>
-  </dict>
-</plist>
-EOF
-
-    printf 'APPL????' > "$app/Contents/PkgInfo"
+    mkdir -p "$out/Applications"
+    cp -R "$base_app" "$app"
+    chmod -R u+w "$app"
 
     cat > "$app/Contents/MacOS/Emacs" <<EOF
 #!${pkgs.runtimeShell}
 export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:$PATH"
-exec "${emacsPackage}/bin/emacs" "\$@"
+exec "${wrappedEmacs}/bin/emacs" "\$@"
 EOF
 
     chmod +x "$app/Contents/MacOS/Emacs"
