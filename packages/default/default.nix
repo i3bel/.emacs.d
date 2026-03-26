@@ -13,6 +13,7 @@ inputs.twist.lib.makeEnv {
     lockDir
     initFiles
     extraPackages
+    extraSiteStartElisp
     ;
   inputOverrides = (import ./input-overrides.nix { inherit lib; }) // profile.extraInputOverrides;
   registries = import ./registries.nix inputs;
