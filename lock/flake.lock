@@ -961,6 +961,22 @@
         "type": "github"
       }
     },
+    "kuro": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774167273,
+        "narHash": "sha256-24cAyAiojDQTyAZMYav6fm53BGYlJnEAkQrtbNngTfc=",
+        "owner": "takeokunn",
+        "repo": "kuro",
+        "rev": "634ee8eb64cd95e4400c6993f63389606886b044",
+        "type": "github"
+      },
+      "original": {
+        "owner": "takeokunn",
+        "repo": "kuro",
+        "type": "github"
+      }
+    },
     "lambda-line": {
       "flake": false,
       "locked": {
@@ -1169,19 +1185,19 @@
         "type": "github"
       }
     },
-    "multi-vterm": {
+    "moonbit-mode": {
       "flake": false,
       "locked": {
-        "lastModified": 1667196630,
-        "narHash": "sha256-J2Isim4v4W06c+e28OrVkMprvk0XLfRSIkzo2UzVfgY=",
-        "owner": "suonlight",
-        "repo": "multi-vterm",
-        "rev": "36746d85870dac5aaee6b9af4aa1c3c0ef21a905",
+        "lastModified": 1755782590,
+        "narHash": "sha256-SFOnlvEMwYbTj4xOnHUCI/+nOQkFEzfjWdUuPuYjlHo=",
+        "owner": "cxa",
+        "repo": "moonbit-mode",
+        "rev": "bd5e82b6a6d66b19d03972837513fcf8f8bdaaaa",
         "type": "github"
       },
       "original": {
-        "owner": "suonlight",
-        "repo": "multi-vterm",
+        "owner": "cxa",
+        "repo": "moonbit-mode",
         "type": "github"
       }
     },
@@ -1760,6 +1776,7 @@
         "inheritenv": "inheritenv",
         "iter2": "iter2",
         "keg": "keg",
+        "kuro": "kuro",
         "lambda-line": "lambda-line",
         "lgr": "lgr",
         "llama": "llama",
@@ -1773,7 +1790,7 @@
         "markdown-mode": "markdown-mode",
         "mcp": "mcp",
         "mermaid-mode": "mermaid-mode",
-        "multi-vterm": "multi-vterm",
+        "moonbit-mode": "moonbit-mode",
         "multiple-cursors": "multiple-cursors",
         "mwim": "mwim",
         "nano-modeline": "nano-modeline",
@@ -1832,7 +1849,6 @@
         "vertico": "vertico",
         "vertico-posframe": "vertico-posframe",
         "visual-regexp": "visual-regexp",
-        "vterm": "vterm",
         "web-mode": "web-mode",
         "websocket": "websocket",
         "which-key": "which-key",
@@ -2256,22 +2272,6 @@
       "original": {
         "owner": "benma",
         "repo": "visual-regexp.el",
-        "type": "github"
-      }
-    },
-    "vterm": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1763571189,
-        "narHash": "sha256-F6lPLL3iPfFhysPpfZr8flQxc1uAb5wndLZEMA19Fkk=",
-        "owner": "akermu",
-        "repo": "emacs-libvterm",
-        "rev": "a01a2894a1c1e81a39527835a9169e35b7ec5dec",
-        "type": "github"
-      },
-      "original": {
-        "owner": "akermu",
-        "repo": "emacs-libvterm",
         "type": "github"
       }
     },

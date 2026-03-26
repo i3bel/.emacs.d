@@ -360,6 +360,12 @@
       repo = "keg.el";
       type = "github";
     };
+    kuro = {
+      flake = false;
+      owner = "takeokunn";
+      repo = "kuro";
+      type = "github";
+    };
     lambda-line = {
       flake = false;
       owner = "Lambda-Emacs";
@@ -438,10 +444,10 @@
       repo = "mermaid-mode";
       type = "github";
     };
-    multi-vterm = {
+    moonbit-mode = {
       flake = false;
-      owner = "suonlight";
-      repo = "multi-vterm";
+      owner = "cxa";
+      repo = "moonbit-mode";
       type = "github";
     };
     multiple-cursors = {
@@ -790,12 +796,6 @@
       flake = false;
       owner = "benma";
       repo = "visual-regexp.el";
-      type = "github";
-    };
-    vterm = {
-      flake = false;
-      owner = "akermu";
-      repo = "emacs-libvterm";
       type = "github";
     };
     web-mode = {
