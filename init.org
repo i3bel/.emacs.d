@@ -158,11 +158,7 @@ In this repository, =.#update= and =.#lock= require =--impure=.
 ** Keybindings
 *** Special Keys
 #+begin_src emacs-lisp
-  (defun toggle-vterm ()
-    (interactive)
-    (multi-vterm-dedicated-toggle))
-
-  (global-set-key (kbd "C-x t") 'toggle-vterm)
+  (global-set-key (kbd "C-x t") 'my/kuro-toggle)
   (global-set-key (kbd "<f3>") 'dashboard-open)
   (global-set-key (kbd "RET") 'smart-newline)
   (global-set-key (kbd "C-RET") 'newline)
@@ -1227,99 +1223,43 @@ jdtsmith/eglot-booster
 #+end_src
 
 ** Shell
-*** vterm
+*** kuro
 #+begin_src emacs-lisp
-  (defvar vterm-local-module-dir
-    (expand-file-name "var/vterm/" user-emacs-directory)
-    "Writable directory for vterm module artifacts.")
+  (defvar my/kuro-buffer-name "*kuro*"
+    "Buffer name for the dedicated Kuro terminal.")
 
-  (defun vterm-local--find-executable (name)
-    (or (executable-find name)
-        (let ((paths
-               (list
-                (expand-file-name (format "~/.nix-profile/bin/%s" name))
-                (format "/etc/profiles/per-user/%s/bin/%s" (user-login-name) name)
-                (format "/run/current-system/sw/bin/%s" name)
-                (format "/nix/var/nix/profiles/default/bin/%s" name)
-                (format "/usr/bin/%s" name)
-                (format "/bin/%s" name)))
-              found)
-          (while (and paths (not found))
-            (let ((candidate (car paths)))
-              (if (file-executable-p candidate)
-                  (setq found candidate)
-                (setq paths (cdr paths)))))
-          found)))
+  (defvar my/kuro-window-height 0.3
+    "Height of the dedicated Kuro window as a fraction of the frame.")
 
-  (defun vterm-local--build-command ()
-    (let ((nix (vterm-local--find-executable "nix")))
+  (defun my/kuro--display-buffer (buffer)
+    (let ((window
+           (display-buffer-in-side-window
+            buffer
+            `((side . bottom)
+              (slot . 0)
+              (window-height . ,my/kuro-window-height)))))
+      (set-window-dedicated-p window t)
+      window))
+
+  (defun my/kuro-toggle ()
+    (interactive)
+    (let* ((buffer (get-buffer my/kuro-buffer-name))
+           (window (and buffer (get-buffer-window buffer t))))
       (cond
-       (nix
-        (concat
-         nix
-         " shell nixpkgs#cmake nixpkgs#gnumake nixpkgs#gcc"
-         " --command sh -lc "
-         (shell-quote-argument
-          "cmake -G 'Unix Makefiles' -DCMAKE_PREFIX_PATH=/opt/homebrew -DUSE_SYSTEM_LIBVTERM=On . && make")))
+       (window
+        (delete-window window))
+       (buffer
+        (select-window (my/kuro--display-buffer buffer)))
        (t
-        (error "vterm build needs `nix` to provision build dependencies")))))
+        (require 'kuro)
+        (let* ((buffer (get-buffer-create my/kuro-buffer-name))
+               (window (my/kuro--display-buffer buffer)))
+          (select-window window)
+          (kuro-create nil my/kuro-buffer-name))))))
 
-  (defun vterm-local-ensure-module ()
-    (let* ((src-lib (locate-library "vterm.el" t))
-           (src-dir (and src-lib (file-name-directory src-lib)))
-           (stamp-file (expand-file-name ".vterm-source" vterm-local-module-dir))
-           (files
-            '("CMakeLists.txt"
-              "elisp.c"
-              "elisp.h"
-              "emacs-module.h"
-              "utf8.c"
-              "utf8.h"
-              "vterm-module.c"
-              "vterm-module.h")))
-      (when src-dir
-        (make-directory vterm-local-module-dir t)
-        (add-to-list 'load-path vterm-local-module-dir)
-        (let ((previous-src
-               (when (file-exists-p stamp-file)
-                 (with-temp-buffer
-                   (insert-file-contents stamp-file)
-                   (buffer-string)))))
-          (unless (equal previous-src src-dir)
-            (dolist (suffix '(".so" ".dylib" ".dll"))
-              (let ((module-file (expand-file-name (format "vterm-module%s" suffix) vterm-local-module-dir)))
-                (when (file-exists-p module-file)
-                  (delete-file module-file))))
-            (with-temp-file stamp-file
-              (insert src-dir))))
-        (dolist (file files)
-          (let ((target-file (expand-file-name file vterm-local-module-dir)))
-            (when (file-exists-p target-file)
-              (delete-file target-file))
-            (copy-file (expand-file-name file src-dir)
-                       target-file)))
-        (unless (let ((load-path (list vterm-local-module-dir)))
-                  (locate-library "vterm-module"))
-          (let ((default-directory vterm-local-module-dir)
-                (buffer (get-buffer-create " *vterm-module-build*")))
-            (with-current-buffer buffer
-              (erase-buffer))
-            (unless (zerop (call-process "sh" nil buffer t "-c" (vterm-local--build-command)))
-              (display-buffer buffer)
-              (error "Failed to build vterm-module; see %s" (buffer-name buffer))))))))
-
-  (use-package vterm
+  (use-package kuro
     :ensure t
-    :commands (vterm)
-    :init
-    (vterm-local-ensure-module))
-
-  (use-package multi-vterm
-    :ensure t
-    :after vterm
-    :commands (multi-vterm multi-vterm-next multi-vterm-prev multi-vterm-dedicated-toggle)
-    :config
-    (setopt multi-vterm-dedicated-window-height-percent 30))
+    :commands (kuro-create kuro-copy-mode))
 #+end_src
 
 *** exec-path-from-shell
