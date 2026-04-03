@@ -273,6 +273,22 @@
         "type": "github"
       }
     },
+    "closql": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767292115,
+        "narHash": "sha256-ulygpKzBeWGZgpArdRI91oGaZxD6/qNqYqxHffnP/SM=",
+        "owner": "magit",
+        "repo": "closql",
+        "rev": "947426d0c93e5ad5374c464b2f121c36cdaf2132",
+        "type": "github"
+      },
+      "original": {
+        "owner": "magit",
+        "repo": "closql",
+        "type": "github"
+      }
+    },
     "comment-translate": {
       "flake": false,
       "locked": {
@@ -817,6 +833,22 @@
         "type": "github"
       }
     },
+    "forge": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1773695344,
+        "narHash": "sha256-AP8Z5P1qVtAy+mJEfFHWj5ybuj+mRs37v8RoYjapitg=",
+        "owner": "magit",
+        "repo": "forge",
+        "rev": "f46e2be47ae89b18a0d6bb4496e60e72aa7a0df1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "magit",
+        "repo": "forge",
+        "type": "github"
+      }
+    },
     "frame-local": {
       "flake": false,
       "locked": {
@@ -863,6 +895,22 @@
       "original": {
         "type": "git",
         "url": "https://gitlab.com/koral/gcmh"
+      }
+    },
+    "ghub": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1775047151,
+        "narHash": "sha256-48j9rIZexxn78T1VrGFVS9a6Bz3Ytx1+F74m9efEiTQ=",
+        "owner": "magit",
+        "repo": "ghub",
+        "rev": "1fb0fba075cb8b80f9819c874be584dffce50b51",
+        "type": "github"
+      },
+      "original": {
+        "owner": "magit",
+        "repo": "ghub",
+        "type": "github"
       }
     },
     "ht": {
@@ -1733,6 +1781,7 @@
         "centaur-tabs": "centaur-tabs",
         "cfrs": "cfrs",
         "claude-code": "claude-code",
+        "closql": "closql",
         "comment-translate": "comment-translate",
         "compat": "compat",
         "cond-let": "cond-let",
@@ -1767,9 +1816,11 @@
         "flutter": "flutter",
         "flycheck": "flycheck",
         "flymake-shellcheck": "flymake-shellcheck",
+        "forge": "forge",
         "frame-local": "frame-local",
         "fsharp-mode": "fsharp-mode",
         "gcmh": "gcmh",
+        "ghub": "ghub",
         "ht": "ht",
         "hy-mode": "hy-mode",
         "hydra": "hydra",
@@ -1841,6 +1892,7 @@
         "swagg": "swagg",
         "tablist": "tablist",
         "transient": "transient",
+        "treepy": "treepy",
         "trinary": "trinary",
         "twist": "twist",
         "undercover": "undercover",
@@ -2144,6 +2196,22 @@
       "original": {
         "owner": "magit",
         "repo": "transient",
+        "type": "github"
+      }
+    },
+    "treepy": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1773393365,
+        "narHash": "sha256-8riSsH7O/nmxYn/JvjAsdMLKoCvk6wOEWW/GJ0LbIX0=",
+        "owner": "volrath",
+        "repo": "treepy.el",
+        "rev": "28f0e2c2c75ea186e8beb570a4a70087926ff80b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "volrath",
+        "repo": "treepy.el",
         "type": "github"
       }
     },

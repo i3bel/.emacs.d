@@ -15,6 +15,8 @@ inputs.twist.lib.makeEnv {
     extraPackages
     extraSiteStartElisp
     ;
-  inputOverrides = (import ./input-overrides.nix { inherit lib; }) // profile.extraInputOverrides;
+  inputOverrides = (import ./input-overrides.nix {
+    inherit lib pkgs;
+  }) // profile.extraInputOverrides;
   registries = import ./registries.nix inputs;
 }

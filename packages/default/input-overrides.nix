@@ -1,4 +1,4 @@
-{ lib }:
+{ lib, pkgs }:
 with builtins;
 {
   counsel = _: super: {
@@ -11,5 +11,12 @@ with builtins;
       "ivy.el"
       "swiper.el"
     ];
+  };
+  forge = _: super: {
+    preBuild =
+      (super.preBuild or "")
+      + ''
+        export PATH="${lib.makeBinPath [ pkgs.git ]}:$PATH"
+      '';
   };
 }
