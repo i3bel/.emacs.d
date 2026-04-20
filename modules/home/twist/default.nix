@@ -19,6 +19,7 @@
   home.packages =
     with pkgs;
     [
+      clang-tools
       cmake
       libtool
       nixd

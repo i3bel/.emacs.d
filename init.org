@@ -853,6 +853,25 @@ jdtsmith/eglot-booster
     :ensure t)
 #+end_src
 
+*** C/C++
+#+begin_src emacs-lisp
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs
+                 '((c-mode c-ts-mode)
+                   . ("clangd"
+                      "--background-index"
+                      "--header-insertion=never")))
+    (add-to-list 'eglot-server-programs
+                 '((c++-mode c++-ts-mode)
+                   . ("clangd"
+                      "--background-index"
+                      "--header-insertion=never"
+                      :initializationOptions
+                      (:fallbackFlags ["-xc++" "-std=c++20"]))))
+    (dolist (hook '(c-mode-hook c-ts-mode-hook c++-mode-hook c++-ts-mode-hook))
+      (add-hook hook #'eglot-ensure)))
+#+end_src
+
 *** C#
 #+begin_src emacs-lisp
   (defun my/eglot-csharp-server (_)
@@ -936,7 +955,9 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp
   (setopt treesit-language-source-alist
         '((astro "https://github.com/virchau13/tree-sitter-astro")
+          (c "https://github.com/tree-sitter/tree-sitter-c")
           (css "https://github.com/tree-sitter/tree-sitter-css")
+          (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
           (csharp "https://github.com/tree-sitter/tree-sitter-c-sharp")
           (moonbit "https://github.com/moonbitlang/tree-sitter-moonbit")
           (satysfi "https://github.com/monaqa/tree-sitter-satysfi")))
