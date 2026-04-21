@@ -21,6 +21,7 @@
     [
       clang-tools
       cmake
+      gcc
       libtool
       nixd
       nodePackages.typescript-language-server

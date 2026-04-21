@@ -855,19 +855,86 @@ jdtsmith/eglot-booster
 
 *** C/C++
 #+begin_src emacs-lisp
+  (defconst my/cpp-modes '(c++-mode c++-ts-mode))
+
+  (defun my/cpp-project-has-compile-database-p (path)
+    (let ((dir (if (file-directory-p path)
+                   path
+                 (file-name-directory path))))
+      (or (locate-dominating-file dir "compile_commands.json")
+          (locate-dominating-file dir "compile_flags.txt"))))
+
+  (defun my/eglot-cpp-compile-command (file)
+    (when-let ((g++ (executable-find "g++")))
+      `(:workingDirectory ,(file-name-directory file)
+        :compilationCommand [,g++ "-std=c++20" "-c" ,file])))
+
+  (defun my/eglot-cpp-compilation-database-changes (server)
+    (let ((root (project-root (eglot--project server)))
+          (changes (make-hash-table :test 'equal)))
+      (dolist (buffer (buffer-list))
+        (with-current-buffer buffer
+          (when (and buffer-file-name
+                     (memq major-mode my/cpp-modes)
+                     (file-in-directory-p buffer-file-name root)
+                     (not (my/cpp-project-has-compile-database-p buffer-file-name)))
+            (when-let ((command (my/eglot-cpp-compile-command buffer-file-name)))
+              (puthash buffer-file-name command changes)))))
+      (unless (= (hash-table-count changes) 0)
+        changes)))
+
+  (defvar my/eglot-workspace-configuration-base nil)
+
+  (defun my/eglot-workspace-configuration (server)
+    (let* ((base (if (functionp my/eglot-workspace-configuration-base)
+                     (funcall my/eglot-workspace-configuration-base server)
+                   my/eglot-workspace-configuration-base))
+           (changes (my/eglot-cpp-compilation-database-changes server)))
+      (cond
+       ((null changes) base)
+       ((or (null base) (keywordp (car-safe base)))
+        (plist-put (copy-sequence base) :compilationDatabaseChanges changes))
+       ((consp (car-safe base))
+        (setf (alist-get 'compilationDatabaseChanges base nil nil #'equal) changes)
+        base)
+       (t
+        `(:compilationDatabaseChanges ,changes)))))
+
+  (defun my/eglot-cpp-server (_)
+    (let* ((g++ (executable-find "g++"))
+           (args '("clangd"
+                   "--background-index"
+                   "--header-insertion=never"))
+           (init `(:fallbackFlags ["-xc++" "-std=c++20"])))
+      (when g++
+        (push (concat "--query-driver=" g++) args)
+        (when (and buffer-file-name
+                   (not (my/cpp-project-has-compile-database-p buffer-file-name)))
+          (when-let ((command (my/eglot-cpp-compile-command buffer-file-name)))
+            (setq init
+                  (plist-put init :compilationDatabaseChanges
+                             (let ((changes (make-hash-table :test 'equal)))
+                               (puthash buffer-file-name command changes)
+                               changes))))))
+      (append (nreverse args)
+              (list :initializationOptions init))))
+
+  (defun my/eglot-refresh-cpp-compilation-database ()
+    (when (memq major-mode my/cpp-modes)
+      (when-let ((server (eglot-current-server)))
+        (eglot-signal-didChangeConfiguration server))))
+
   (with-eval-after-load 'eglot
+    (setq my/eglot-workspace-configuration-base eglot-workspace-configuration)
+    (setopt eglot-workspace-configuration #'my/eglot-workspace-configuration)
     (add-to-list 'eglot-server-programs
                  '((c-mode c-ts-mode)
                    . ("clangd"
                       "--background-index"
                       "--header-insertion=never")))
     (add-to-list 'eglot-server-programs
-                 '((c++-mode c++-ts-mode)
-                   . ("clangd"
-                      "--background-index"
-                      "--header-insertion=never"
-                      :initializationOptions
-                      (:fallbackFlags ["-xc++" "-std=c++20"]))))
+                 '((c++-mode c++-ts-mode) . my/eglot-cpp-server))
+    (add-hook 'eglot-managed-mode-hook #'my/eglot-refresh-cpp-compilation-database)
     (dolist (hook '(c-mode-hook c-ts-mode-hook c++-mode-hook c++-ts-mode-hook))
       (add-hook hook #'eglot-ensure)))
 #+end_src

@@ -15,9 +15,10 @@ in
   exportManifest = true;
   extraPackages = [ ];
   extraSiteStartElisp = ''
-    (let ((clangd-bin "${pkgs.lib.makeBinPath [ pkgs.clang-tools ]}"))
-      (setenv "PATH" (concat clangd-bin path-separator (getenv "PATH")))
-      (add-to-list 'exec-path clangd-bin))
+    (let ((cxx-tools-bin "${pkgs.lib.makeBinPath [ pkgs.clang-tools pkgs.gcc ]}"))
+      (setenv "PATH" (concat cxx-tools-bin path-separator (getenv "PATH")))
+      (dolist (dir (reverse (split-string cxx-tools-bin path-separator t)))
+        (add-to-list 'exec-path dir)))
     (setenv "KURO_MODULE_PATH" "${kuroModule}/lib")
   '';
   extraRecipeDir = ./recipes;
