@@ -907,7 +907,9 @@ jdtsmith/eglot-booster
                    "--header-insertion=never"))
            (init `(:fallbackFlags ["-xc++" "-std=c++20"])))
       (when g++
-        (push (concat "--query-driver=" g++) args)
+        (setq args
+              (append args
+                      (list (concat "--query-driver=" g++))))
         (when (and buffer-file-name
                    (not (my/cpp-project-has-compile-database-p buffer-file-name)))
           (when-let ((command (my/eglot-cpp-compile-command buffer-file-name)))
@@ -916,7 +918,7 @@ jdtsmith/eglot-booster
                              (let ((changes (make-hash-table :test 'equal)))
                                (puthash buffer-file-name command changes)
                                changes))))))
-      (append (nreverse args)
+      (append args
               (list :initializationOptions init))))
 
   (defun my/eglot-refresh-cpp-compilation-database ()
