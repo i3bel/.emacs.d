@@ -857,13 +857,6 @@ jdtsmith/eglot-booster
 #+begin_src emacs-lisp
   (defconst my/cpp-modes '(c++-mode c++-ts-mode))
 
-  (defun my/cpp-project-has-compile-database-p (path)
-    (let ((dir (if (file-directory-p path)
-                   path
-                 (file-name-directory path))))
-      (or (locate-dominating-file dir "compile_commands.json")
-          (locate-dominating-file dir "compile_flags.txt"))))
-
   (defun my/eglot-cpp-compile-command (file)
     (when-let ((g++ (executable-find "g++")))
       `(:workingDirectory ,(file-name-directory file)
@@ -876,8 +869,7 @@ jdtsmith/eglot-booster
         (with-current-buffer buffer
           (when (and buffer-file-name
                      (memq major-mode my/cpp-modes)
-                     (file-in-directory-p buffer-file-name root)
-                     (not (my/cpp-project-has-compile-database-p buffer-file-name)))
+                     (file-in-directory-p buffer-file-name root))
             (when-let ((command (my/eglot-cpp-compile-command buffer-file-name)))
               (puthash buffer-file-name command changes)))))
       (unless (= (hash-table-count changes) 0)
@@ -910,14 +902,13 @@ jdtsmith/eglot-booster
         (setq args
               (append args
                       (list (concat "--query-driver=" g++))))
-        (when (and buffer-file-name
-                   (not (my/cpp-project-has-compile-database-p buffer-file-name)))
-          (when-let ((command (my/eglot-cpp-compile-command buffer-file-name)))
-            (setq init
-                  (plist-put init :compilationDatabaseChanges
-                             (let ((changes (make-hash-table :test 'equal)))
-                               (puthash buffer-file-name command changes)
-                               changes))))))
+        (when-let ((command (and buffer-file-name
+                                 (my/eglot-cpp-compile-command buffer-file-name))))
+          (setq init
+                (plist-put init :compilationDatabaseChanges
+                           (let ((changes (make-hash-table :test 'equal)))
+                             (puthash buffer-file-name command changes)
+                             changes)))))
       (append args
               (list :initializationOptions init))))
 
