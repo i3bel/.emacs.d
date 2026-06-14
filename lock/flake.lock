@@ -2012,11 +2012,11 @@
     "shell-maker": {
       "flake": false,
       "locked": {
-        "lastModified": 1767958632,
-        "narHash": "sha256-iMsN3UaoQ78vR0pHyd7f2uiYWwZmrFE3KOlvfEIjO/Y=",
+        "lastModified": 1781029418,
+        "narHash": "sha256-nJNZBZKmzEVn5gNEL0DT4S09Hfd8hk6DLaZTtoRksS0=",
         "owner": "xenodium",
         "repo": "shell-maker",
-        "rev": "e260a8e472e22b9c4a8a5b4892996dc2c47c7c7e",
+        "rev": "43ee9e1862994cbaa89715d324edb7a424181f22",
         "type": "github"
       },
       "original": {
