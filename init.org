@@ -1814,6 +1814,13 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+end_src
 
 ** Utilities
+*** agent-shell
+#+begin_src emacs-lisp
+  (use-package agent-shell
+    :ensure t
+    :commands (agent-shell agent-shell-start))
+#+end_src
+
 *** ai-code-interface
 #+begin_src emacs-lisp
   (use-package ai-code-interface

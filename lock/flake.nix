@@ -7,6 +7,18 @@
       repo = "ace-window";
       type = "github";
     };
+    acp = {
+      flake = false;
+      owner = "xenodium";
+      repo = "acp.el";
+      type = "github";
+    };
+    agent-shell = {
+      flake = false;
+      owner = "xenodium";
+      repo = "agent-shell";
+      type = "github";
+    };
     aggressive-indent = {
       flake = false;
       owner = "Malabarba";

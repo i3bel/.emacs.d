@@ -16,6 +16,38 @@
         "type": "github"
       }
     },
+    "acp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779917551,
+        "narHash": "sha256-hN5c1kOKBPq+rbuh0ILxq8oRVDgZLxQqQmeDj5PUKzE=",
+        "owner": "xenodium",
+        "repo": "acp.el",
+        "rev": "3ddfa907eb7f17949a4a8e731ea5c5241e6cbcb4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "xenodium",
+        "repo": "acp.el",
+        "type": "github"
+      }
+    },
+    "agent-shell": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1781446849,
+        "narHash": "sha256-vIUXzq7vtoqpooUhykirS21OGbA7cRj99LSHdWYa1P0=",
+        "owner": "xenodium",
+        "repo": "agent-shell",
+        "rev": "e382e41750a27ea2fbb8ae9e9c3d88edb08fa257",
+        "type": "github"
+      },
+      "original": {
+        "owner": "xenodium",
+        "repo": "agent-shell",
+        "type": "github"
+      }
+    },
     "aggressive-indent": {
       "flake": false,
       "locked": {
@@ -1765,6 +1797,8 @@
     "root": {
       "inputs": {
         "ace-window": "ace-window",
+        "acp": "acp",
+        "agent-shell": "agent-shell",
         "aggressive-indent": "aggressive-indent",
         "ai-code-interface": "ai-code-interface",
         "aio": "aio",
