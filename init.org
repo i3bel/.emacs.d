@@ -1089,7 +1089,47 @@ jdtsmith/eglot-booster
       (interactive)
       (call-interactively 'centaur-tabs-local-mode)
       (call-interactively 'centaur-tabs-local-mode))
-    (centaur-tabs-group-by-projectile-project)
+    (defun my/centaur-tabs-buffer-directory ()
+      (cond
+       (buffer-file-name
+        (file-name-directory (expand-file-name buffer-file-name)))
+       ((and default-directory
+             (file-directory-p default-directory))
+        (file-name-as-directory (expand-file-name default-directory)))))
+
+    (defun my/centaur-tabs-project-root (dir)
+      (let ((default-directory dir))
+        (or (when (fboundp 'projectile-project-root)
+              (ignore-errors (projectile-project-root)))
+            (when (require 'project nil t)
+              (when-let ((project (project-current nil)))
+                (project-root project))))))
+
+    (defun my/centaur-tabs-project-group-name ()
+      (let* ((dir (my/centaur-tabs-buffer-directory))
+             (root (and dir (my/centaur-tabs-project-root dir))))
+        (cond
+         (root
+          (file-name-nondirectory (directory-file-name root)))
+         (dir
+          (abbreviate-file-name (directory-file-name dir)))
+         (t
+          "Emacs"))))
+
+    (defun my/centaur-tabs-low-priority-output-buffer-p ()
+      (let ((case-fold-search t)
+            (name (buffer-name)))
+        (or (string-prefix-p " " name)
+            (string-match-p
+             "\\(?:stderr\\|stdout\\|Async Shell Command\\)"
+             name))))
+
+    (defun my/centaur-tabs-buffer-groups ()
+      (list (if (my/centaur-tabs-low-priority-output-buffer-p)
+                "Output"
+              (my/centaur-tabs-project-group-name))))
+
+    (setq centaur-tabs-buffer-groups-function #'my/centaur-tabs-buffer-groups)
     (centaur-tabs-headline-match)
     (centaur-tabs-enable-buffer-reordering)
     (centaur-tabs-change-fonts "arial" 90)
