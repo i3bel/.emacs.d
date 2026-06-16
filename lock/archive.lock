@@ -15,21 +15,6 @@
     },
     "version": "1.27.0.20260505.161621"
   },
-  "queue": {
-    "archive": {
-      "narHash": "sha256-ajVA/+XvUon+Ph7OdIwIgimlWbykI8V0hPlT8HREiA4=",
-      "type": "tarball",
-      "url": "https://elpa.gnu.org/devel/queue-0.2.0.20210306.173709.tar"
-    },
-    "inventory": {
-      "type": "archive",
-      "url": "https://elpa.gnu.org/devel/"
-    },
-    "packageRequires": {
-      "cl-lib": "0.5"
-    },
-    "version": "0.2.0.20210306.173709"
-  },
   "rainbow-mode": {
     "archive": {
       "narHash": "sha256-XMJ1pjGBISLllFwOcH9nA8xu9qYo1xsiqQ5XH/4XHCU=",

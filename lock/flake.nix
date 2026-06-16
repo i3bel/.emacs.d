@@ -50,28 +50,10 @@
       repo = "all-the-icons-dired";
       type = "github";
     };
-    ansi = {
-      flake = false;
-      owner = "rejeep";
-      repo = "ansi.el";
-      type = "github";
-    };
     arduino-mode = {
       flake = false;
       type = "git";
       url = "https://repo.or.cz/arduino-mode.git";
-    };
-    async = {
-      flake = false;
-      owner = "jwiegley";
-      repo = "emacs-async";
-      type = "github";
-    };
-    async-await = {
-      flake = false;
-      owner = "chuntaro";
-      repo = "emacs-async-await";
-      type = "github";
     };
     avy = {
       flake = false;
@@ -85,12 +67,6 @@
       repo = "beacon";
       type = "github";
     };
-    bui = {
-      flake = false;
-      owner = "alezost";
-      repo = "bui.el";
-      type = "github";
-    };
     cape = {
       flake = false;
       owner = "minad";
@@ -101,12 +77,6 @@
       flake = false;
       owner = "ema2159";
       repo = "centaur-tabs";
-      type = "github";
-    };
-    cfrs = {
-      flake = false;
-      owner = "Alexander-Miller";
-      repo = "cfrs";
       type = "github";
     };
     claude-code = {
@@ -217,22 +187,10 @@
       repo = "dockerfile-mode";
       type = "github";
     };
-    dotenv = {
-      flake = false;
-      owner = "pkulev";
-      repo = "dotenv.el";
-      type = "github";
-    };
     dumb-jump = {
       flake = false;
       owner = "jacktasia";
       repo = "dumb-jump";
-      type = "github";
-    };
-    eask = {
-      flake = false;
-      owner = "emacs-eask";
-      repo = "eask";
       type = "github";
     };
     editorconfig = {
@@ -247,22 +205,10 @@
       repo = "eglot-booster";
       type = "github";
     };
-    el-project = {
-      flake = false;
-      owner = "Kyure-A";
-      repo = "el-project";
-      type = "github";
-    };
     elcord = {
       flake = false;
       owner = "Mstrodl";
       repo = "elcord";
-      type = "github";
-    };
-    elquery = {
-      flake = false;
-      owner = "AdamNiederer";
-      repo = "elquery";
       type = "github";
     };
     emacsql = {
@@ -287,12 +233,6 @@
       flake = false;
       owner = "iqbalansari";
       repo = "emacs-emojify";
-      type = "github";
-    };
-    epl = {
-      flake = false;
-      owner = "cask";
-      repo = "epl";
       type = "github";
     };
     exec-path-from-shell = {
@@ -329,12 +269,6 @@
       flake = false;
       owner = "magit";
       repo = "forge";
-      type = "github";
-    };
-    frame-local = {
-      flake = false;
-      owner = "sebastiencs";
-      repo = "frame-local";
       type = "github";
     };
     fsharp-mode = {
@@ -378,18 +312,6 @@
       repo = "inheritenv";
       type = "github";
     };
-    iter2 = {
-      flake = false;
-      owner = "doublep";
-      repo = "iter2";
-      type = "github";
-    };
-    keg = {
-      flake = false;
-      owner = "conao3";
-      repo = "keg.el";
-      type = "github";
-    };
     kuro = {
       flake = false;
       owner = "takeokunn";
@@ -402,22 +324,10 @@
       repo = "lambda-line";
       type = "github";
     };
-    lgr = {
-      flake = false;
-      owner = "Fuco1";
-      repo = "emacs-lgr";
-      type = "github";
-    };
     llama = {
       flake = false;
       owner = "tarsius";
       repo = "llama";
-      type = "github";
-    };
-    llm = {
-      flake = false;
-      owner = "ahyatt";
-      repo = "llm";
       type = "github";
     };
     lsp-mode = {
@@ -546,18 +456,6 @@
       repo = "org-roam";
       type = "github";
     };
-    package-build = {
-      flake = false;
-      owner = "melpa";
-      repo = "package-build";
-      type = "github";
-    };
-    package-lint = {
-      flake = false;
-      owner = "purcell";
-      repo = "package-lint";
-      type = "github";
-    };
     page-break-lines = {
       flake = false;
       owner = "purcell";
@@ -570,37 +468,6 @@
       repo = "paredit";
       type = "github";
     };
-    pfuture = {
-      flake = false;
-      owner = "Alexander-Miller";
-      repo = "pfuture";
-      type = "github";
-    };
-    pkg-info = {
-      flake = false;
-      owner = "emacsorphanage";
-      repo = "pkg-info";
-      type = "github";
-    };
-    plz = {
-      flake = false;
-      owner = "alphapapa";
-      ref = "stable";
-      repo = "plz.el";
-      type = "github";
-    };
-    plz-event-source = {
-      flake = false;
-      owner = "r0man";
-      repo = "plz-event-source";
-      type = "github";
-    };
-    plz-media-type = {
-      flake = false;
-      owner = "r0man";
-      repo = "plz-media-type";
-      type = "github";
-    };
     polymode = {
       flake = false;
       owner = "polymode";
@@ -611,12 +478,6 @@
       flake = false;
       owner = "auto-complete";
       repo = "popup-el";
-      type = "github";
-    };
-    pos-tip = {
-      flake = false;
-      owner = "pitkali";
-      repo = "pos-tip";
       type = "github";
     };
     posframe = {
@@ -643,12 +504,6 @@
       repo = "projectile";
       type = "github";
     };
-    promise = {
-      flake = false;
-      owner = "chuntaro";
-      repo = "emacs-promise";
-      type = "github";
-    };
     puni = {
       flake = false;
       owner = "AmaiKinono";
@@ -659,12 +514,6 @@
       flake = false;
       owner = "Fanael";
       repo = "rainbow-delimiters";
-      type = "github";
-    };
-    recur = {
-      flake = false;
-      owner = "ROCKTAKEY";
-      repo = "recur";
       type = "github";
     };
     request = {
@@ -701,24 +550,6 @@
       flake = false;
       owner = "xenodium";
       repo = "shell-maker";
-      type = "github";
-    };
-    shrink-path = {
-      flake = false;
-      owner = "bennya";
-      repo = "shrink-path.el";
-      type = "gitlab";
-    };
-    shut-up = {
-      flake = false;
-      owner = "cask";
-      repo = "shut-up";
-      type = "github";
-    };
-    simple-httpd = {
-      flake = false;
-      owner = "skeeto";
-      repo = "emacs-web-server";
       type = "github";
     };
     sly = {
@@ -775,22 +606,10 @@
       repo = "tablist";
       type = "github";
     };
-    transient = {
-      flake = false;
-      owner = "magit";
-      repo = "transient";
-      type = "github";
-    };
     treepy = {
       flake = false;
       owner = "volrath";
       repo = "treepy.el";
-      type = "github";
-    };
-    trinary = {
-      flake = false;
-      owner = "emacs-elsa";
-      repo = "trinary-logic";
       type = "github";
     };
     twist = {
@@ -799,22 +618,10 @@
       repo = "twist.el";
       type = "github";
     };
-    undercover = {
-      flake = false;
-      owner = "undercover-el";
-      repo = "undercover.el";
-      type = "github";
-    };
     undo-fu = {
       flake = false;
       type = "git";
       url = "https://codeberg.org/ideasman42/emacs-undo-fu.git";
-    };
-    validate = {
-      flake = false;
-      owner = "Malabarba";
-      repo = "validate.el";
-      type = "github";
     };
     vertico = {
       flake = false;
