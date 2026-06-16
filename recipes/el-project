@@ -1,1 +1,0 @@
-(el-project :repo "Kyure-A/el-project" :fetcher github :files (:defaults "skeleton"))

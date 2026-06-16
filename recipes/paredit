@@ -1,2 +1,0 @@
-(paredit :fetcher github
-         :repo "emacsmirror/paredit")

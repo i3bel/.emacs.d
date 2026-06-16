@@ -1,4 +1,0 @@
-(ai-code-interface :fetcher github
-       :repo "Kyure-A/ai-code-interface.el"
-       :depends (claude-code)
-       :branch "package-requires")

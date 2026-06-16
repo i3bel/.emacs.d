@@ -64,23 +64,6 @@
         "type": "github"
       }
     },
-    "ai-code-interface": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1765932378,
-        "narHash": "sha256-JRihat6Gg6doJjhvg2B9VbWcnMdtsigc+mKp0TDf854=",
-        "owner": "Kyure-A",
-        "repo": "ai-code-interface.el",
-        "rev": "38a98db473561bbe82d51d1f14ac8f78d9acaa47",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Kyure-A",
-        "ref": "package-requires",
-        "repo": "ai-code-interface.el",
-        "type": "github"
-      }
-    },
     "aio": {
       "flake": false,
       "locked": {
@@ -206,22 +189,6 @@
       "original": {
         "owner": "ema2159",
         "repo": "centaur-tabs",
-        "type": "github"
-      }
-    },
-    "claude-code": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1766098566,
-        "narHash": "sha256-ISlD6q1hceckry1Jd19BX1MfobHJxng5ulX2gq9f644=",
-        "owner": "stevemolitor",
-        "repo": "claude-code.el",
-        "rev": "4a9914bd4161eb43f489820f9174c62390e5adc8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "stevemolitor",
-        "repo": "claude-code.el",
         "type": "github"
       }
     },
@@ -817,22 +784,6 @@
         "type": "github"
       }
     },
-    "inheritenv": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1732024534,
-        "narHash": "sha256-qzM7uepVOTQyxJmngiePHVXFdeOw59wGvwiKl3xEDT4=",
-        "owner": "purcell",
-        "repo": "inheritenv",
-        "rev": "b9e67cc20c069539698a9ac54d0e6cc11e616c6f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "purcell",
-        "repo": "inheritenv",
-        "type": "github"
-      }
-    },
     "kuro": {
       "flake": false,
       "locked": {
@@ -1073,22 +1024,6 @@
         "type": "github"
       }
     },
-    "nano-modeline": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1714386273,
-        "narHash": "sha256-CoADZ4L4JpoF3JRMb793z2nAq8s1VE3uqb3gqFD7IOA=",
-        "owner": "rougier",
-        "repo": "nano-modeline",
-        "rev": "04676d57a1e602123a593836745a744d1b2028fb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rougier",
-        "repo": "nano-modeline",
-        "type": "github"
-      }
-    },
     "nerd-icons": {
       "flake": false,
       "locked": {
@@ -1230,22 +1165,6 @@
       "original": {
         "owner": "purcell",
         "repo": "page-break-lines",
-        "type": "github"
-      }
-    },
-    "paredit": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1730669999,
-        "narHash": "sha256-y5yZSraJCWoJPvcBER6aANYGjnqwUuU8Wnmv6ne52hE=",
-        "owner": "emacsmirror",
-        "repo": "paredit",
-        "rev": "af075775af91f2dbc63b915d762b4aec092946c4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "emacsmirror",
-        "repo": "paredit",
         "type": "github"
       }
     },
@@ -1399,7 +1318,6 @@
         "acp": "acp",
         "agent-shell": "agent-shell",
         "aggressive-indent": "aggressive-indent",
-        "ai-code-interface": "ai-code-interface",
         "aio": "aio",
         "all-the-icons": "all-the-icons",
         "all-the-icons-dired": "all-the-icons-dired",
@@ -1408,7 +1326,6 @@
         "beacon": "beacon",
         "cape": "cape",
         "centaur-tabs": "centaur-tabs",
-        "claude-code": "claude-code",
         "closql": "closql",
         "comment-translate": "comment-translate",
         "compat": "compat",
@@ -1446,7 +1363,6 @@
         "ht": "ht",
         "hy-mode": "hy-mode",
         "hydra": "hydra",
-        "inheritenv": "inheritenv",
         "kuro": "kuro",
         "lambda-line": "lambda-line",
         "llama": "llama",
@@ -1462,7 +1378,6 @@
         "moonbit-mode": "moonbit-mode",
         "multiple-cursors": "multiple-cursors",
         "mwim": "mwim",
-        "nano-modeline": "nano-modeline",
         "nerd-icons": "nerd-icons",
         "nerd-icons-corfu": "nerd-icons-corfu",
         "nix-mode": "nix-mode",
@@ -1472,7 +1387,6 @@
         "org-modern": "org-modern",
         "org-roam": "org-roam",
         "page-break-lines": "page-break-lines",
-        "paredit": "paredit",
         "polymode": "polymode",
         "popup": "popup",
         "posframe": "posframe",
@@ -1490,7 +1404,6 @@
         "sly": "sly",
         "smart-hungry-delete": "smart-hungry-delete",
         "smart-newline": "smart-newline",
-        "solaire-mode": "solaire-mode",
         "spinner": "spinner",
         "sublimity": "sublimity",
         "svelte-mode": "svelte-mode",
@@ -1637,22 +1550,6 @@
       "original": {
         "owner": "ainame",
         "repo": "smart-newline.el",
-        "type": "github"
-      }
-    },
-    "solaire-mode": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1766550189,
-        "narHash": "sha256-Q4GnFGQXd0BRipmLsAtnUxhJrWD3URuJAzxvp2zXiTE=",
-        "owner": "hlissner",
-        "repo": "emacs-solaire-mode",
-        "rev": "e44f11a1ff7489ea7173119d62de99b88e29c918",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hlissner",
-        "repo": "emacs-solaire-mode",
         "type": "github"
       }
     },

@@ -25,13 +25,6 @@
       repo = "aggressive-indent-mode";
       type = "github";
     };
-    ai-code-interface = {
-      flake = false;
-      owner = "Kyure-A";
-      ref = "package-requires";
-      repo = "ai-code-interface.el";
-      type = "github";
-    };
     aio = {
       flake = false;
       owner = "skeeto";
@@ -77,12 +70,6 @@
       flake = false;
       owner = "ema2159";
       repo = "centaur-tabs";
-      type = "github";
-    };
-    claude-code = {
-      flake = false;
-      owner = "stevemolitor";
-      repo = "claude-code.el";
       type = "github";
     };
     closql = {
@@ -306,12 +293,6 @@
       repo = "hydra";
       type = "github";
     };
-    inheritenv = {
-      flake = false;
-      owner = "purcell";
-      repo = "inheritenv";
-      type = "github";
-    };
     kuro = {
       flake = false;
       owner = "takeokunn";
@@ -402,12 +383,6 @@
       repo = "mwim.el";
       type = "github";
     };
-    nano-modeline = {
-      flake = false;
-      owner = "rougier";
-      repo = "nano-modeline";
-      type = "github";
-    };
     nerd-icons = {
       flake = false;
       owner = "rainstormstudio";
@@ -460,12 +435,6 @@
       flake = false;
       owner = "purcell";
       repo = "page-break-lines";
-      type = "github";
-    };
-    paredit = {
-      flake = false;
-      owner = "emacsmirror";
-      repo = "paredit";
       type = "github";
     };
     polymode = {
@@ -568,12 +537,6 @@
       flake = false;
       owner = "ainame";
       repo = "smart-newline.el";
-      type = "github";
-    };
-    solaire-mode = {
-      flake = false;
-      owner = "hlissner";
-      repo = "emacs-solaire-mode";
       type = "github";
     };
     spinner = {

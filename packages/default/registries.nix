@@ -20,7 +20,6 @@ inputs: [
     path = inputs.melpa.outPath + "/recipes";
     exclude = [
       "dired-k"
-      "paredit"
     ];
   }
   {

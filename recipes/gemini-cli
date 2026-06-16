@@ -1,1 +1,0 @@
-(gemini-cli :fetcher github :repo "Kyure-A/gemini-cli.el")
