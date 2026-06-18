@@ -353,7 +353,8 @@ In this repository, =.#update= and =.#lock= require =--impure=.
   (use-package emojify
     :ensure t
     :config
-    :hook (after-init-hook . global-emojify-mode))
+    :hook (after-init-hook . (lambda ()
+                               (run-with-idle-timer 1 nil #'global-emojify-mode))))
 #+end_src
 
 *** lambda-line
@@ -1222,14 +1223,46 @@ jdtsmith/eglot-booster
 
 **** dashboard
 #+begin_src emacs-lisp 
-  (defvar my/dashboard-startup-time nil)
+  (defun my/dashboard-remote-file-p (file)
+    (and (stringp file)
+         (string-match-p "\\`/[^/|:]+:" file)))
 
-  (defun my/dashboard-init-info ()
-    "Return startup time measured when the dashboard is first rendered."
-    (unless my/dashboard-startup-time
-      (setq my/dashboard-startup-time
-            (float-time (time-subtract (current-time) before-init-time))))
-    (format "Emacs started in %.3f seconds" my/dashboard-startup-time))
+  (defun my/dashboard-local-file-p (file)
+    (not (my/dashboard-remote-file-p file)))
+
+  (defun my/dashboard-insert-local-recents (orig-fun list-size)
+    (let ((recentf-list (cl-remove-if-not #'my/dashboard-local-file-p recentf-list)))
+      (funcall orig-fun list-size)))
+
+  (defun my/dashboard-bookmark-filename (name)
+    (cdr (assq 'filename (cdr (assoc name bookmark-alist)))))
+
+  (defun my/dashboard-format-bookmark (name)
+    (let ((path (my/dashboard-bookmark-filename name)))
+      (if path
+          (format dashboard-bookmarks-item-format
+                  name
+                  (if (my/dashboard-remote-file-p path)
+                      path
+                    (abbreviate-file-name path)))
+        name)))
+
+  (defun my/dashboard-insert-bookmarks (list-size)
+    (require 'bookmark)
+    (bookmark-maybe-load-default-file)
+    (let ((dashboard-set-file-icons nil))
+      (dashboard-insert-section
+       "Bookmarks:"
+       (dashboard-subseq (bookmark-all-names) list-size)
+       list-size
+       'bookmarks
+       (dashboard-get-shortcut 'bookmarks)
+       `(lambda (&rest _) (bookmark-jump ,el))
+       (my/dashboard-format-bookmark el))))
+
+  (with-eval-after-load 'dashboard-widgets
+    (advice-add #'dashboard-insert-recents :around #'my/dashboard-insert-local-recents)
+    (advice-add #'dashboard-insert-bookmarks :override #'my/dashboard-insert-bookmarks))
 
   (use-package dashboard
     :ensure t
@@ -1242,7 +1275,6 @@ jdtsmith/eglot-booster
     (setq dashboard-center-content t)
     (setq dashboard-set-heading-icons t)
     (setq dashboard-set-file-icons t)
-    (setq dashboard-init-info #'my/dashboard-init-info)
     (setq dashboard-banner-logo-title "NEWGAMACS!")
     (setq dashboard-footer-messages '("「今日も一日がんばるぞい！」 - 涼風青葉"
                                       "「なんだかホントに入社した気分です！」 - 涼風青葉"
