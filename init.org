@@ -1063,7 +1063,8 @@ jdtsmith/eglot-booster
   (use-package aggressive-indent
     :ensure t
     :commands (global-aggressive-indent-mode)
-    :init (global-aggressive-indent-mode t))
+    :hook (after-init-hook . (lambda ()
+                               (run-with-idle-timer 1 nil #'global-aggressive-indent-mode))))
 #+end_src
 *** cape
 #+begin_src emacs-lisp
@@ -1363,8 +1364,8 @@ highlights dired buffer like supercrabtree/k
 #+begin_src emacs-lisp
   (use-package editorconfig
     :ensure t
-    :init
-    (editorconfig-mode t))
+    :hook (after-init-hook . (lambda ()
+                               (run-with-idle-timer 1 nil #'editorconfig-mode))))
 #+end_src
 
 *** embark
