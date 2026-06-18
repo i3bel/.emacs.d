@@ -62,7 +62,7 @@ In this repository, =.#update= and =.#lock= require =--impure=.
 ** Initialize
 *** Header
 #+begin_src emacs-lisp 
-  ;;; init.el ---  -*- lexical-binding: t -*-
+;;; init.el ---  -*- lexical-binding: t -*-
 
   ;; Author: Kyure_A <github.com/Kyure-A>
   ;; Maintainer: Kyure_A <github.com/Kyure-A>
@@ -509,7 +509,7 @@ jdtsmith/eglot-booster
   (defconst my/cpp-modes '(c++-mode c++-ts-mode))
 
   (defun my/eglot-cpp-compile-command (file)
-    (when-let ((g++ (executable-find "g++")))
+    (when-let* ((g++ (executable-find "g++")))
       `(:workingDirectory ,(file-name-directory file)
         :compilationCommand [,g++ "-std=c++20" "-c" ,file])))
 
@@ -521,7 +521,7 @@ jdtsmith/eglot-booster
           (when (and buffer-file-name
                      (memq major-mode my/cpp-modes)
                      (file-in-directory-p buffer-file-name root))
-            (when-let ((command (my/eglot-cpp-compile-command buffer-file-name)))
+            (when-let* ((command (my/eglot-cpp-compile-command buffer-file-name)))
               (puthash buffer-file-name command changes)))))
       (unless (= (hash-table-count changes) 0)
         changes)))
@@ -553,7 +553,7 @@ jdtsmith/eglot-booster
         (setq args
               (append args
                       (list (concat "--query-driver=" g++))))
-        (when-let ((command (and buffer-file-name
+        (when-let* ((command (and buffer-file-name
                                  (my/eglot-cpp-compile-command buffer-file-name))))
           (setq init
                 (plist-put init :compilationDatabaseChanges
@@ -565,7 +565,7 @@ jdtsmith/eglot-booster
 
   (defun my/eglot-refresh-cpp-compilation-database ()
     (when (memq major-mode my/cpp-modes)
-      (when-let ((server (eglot-current-server)))
+      (when-let* ((server (eglot-current-server)))
         (eglot-signal-didChangeConfiguration server))))
 
   (with-eval-after-load 'eglot
@@ -586,11 +586,11 @@ jdtsmith/eglot-booster
 *** C#
 #+begin_src emacs-lisp
   (defun my/eglot-csharp-server (_)
-    (or (when-let ((cmd (executable-find "omnisharp")))
+    (or (when-let* ((cmd (executable-find "omnisharp")))
           (list cmd "-lsp"))
-        (when-let ((cmd (executable-find "OmniSharp")))
+        (when-let* ((cmd (executable-find "OmniSharp")))
           (list cmd "-lsp"))
-        (when-let ((cmd (executable-find "csharp-ls")))
+        (when-let* ((cmd (executable-find "csharp-ls")))
           (list cmd))))
 
   (with-eval-after-load 'eglot
@@ -1103,7 +1103,7 @@ jdtsmith/eglot-booster
         (or (when (fboundp 'projectile-project-root)
               (ignore-errors (projectile-project-root)))
             (when (require 'project nil t)
-              (when-let ((project (project-current nil)))
+              (when-let* ((project (project-current nil)))
                 (project-root project))))))
 
     (defun my/centaur-tabs-project-group-name ()
@@ -1223,44 +1223,44 @@ jdtsmith/eglot-booster
 
 **** dashboard
 #+begin_src emacs-lisp 
-  (defun my/dashboard-remote-file-p (file)
-    (and (stringp file)
-         (string-match-p "\\`/[^/|:]+:" file)))
-
-  (defun my/dashboard-local-file-p (file)
-    (not (my/dashboard-remote-file-p file)))
-
-  (defun my/dashboard-insert-local-recents (orig-fun list-size)
-    (let ((recentf-list (cl-remove-if-not #'my/dashboard-local-file-p recentf-list)))
-      (funcall orig-fun list-size)))
-
-  (defun my/dashboard-bookmark-filename (name)
-    (cdr (assq 'filename (cdr (assoc name bookmark-alist)))))
-
-  (defun my/dashboard-format-bookmark (name)
-    (let ((path (my/dashboard-bookmark-filename name)))
-      (if path
-          (format dashboard-bookmarks-item-format
-                  name
-                  (if (my/dashboard-remote-file-p path)
-                      path
-                    (abbreviate-file-name path)))
-        name)))
-
-  (defun my/dashboard-insert-bookmarks (list-size)
-    (require 'bookmark)
-    (bookmark-maybe-load-default-file)
-    (let ((dashboard-set-file-icons nil))
-      (dashboard-insert-section
-       "Bookmarks:"
-       (dashboard-subseq (bookmark-all-names) list-size)
-       list-size
-       'bookmarks
-       (dashboard-get-shortcut 'bookmarks)
-       `(lambda (&rest _) (bookmark-jump ,el))
-       (my/dashboard-format-bookmark el))))
-
   (with-eval-after-load 'dashboard-widgets
+    (defun my/dashboard-remote-file-p (file)
+      (and (stringp file)
+           (string-match-p "\\`/[^/|:]+:" file)))
+
+    (defun my/dashboard-local-file-p (file)
+      (not (my/dashboard-remote-file-p file)))
+
+    (defun my/dashboard-insert-local-recents (orig-fun list-size)
+      (let ((recentf-list (cl-remove-if-not #'my/dashboard-local-file-p recentf-list)))
+        (funcall orig-fun list-size)))
+
+    (defun my/dashboard-bookmark-filename (name)
+      (cdr (assq 'filename (cdr (assoc name bookmark-alist)))))
+
+    (defun my/dashboard-format-bookmark (name)
+      (let ((path (my/dashboard-bookmark-filename name)))
+        (if path
+            (format dashboard-bookmarks-item-format
+                    name
+                    (if (my/dashboard-remote-file-p path)
+                        path
+                      (abbreviate-file-name path)))
+          name)))
+
+    (defun my/dashboard-insert-bookmarks (list-size)
+      (require 'bookmark)
+      (bookmark-maybe-load-default-file)
+      (let ((dashboard-set-file-icons nil))
+        (dashboard-insert-section
+         "Bookmarks:"
+         (dashboard-subseq (bookmark-all-names) list-size)
+         list-size
+         'bookmarks
+         (dashboard-get-shortcut 'bookmarks)
+         `(lambda (&rest _) (bookmark-jump ,el))
+         (my/dashboard-format-bookmark el))))
+
     (advice-add #'dashboard-insert-recents :around #'my/dashboard-insert-local-recents)
     (advice-add #'dashboard-insert-bookmarks :override #'my/dashboard-insert-bookmarks))
 

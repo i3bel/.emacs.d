@@ -13,7 +13,7 @@ https://github.com/Kyure-A/.emacs.d
 ** Initialize
 *** Header
 #+begin_src emacs-lisp 
-  ;;; early-init.el ---  -*- lexical-binding: t -*-
+;;; early-init.el ---  -*- lexical-binding: t -*-
 
   ;; Author: Kyure_A <github.com/Kyure-A>
   ;; Maintainer: Kyure_A <github.com/Kyure-A>
