@@ -1184,8 +1184,7 @@ jdtsmith/eglot-booster
   (defun dashboard-goto-recent-files ()
     "Go to recent files."
     (interactive)
-    (let ((func (local-key-binding "r")))
-      (and func (funcall func))))
+    (dashboard--goto-section-by-index 2))
 #+end_src
 
 **** open-dashboard
@@ -1242,7 +1241,6 @@ jdtsmith/eglot-booster
                                       "「C++ を完全に理解してしまったかもしれない」 - 桜ねね"
                                       "「これでもデバッグはプロ級だし 今はプログラムの知識だってあるんだからまかせてよね！」 - 桜ねね"))
     (setq dashboard-startup-banner (if (or (eq window-system 'x) (eq window-system 'ns) (eq window-system 'w32)) "~/.config/emacs/assets/banner.png" "~/.config/emacs/assets/banner.txt"))
-    (open-dashboard)
     (dashboard-setup-startup-hook)
     (define-key dashboard-mode-map (kbd "<f3>") #'quit-dashboard)
     (define-key dashboard-mode-map (kbd "p") #'previous-line)
@@ -1528,7 +1526,13 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
 #+begin_src emacs-lisp
   (use-package copilot
     :ensure t
-    :hook (prog-mode-hook . copilot-mode)
+    :commands (copilot-mode)
+    :hook (prog-mode-hook . my/copilot-mode)
+    :preface
+    (defun my/copilot-mode ()
+      (unless (or (string= (buffer-name) "*scratch*")
+                  (derived-mode-p 'lisp-data-mode))
+        (copilot-mode 1)))
     :init
     (let* ((user-profile-bin (format "/etc/profiles/per-user/%s/bin/copilot-language-server"
                                      (user-login-name)))
@@ -1565,7 +1569,8 @@ Allows you to integrate Rich Presence from Discord.
 #+begin_src emacs-lisp
   (use-package elcord
     :ensure t
-    :hook (after-init-hook . elcord-mode))
+    :hook (after-init-hook . (lambda ()
+                               (run-with-idle-timer 2 nil #'elcord-mode))))
 #+end_src
 
 *** Magit
