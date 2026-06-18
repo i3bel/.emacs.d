@@ -1222,6 +1222,15 @@ jdtsmith/eglot-booster
 
 **** dashboard
 #+begin_src emacs-lisp 
+  (defvar my/dashboard-startup-time nil)
+
+  (defun my/dashboard-init-info ()
+    "Return startup time measured when the dashboard is first rendered."
+    (unless my/dashboard-startup-time
+      (setq my/dashboard-startup-time
+            (float-time (time-subtract (current-time) before-init-time))))
+    (format "Emacs started in %.3f seconds" my/dashboard-startup-time))
+
   (use-package dashboard
     :ensure t
     :hook (after-init-hook . open-dashboard)
@@ -1233,6 +1242,7 @@ jdtsmith/eglot-booster
     (setq dashboard-center-content t)
     (setq dashboard-set-heading-icons t)
     (setq dashboard-set-file-icons t)
+    (setq dashboard-init-info #'my/dashboard-init-info)
     (setq dashboard-banner-logo-title "NEWGAMACS!")
     (setq dashboard-footer-messages '("「今日も一日がんばるぞい！」 - 涼風青葉"
                                       "「なんだかホントに入社した気分です！」 - 涼風青葉"
