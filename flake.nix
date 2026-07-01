@@ -54,9 +54,29 @@
     outputs
     // {
       apps = lib.mapAttrs (
-        _system: packages:
-        packages.default.makeApps {
-          lockDirName = "lock";
+        system: packages:
+        let
+          pkgs = import inputs.nixpkgs {
+            inherit system;
+            overlays = overlaysList;
+          };
+          profile = import ./default.nix {
+            inherit pkgs;
+          };
+          generatedApps = packages.default.makeApps {
+            lockDirName = "lock";
+          };
+          defaultWrapper = pkgs.callPackage ./nix/lib/tmp-init-dir-wrapper.nix { } {
+            emacsEnv = packages.default;
+            inherit (profile) initFiles earlyInitFile;
+          };
+        in
+        generatedApps
+        // {
+          default = {
+            type = "app";
+            program = "${defaultWrapper}/bin/emacs-twist";
+          };
         }
       ) (lib.filterAttrs (_: packages: packages ? default) outputs.packages);
 
