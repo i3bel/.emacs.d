@@ -3,12 +3,16 @@
   writeShellScriptBin,
 }:
 
-emacsEnv:
+{
+  emacsEnv,
+  initFiles,
+  earlyInitFile,
+}:
 let
   initFile = runCommandLocal "twist-init.el" { } ''
     mkdir -p "$out"
     touch "$out/init.el"
-    for file in ${builtins.concatStringsSep " " emacsEnv.initFiles}; do
+    for file in ${builtins.concatStringsSep " " initFiles}; do
       cat "$file" >> "$out/init.el"
       echo >> "$out/init.el"
     done
@@ -24,7 +28,7 @@ writeShellScriptBin "emacs-twist" ''
   trap cleanup EXIT
 
   ln -s ${initFile}/init.el "$initdir/init.el"
-  ln -s ${emacsEnv.earlyInitFile} "$initdir/early-init.el"
+  ln -s ${earlyInitFile} "$initdir/early-init.el"
 
   ${emacsEnv}/bin/emacs --init-directory="$initdir" "$@"
 ''

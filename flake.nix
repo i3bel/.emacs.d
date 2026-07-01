@@ -60,10 +60,16 @@
             inherit system;
             overlays = overlaysList;
           };
+          profile = import ./default.nix {
+            inherit pkgs;
+          };
           generatedApps = packages.default.makeApps {
             lockDirName = "lock";
           };
-          defaultWrapper = pkgs.callPackage ./nix/lib/tmp-init-dir-wrapper.nix { } packages.default;
+          defaultWrapper = pkgs.callPackage ./nix/lib/tmp-init-dir-wrapper.nix { } {
+            emacsEnv = packages.default;
+            inherit (profile) initFiles earlyInitFile;
+          };
         in
         generatedApps
         // {
