@@ -293,6 +293,18 @@
       repo = "hydra";
       type = "github";
     };
+    inf-ruby = {
+      flake = false;
+      owner = "nonsequitur";
+      repo = "inf-ruby";
+      type = "github";
+    };
+    inflections = {
+      flake = false;
+      owner = "eschulte";
+      repo = "jump.el";
+      type = "github";
+    };
     kuro = {
       flake = false;
       owner = "takeokunn";
@@ -473,6 +485,12 @@
       repo = "projectile";
       type = "github";
     };
+    projectile-rails = {
+      flake = false;
+      owner = "asok";
+      repo = "projectile-rails";
+      type = "github";
+    };
     puni = {
       flake = false;
       owner = "AmaiKinono";
@@ -485,10 +503,22 @@
       repo = "rainbow-delimiters";
       type = "github";
     };
+    rake = {
+      flake = false;
+      owner = "asok";
+      repo = "rake";
+      type = "github";
+    };
     request = {
       flake = false;
       owner = "tkf";
       repo = "emacs-request";
+      type = "github";
+    };
+    rspec-mode = {
+      flake = false;
+      owner = "pezra";
+      repo = "rspec-mode";
       type = "github";
     };
     rust-mode = {

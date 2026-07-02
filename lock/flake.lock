@@ -784,6 +784,38 @@
         "type": "github"
       }
     },
+    "inf-ruby": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1766542577,
+        "narHash": "sha256-agdYqk2UZBWEpN9Hd/B1ExOf9xh0hxtWQK3y0X03/Tg=",
+        "owner": "nonsequitur",
+        "repo": "inf-ruby",
+        "rev": "274398a24288a7db430a656b580ffbf889ca02aa",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nonsequitur",
+        "repo": "inf-ruby",
+        "type": "github"
+      }
+    },
+    "inflections": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1610318257,
+        "narHash": "sha256-Z51pBVsMvk9OU93tvJsjeGRYEphuoFvXB2xZukw80A0=",
+        "owner": "eschulte",
+        "repo": "jump.el",
+        "rev": "55caa66a7cc6e0b1a76143fd40eff38416928941",
+        "type": "github"
+      },
+      "original": {
+        "owner": "eschulte",
+        "repo": "jump.el",
+        "type": "github"
+      }
+    },
     "kuro": {
       "flake": false,
       "locked": {
@@ -1264,6 +1296,22 @@
         "type": "github"
       }
     },
+    "projectile-rails": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1672504996,
+        "narHash": "sha256-ZGpjuNegSUiz0rLa2KYGfhzcR24i4xgZ1o9sQ6xWlZI=",
+        "owner": "asok",
+        "repo": "projectile-rails",
+        "rev": "701784df7befe17b861f1b53fe9cbc59d0b94b9f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "asok",
+        "repo": "projectile-rails",
+        "type": "github"
+      }
+    },
     "puni": {
       "flake": false,
       "locked": {
@@ -1293,6 +1341,22 @@
       "original": {
         "owner": "Fanael",
         "repo": "rainbow-delimiters",
+        "type": "github"
+      }
+    },
+    "rake": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1644568047,
+        "narHash": "sha256-2QiAO2w/Om9kjObAIfdE9wpPGXj9qY9ivB7iIGdNkY8=",
+        "owner": "asok",
+        "repo": "rake",
+        "rev": "452ea0caca33376487103c64177c295ed2960cca",
+        "type": "github"
+      },
+      "original": {
+        "owner": "asok",
+        "repo": "rake",
         "type": "github"
       }
     },
@@ -1363,6 +1427,8 @@
         "ht": "ht",
         "hy-mode": "hy-mode",
         "hydra": "hydra",
+        "inf-ruby": "inf-ruby",
+        "inflections": "inflections",
         "kuro": "kuro",
         "lambda-line": "lambda-line",
         "llama": "llama",
@@ -1393,9 +1459,12 @@
         "powerline": "powerline",
         "powershell": "powershell",
         "projectile": "projectile",
+        "projectile-rails": "projectile-rails",
         "puni": "puni",
         "rainbow-delimiters": "rainbow-delimiters",
+        "rake": "rake",
         "request": "request",
+        "rspec-mode": "rspec-mode",
         "rust-mode": "rust-mode",
         "rustowl": "rustowl",
         "s": "s",
@@ -1423,6 +1492,22 @@
         "yaml": "yaml",
         "yaml-mode": "yaml-mode",
         "yasnippet": "yasnippet"
+      }
+    },
+    "rspec-mode": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1781761689,
+        "narHash": "sha256-tO2kfwxRRb/wnUo4STJwlAxIb6dCeNQu/EqvlcBR9hg=",
+        "owner": "pezra",
+        "repo": "rspec-mode",
+        "rev": "b5d48de9b56a0070d7a0d3e642b139992a1ce3f0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pezra",
+        "repo": "rspec-mode",
+        "type": "github"
       }
     },
     "rust-mode": {

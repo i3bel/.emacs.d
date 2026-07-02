@@ -612,6 +612,21 @@ jdtsmith/eglot-booster
     (add-hook 'nix-mode-hook #'eglot-ensure))
 #+end_src
 
+*** Ruby
+#+begin_src emacs-lisp
+  (defun my/eglot-ruby-server (_)
+    (or (when-let* ((cmd (executable-find "ruby-lsp")))
+          (list cmd))
+        (when-let* ((cmd (executable-find "solargraph")))
+          (list cmd "stdio"))))
+
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs
+                 '((ruby-mode ruby-ts-mode) . my/eglot-ruby-server))
+    (dolist (hook '(ruby-mode-hook ruby-ts-mode-hook))
+      (add-hook hook #'eglot-ensure)))
+#+end_src
+
 *** Rust
 [[https://gist.github.com/casouri/0ad2c6e58965f6fd2498a91fc9c66501?permalink_comment_id=4645337#gistcomment-4645337][Source]]
 #+begin_src emacs-lisp
@@ -650,15 +665,31 @@ jdtsmith/eglot-booster
   (defun node-project-p () (project-has-file-p "package.json"))
   (defun bun-project-p  () (project-has-file-p "bun.lockb"))
 
+  (defun web-mode-javascript-buffer-p ()
+    (and buffer-file-name
+         (string-match-p "\\.\\(?:[cm]?[jt]sx?\\|json\\)\\'" buffer-file-name)))
+
   (defun es-server-program (_)
     (cond ((deno-project-p)
            '("deno" "lsp" :initializationOptions (:enable t :lint t)))
           ((or (node-project-p) (bun-project-p))
            '("typescript-language-server" "--stdio"))))
+
+  (defun web-mode-server-program (_)
+    (cond ((and buffer-file-name
+                (string-match-p "\\.erb\\'" buffer-file-name))
+           (my/eglot-ruby-server nil))
+          ((web-mode-javascript-buffer-p)
+           (es-server-program nil))))
+
+  (defun web-mode-eglot-ensure ()
+    (when (web-mode-server-program nil)
+      (eglot-ensure)))
   
   (with-eval-after-load 'eglot
-    (add-to-list 'eglot-server-programs '((js-mode web-mode) . es-server-program))
-    (add-hook 'web-mode-hook #'eglot-ensure)
+    (add-to-list 'eglot-server-programs '(js-mode . es-server-program))
+    (add-to-list 'eglot-server-programs '(web-mode . web-mode-server-program))
+    (add-hook 'web-mode-hook #'web-mode-eglot-ensure)
     (add-hook 'js-mode-hook #'eglot-ensure))
 #+end_src
 
@@ -671,6 +702,7 @@ jdtsmith/eglot-booster
           (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
           (csharp "https://github.com/tree-sitter/tree-sitter-c-sharp")
           (moonbit "https://github.com/moonbitlang/tree-sitter-moonbit")
+          (ruby "https://github.com/tree-sitter/tree-sitter-ruby")
           (satysfi "https://github.com/monaqa/tree-sitter-satysfi")))
 #+end_src
 
@@ -786,6 +818,43 @@ jdtsmith/eglot-booster
   (use-package powershell
     :mode (("\\.ps1$" . powershell-mode))
     :ensure t)
+#+end_src
+
+*** Ruby / Rails
+#+begin_src emacs-lisp
+  (use-package ruby-mode
+    :mode (("\\.rb\\'" . ruby-mode)
+           ("\\.rake\\'" . ruby-mode)
+           ("\\.gemspec\\'" . ruby-mode)
+           ("\\(?:Gem\\|Rake\\|Cap\\|Guard\\)file\\'" . ruby-mode)
+           ("config\\.ru\\'" . ruby-mode))
+    :init
+    (when (and (fboundp 'treesit-available-p)
+               (treesit-available-p)
+               (fboundp 'treesit-language-available-p)
+               (treesit-language-available-p 'ruby))
+      (add-to-list 'major-mode-remap-alist
+                   '(ruby-mode . ruby-ts-mode)))
+    :config
+    (setopt ruby-indent-level 2)
+    (setopt ruby-insert-encoding-magic-comment nil))
+
+  (use-package inf-ruby
+    :ensure t
+    :hook ((ruby-mode-hook . inf-ruby-minor-mode)
+           (ruby-ts-mode-hook . inf-ruby-minor-mode)))
+
+  (use-package rspec-mode
+    :ensure t
+    :hook ((ruby-mode-hook . rspec-mode)
+           (ruby-ts-mode-hook . rspec-mode)))
+
+  (use-package projectile-rails
+    :ensure t
+    :after projectile
+    :hook ((ruby-mode-hook . projectile-rails-on)
+           (ruby-ts-mode-hook . projectile-rails-on)
+           (web-mode-hook . projectile-rails-on)))
 #+end_src
 
 *** Rust
@@ -942,6 +1011,11 @@ jdtsmith/eglot-booster
     (setopt web-mode-enable-current-column-highlight t)
     (setopt web-mode-enable-current-element-highlight t)
     (setopt web-mode-comment-style 2)
+    (setopt web-mode-engines-alist '(("erb" . "\\.erb\\'")))
+    (setopt web-mode-code-indent-offset 2)
+    (setopt web-mode-css-indent-offset 2)
+    (setopt web-mode-script-padding 0)
+    (setopt web-mode-style-padding 0)
     (setopt web-mode-enable-auto-indentation nil))
 #+end_src
 

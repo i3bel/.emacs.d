@@ -15,7 +15,17 @@ in
   exportManifest = true;
   extraPackages = [ ];
   extraSiteStartElisp = ''
-    (let ((extra-bin "${pkgs.lib.makeBinPath [ pkgs.clang-tools pkgs.gcc pkgs.codex-acp ]}"))
+    (let ((extra-bin "${
+      pkgs.lib.makeBinPath [
+        pkgs.clang-tools
+        pkgs.gcc
+        pkgs.codex-acp
+        pkgs.ruby
+        pkgs.rubyPackages.ruby-lsp
+        pkgs.rubyPackages.rubocop
+        pkgs.rubyPackages.solargraph
+      ]
+    }"))
       (setenv "PATH" (concat extra-bin path-separator (getenv "PATH")))
       (dolist (dir (reverse (split-string extra-bin path-separator t)))
         (add-to-list 'exec-path dir)))
