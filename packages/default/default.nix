@@ -12,6 +12,7 @@ inputs.twist.lib.makeEnv {
     emacsPackage
     lockDir
     initFiles
+    exportManifest
     extraPackages
     extraSiteStartElisp
     ;

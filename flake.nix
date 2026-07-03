@@ -69,6 +69,9 @@
           defaultWrapper = pkgs.callPackage ./nix/lib/tmp-init-dir-wrapper.nix { } {
             emacsEnv = packages.default;
             inherit (profile) initFiles earlyInitFile;
+            assetsDir = ./assets;
+            snippetsDir = ./snippets;
+            manifestFile = packages.default.emacsWrapper.elispManifestPath;
           };
         in
         generatedApps

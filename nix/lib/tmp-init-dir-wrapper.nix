@@ -7,6 +7,10 @@
   emacsEnv,
   initFiles,
   earlyInitFile,
+  assetsDir ? null,
+  snippetsDir ? null,
+  manifestFile ? null,
+  manifestFileName ? "twist-manifest.json",
 }:
 let
   initFile = runCommandLocal "twist-init.el" { } ''
@@ -29,6 +33,9 @@ writeShellScriptBin "emacs-twist" ''
 
   ln -s ${initFile}/init.el "$initdir/init.el"
   ln -s ${earlyInitFile} "$initdir/early-init.el"
+  ${if assetsDir == null then "" else ''ln -s ${assetsDir} "$initdir/assets"''}
+  ${if snippetsDir == null then "" else ''ln -s ${snippetsDir} "$initdir/snippets"''}
+  ${if manifestFile == null then "" else ''ln -s ${manifestFile} "$initdir/${manifestFileName}"''}
 
   ${emacsEnv}/bin/emacs --init-directory="$initdir" "$@"
 ''
