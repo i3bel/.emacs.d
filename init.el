@@ -1,67 +1,3 @@
-#+title: init.org
-#+description: Kyure_A's Emacs config
-#+author: Kyure_A
- 
-* Introduction
-
-** Author
-Kyure_A
-
-** Repository
-https://github.com/Kyure-A/.emacs.d
-
-** Screen shot
-[[file:./assets/ss1.png]]
-[[file:./assets/ss2.png]]
-
-* Commands
-
-** Run My Emacs
-#+begin_src sh
-nix run .#default
-#+end_src
-Launches Emacs from this flake.
-
-** Update flake.lock
-#+begin_src sh
-nix run --impure .#lock
-#+end_src
-Regenerates lock data and updates =lock/flake.lock=.
-
-
-** Update Package Metadata
-#+begin_src sh
-nix run --impure .#update
-#+end_src
-Refreshes archive-based package metadata under =lock/=.
-
-** Hot-reload Packages (inside Emacs)
-#+begin_src text
-M-x twist-update
-#+end_src
-Applies updated package set without restarting Emacs.
-
-** Format Repository
-#+begin_src sh
-nix fmt
-#+end_src
-Formats files using =treefmt= and =nixfmt-rfc-style=.
-
-** Show Available Flake Outputs
-#+begin_src sh
-nix flake show --all-systems
-#+end_src
-Lists exported flake outputs (=packages=, =apps=, =formatter=, etc.).
-
-#+begin_quote
-In this repository, =.#update= and =.#lock= require =--impure=.
-#+end_quote
- 
-
-* Configurations
-** Initialize
-*** Header
-#+begin_src emacs-lisp 
 ;;; init.el ---  -*- lexical-binding: t -*-
 
   ;; Author: Kyure_A <github.com/Kyure-A>
@@ -79,46 +15,35 @@ In this repository, =.#update= and =.#lock= require =--impure=.
   ;;  .?eeeee`                       .AA!    AAA                  .ssss<s!   .!!
 
   ;;; Code:  
-#+end_src
 
-*** Setup tracker
-#+begin_src emacs-lisp
-  (defvar setup-tracker--level 0)
-  (defvar setup-tracker--parents nil)
-  (defvar setup-tracker--times nil)
 
-  (when load-file-name
-    (push load-file-name setup-tracker--parents)
-    (push (current-time) setup-tracker--times)
-    (setq setup-tracker--level (1+ setup-tracker--level)))
 
-  (add-variable-watcher
-   'load-file-name
-   (lambda (_ v &rest __)
-     (cond ((equal v (car setup-tracker--parents))
-            nil)
-           ((equal v (cadr setup-tracker--parents))
-            (setq setup-tracker--level (1- setup-tracker--level))
-            (let* ((now (current-time))
-                   (start (pop setup-tracker--times))
-                   (elapsed (+ (* (- (nth 1 now) (nth 1 start)) 1000)
-                               (/ (- (nth 2 now) (nth 2 start)) 1000))))
-              (with-current-buffer (get-buffer-create "*setup-tracker*")
-                (save-excursion
-                  (goto-char (point-min))
-                  (dotimes (_ setup-tracker--level) (insert "> "))
-                  (insert
-                   (file-name-nondirectory (pop setup-tracker--parents))
-                   " (" (number-to-string elapsed) " msec)\n")))))
-           (t
-            (push v setup-tracker--parents)
-            (push (current-time) setup-tracker--times)
-            (setq setup-tracker--level (1+ setup-tracker--level))))))
-#+end_src
+;; 使用清华大学 TUNA 镜像
+(setq package-archives
+      '(("gnu"    . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+        ("nongnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
+        ("melpa"  . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 
-*** with-delayed-execution
-[[https://zenn.dev/takeokunn/articles/56010618502ccc#:~:text=%E5%85%83%E8%A8%98%E4%BA%8B%E3%82%92%E5%8F%82%E8%80%83%E3%81%AB%E5%84%AA%E5%85%88%E9%A0%86%E4%BD%8D%E9%AB%98%E3%81%84queue%E3%82%92%E5%87%A6%E7%90%86%E3%81%99%E3%82%8B%E6%A9%9F%E6%A7%8B%E3%82%82%E4%BD%9C%E3%82%8A%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82][Source]]
-#+begin_src emacs-lisp 
+(package-initialize)
+
+(unless package-archive-contents
+  (package-refresh-contents))
+
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+(require 'use-package)
+(setopt use-package-always-ensure t)
+
+(defun my/use-package-ensure-smart (name args state &optional no-refresh)
+  "如果 NAME 已经是内置可用的功能/函数,就跳过安装,否则走正常的 package-install。"
+  (unless (or (fboundp name) (featurep name) (locate-library (symbol-name name)))
+    (use-package-ensure-elpa name args state no-refresh)))
+
+(setopt use-package-ensure-function #'my/use-package-ensure-smart)
+
+(require 'package)
+
+
   (defvar my/delayed-priority-low-configurations '())
   (defvar my/delayed-priority-low-configuration-timer nil)
 
@@ -136,29 +61,19 @@ In this repository, =.#update= and =.#lock= require =--impure=.
     (declare (indent 0))
     `(setq my/delayed-priority-low-configurations
            (append my/delayed-priority-low-configurations ',body)))
-#+end_src
 
-*** cl-lib
-#+begin_src emacs-lisp :tangle no
   (require 'cl-lib t)
   (setq byte-compile-warnings '(cl-functions))
-#+end_src
 
-*** use-package
-#+begin_src emacs-lisp
   (eval-when-compile
     (require 'use-package))
 
   (eval-and-compile
-    (setopt use-package-ensure-function #'(lambda (&rest args) t))
+   ;; (setopt use-package-ensure-function #'(lambda (&rest args) t))
     (setopt use-package-always-defer t)
     (setopt use-package-compute-statistics t))
-#+end_src
 
-** Keybindings
-*** Special Keys
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-x t") 'my/kuro-toggle)
+
   (global-set-key (kbd "<f3>") 'dashboard-open)
   (global-set-key (kbd "RET") 'smart-newline)
   (global-set-key (kbd "C-RET") 'newline)
@@ -168,10 +83,7 @@ In this repository, =.#update= and =.#lock= require =--impure=.
   (global-set-key (kbd "C-<right>") 'centaur-tabs-backward)
   (global-set-key (kbd "C-<return>") 'newline)
   (global-set-key (kbd "C-SPC") 'toggle-input-method)
-#+end_src
 
-*** C-x
-#+begin_src emacs-lisp
   (global-set-key (kbd "C-x g") 'magit-status)
   (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
   (global-set-key (kbd "C-x i") 'nil)
@@ -180,26 +92,16 @@ In this repository, =.#update= and =.#lock= require =--impure=.
   (global-set-key (kbd "C-x u") 'nil)
   (global-set-key (kbd "C-x C-z") 'nil)
   (global-set-key (kbd "C-x C-c") 'nil)
-  #+end_src
 
-*** C-c
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-c a") 'agent-shell)
+
   (global-set-key (kbd "C-c e b") 'eval-buffer)
   (global-set-key (kbd "C-c e m") 'menu-bar-mode)
   (global-set-key (kbd "C-c m") 'minuet-configure-provider)
   (global-set-key (kbd "C-c p") 'smartparens-global-mode)
   (global-set-key (kbd "C-c r") 'vr/replace)
-#+end_src
 
-*** C-l (eglot)
-#+begin_src emacs-lisp
   (global-set-key (kbd "C-l") 'eglot)
-  ;; (global-set-key (kbd "C-l C-l") 'eglot)
-#+end_src
 
-*** C-*
-#+begin_src emacs-lisp
   (global-set-key (kbd "C-a") 'mwim-beginning-of-code-or-line)
   (global-set-key (kbd "C-d") 'smart-hungry-delete-backward-char)
   (global-set-key (kbd "C-e") 'mwim-end-of-code-or-line)
@@ -214,80 +116,41 @@ In this repository, =.#update= and =.#lock= require =--impure=.
   (global-set-key (kbd "C-/") 'other-window)
   (global-set-key (kbd "C-;") 'smart-hungry-delete-forward-char)
   (global-set-key (kbd "C-.") 'embark-act)
-;;  (global-set-key (kbd "") #'embark-prefix-help-command)
-#+end_src
 
-*** M-* 
-#+begin_src emacs-lisp
+
   (global-set-key (kbd "M-k") 'puni-backward-kill-line)
   (global-set-key (kbd "M-.") #'dumb-jump-go)
   (global-set-key (kbd "M-,") #'dumb-jump-back)
-#+end_src
 
-*** yes/no
-#+begin_src emacs-lisp
   (fset 'yes-or-no-p 'y-or-n-p)
-#+end_src
 
-** Common
-*** Mouse
-#+begin_src emacs-lisp 
   (setq mouse-wheel-progressive-speed nil)
   (setq scroll-preserve-screen-position 'always)
-#+end_src
 
-*** Indent 
-#+begin_src emacs-lisp 
   (setq-default indent-tabs-mode nil)
-#+end_src
 
-*** save-place-mode
-#+begin_src emacs-lisp 
-  (use-package save-place-mode :hook (after-init-hook . save-place-mode))
-#+end_src
+  (use-package saveplace :hook (after-init-hook . save-place-mode))
 
-*** electric-pair-mode
-#+begin_src emacs-lisp 
-  (use-package electric-pair-mode :hook (after-init-hook . electric-pair-mode))
-#+end_src
+  (use-package elec-pair :hook (after-init-hook . electric-pair-mode))
 
-*** delete-selection-mode
-#+begin_src emacs-lisp
-  (use-package delete-selection-mode :hook (after-init-hook . delete-selection-mode))
-#+end_src
+  (use-package delsel :hook (after-init-hook . delete-selection-mode))
 
-*** auto yes (async-shell-command)
-[[https://emacs.stackexchange.com/questions/14669/sort-of-autoreply-for-specific-messages-in-minibuffer][Source]]
-#+begin_src emacs-lisp
   (defun auto-yes (old-fun &rest args)
     (cl-letf (((symbol-function 'y-or-n-p) (lambda (prompt) t))
                ((symbol-function 'yes-or-no-p) (lambda (prompt) t)))
       (apply old-fun args)))
 
   (advice-add #'async-shell-command :around #'auto-yes)
-#+end_src
 
-*** shut up (async-shell-command)
-#+begin_src emacs-lisp
   (add-to-list 'display-buffer-alist '("*Async Shell Command*" display-buffer-no-window (nil)))
-#+end_src
 
-*** Auto revert
-#+begin_src emacs-lisp
   (use-package auto-revert-mode
     :hook (after-init-hook . global-auto-revert-mode)
     :config
     (setopt auto-revert-interval 1))
-#+end_src
 
-*** which-function-mode
-#+begin_src emacs-lisp
-  (use-package which-function-mode :hook (after-init-hook . which-function-mode))
-#+end_src
+  (use-package which-func :hook (after-init-hook . which-function-mode))
 
-*** recent file
-**** recentf
-#+begin_src emacs-lisp
   (use-package recentf
     :config
     (recentf-mode t)
@@ -299,89 +162,53 @@ In this repository, =.#update= and =.#lock= require =--impure=.
    			  "^/sudo:"
    			  "/\\.emacs\\.d/games/*-scores"
    			  "/\\.emacs\\.d/\\.tmp/")))
-#+end_src
-*** disable make lockfiles
-#+begin_src emacs-lisp
+
   (setq create-lockfiles nil)
-#+end_src
 
-*** backup directories
-#+begin_src emacs-lisp
   (setq backup-directory-alist '((".*" . "~/.tmp")))
-#+end_src
 
-*** auto save
-#+begin_src emacs-lisp
   (setq auto-save-file-name-transforms '((".*" "~/.tmp/" t)))
   (setq auto-save-list-file-prefix nil)
   (setq auto-save-default nil)
-#+end_src
 
-** Visual
-*** all-the-icons
-**** all-the-icons
-#+begin_src emacs-lisp
   (use-package all-the-icons :ensure t)
-#+end_src
 
-**** all-the-icons-dired
-#+begin_src emacs-lisp
   (use-package all-the-icons-dired
     :after dired all-the-icons
     :ensure t
     :hook
     (dired-mode . all-the-icons-dired-mode))
-#+end_src
 
-*** beacon
-#+begin_src emacs-lisp 
-  (use-package beacon
-    :ensure t
-    :config
-    (setopt beacon-color "red"))
-#+end_src
 
-*** display-line-numbers
-#+begin_src emacs-lisp
+
+  (global-display-line-numbers-mode t)
+
   (with-delayed-execution
     (custom-set-variables '(display-line-numbers-width-start t))
     (defalias 'linum-mode 'display-line-numbers-mode))
-#+end_src
 
-*** emojify
-#+begin_src emacs-lisp 
-  (use-package emojify
-    :ensure t
-    :config
-    :hook (after-init-hook . (lambda ()
-                               (run-with-idle-timer 1 nil #'global-emojify-mode))))
-#+end_src
 
-*** lambda-line
-#+begin_src emacs-lisp
+
   (use-package lambda-line
-    :ensure t
+    :load-path "~/.emacs.d/site-lisp/lambda-line"
     :hook ((prog-mode-hook . lambda-line-mode)
            (text-mode-hook . lambda-line-mode)
            (dired-mode-hook . lambda-line-mode))
     :config
-    (setopt lambda-line-icon-time t) ;; requires ClockFace font (see below)
+    (setopt lambda-line-icon-time nil) ;; requires ClockFace font (see below)
     (setopt lambda-line-clockface-update-fontset "ClockFaceRect") ;; set clock icon
     (setopt lambda-line-abbrev t) ;; abbreviate major modes
     (setopt lambda-line-hspace "  ")  ;; add some cushion
     (setopt lambda-line-prefix t) ;; use a prefix symbol
     (setopt lambda-line-prefix-padding nil) ;; no extra space for prefix 
     (setopt lambda-line-status-invert nil)  ;; no invert colors
-    (setopt lambda-line-gui-ro-symbol  " ⨂") ;; symbols
-    (setopt lambda-line-gui-mod-symbol " ⬤") 
-    (setopt lambda-line-gui-rw-symbol  " ◯") 
+    (setopt lambda-line-gui-ro-symbol  " [RO]")
+    (setopt lambda-line-gui-mod-symbol " [M]")
+    (setopt lambda-line-gui-rw-symbol  " [RW]")
     (setopt lambda-line-space-top +.30)  ;; padding on top and bottom of line
     (setopt lambda-line-space-bottom -.30)
     (setopt lambda-line-symbol-position 0.1))
-#+end_src
 
-*** modus
-#+begin_src emacs-lisp
   (use-package modus-themes
     :init
     (setq modus-themes-common-palette-overrides
@@ -451,61 +278,32 @@ In this repository, =.#update= and =.#lock= require =--impure=.
             (bg-tab-other "#221c38")))
     (setq modus-themes-vivendi-palette-overrides modus-themes-common-palette-overrides)
     :hook (after-init-hook . (lambda () (load-theme 'modus-vivendi t))))
-#+end_src
 
-*** nerd-icons
-**** nerd-icons
-#+begin_src emacs-lisp
   (use-package nerd-icons :ensure t)
-#+end_src
 
-**** nerd-icons-corfu
-#+begin_src emacs-lisp
   (use-package nerd-icons-corfu
     :after nerd-icons
     :ensure t
     :commands (nerd-icons-corfu-formatter)
-    :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
-#+end_src
+    :init (with-eval-after-load 'corfu
+    (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)))
 
-*** page-break-lines
-#+begin_src emacs-lisp 
-  (use-package page-break-lines
-    :ensure t
-    :hook (after-init-hook . global-page-break-lines-mode))
-#+end_src
 
-*** paren
-#+begin_src emacs-lisp
+
   (with-delayed-execution
     (show-paren-mode t)
     (with-eval-after-load 'show-paren-mode
       (set-face-underline-p 'show-paren-match-face "#ffffff")
       (setq show-paren-delay 0)
       (setq show-paren-style 'expression)))
-#+end_src
 
-*** rainbow-delimiters
-#+begin_src emacs-lisp 
   (use-package rainbow-delimiters
     :ensure t
     :hook
     (prog-mode-hook . rainbow-delimiters-mode))
-#+end_src
 
-** Language Server
-*** eglot-booster
-jdtsmith/eglot-booster
-#+begin_src emacs-lisp
-  (use-package eglot-booster
-    :after eglot
-    :commands (eglot-booster-mode)
-    :hook (eglot . eglot-booster-mode)
-    :ensure t)
-#+end_src
 
-*** C/C++
-#+begin_src emacs-lisp
+
   (defconst my/cpp-modes '(c++-mode c++-ts-mode))
 
   (defun my/eglot-cpp-compile-command (file)
@@ -581,10 +379,7 @@ jdtsmith/eglot-booster
     (add-hook 'eglot-managed-mode-hook #'my/eglot-refresh-cpp-compilation-database)
     (dolist (hook '(c-mode-hook c-ts-mode-hook c++-mode-hook c++-ts-mode-hook))
       (add-hook hook #'eglot-ensure)))
-#+end_src
 
-*** C#
-#+begin_src emacs-lisp
   (defun my/eglot-csharp-server (_)
     (or (when-let* ((cmd (executable-find "omnisharp")))
           (list cmd "-lsp"))
@@ -598,22 +393,10 @@ jdtsmith/eglot-booster
                  '((csharp-mode csharp-ts-mode) . my/eglot-csharp-server))
     (dolist (hook '(csharp-mode-hook csharp-ts-mode-hook))
       (add-hook hook #'eglot-ensure)))
-#+end_src
 
-*** MoonBit
-#+begin_src emacs-lisp
-  (use-package moonbit-mode :ensure t)
-#+end_src
 
-*** Nix
-#+begin_src emacs-lisp
-  (with-eval-after-load 'eglot
-    (add-to-list 'eglot-server-programs '(nix-mode . ("nixd")))
-    (add-hook 'nix-mode-hook #'eglot-ensure))
-#+end_src
 
-*** Ruby
-#+begin_src emacs-lisp
+
   (defun my/eglot-ruby-server (_)
     (or (when-let* ((cmd (executable-find "ruby-lsp")))
           (list cmd))
@@ -625,32 +408,14 @@ jdtsmith/eglot-booster
                  '((ruby-mode ruby-ts-mode) . my/eglot-ruby-server))
     (dolist (hook '(ruby-mode-hook ruby-ts-mode-hook))
       (add-hook hook #'eglot-ensure)))
-#+end_src
 
-*** Rust
-[[https://gist.github.com/casouri/0ad2c6e58965f6fd2498a91fc9c66501?permalink_comment_id=4645337#gistcomment-4645337][Source]]
-#+begin_src emacs-lisp
-  (with-eval-after-load 'eglot
-    (add-to-list 'eglot-server-programs
-                 `(rust-mode . ("rust-analyzer" :initializationOptions
-                                ( :procMacro (:enable t)
-                                  :cargo ( :buildScripts (:enable t)
-                                           :features "all")))))
-    (add-hook 'rust-mode-hook #'eglot-ensure))
-#+end_src
 
-*** SATySFi
-#+begin_src emacs-lisp
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs '(satysfi-mode . ("satysfi-language-server")))
-    (add-to-list 'eglot-server-programs '(satysfi-ts-mode . ("satysfi-language-server")))
+    
     (add-hook 'satysfi-mode-hook #'eglot-ensure)
-    (add-hook 'satysfi-ts-mode-hook #'eglot-ensure))
-#+end_src
+    )
 
-*** TypeScript
-[[https://zenn.dev/hyakt/articles/5c947cc22c4bfa][Source]]
-#+begin_src emacs-lisp
   (defun project-root* ()
     (when-let* ((proj (project-current nil)))
       (project-root proj)))
@@ -665,9 +430,7 @@ jdtsmith/eglot-booster
   (defun node-project-p () (project-has-file-p "package.json"))
   (defun bun-project-p  () (project-has-file-p "bun.lockb"))
 
-  (defun web-mode-javascript-buffer-p ()
-    (and buffer-file-name
-         (string-match-p "\\.\\(?:[cm]?[jt]sx?\\|json\\)\\'" buffer-file-name)))
+
 
   (defun es-server-program (_)
     (cond ((deno-project-p)
@@ -675,26 +438,8 @@ jdtsmith/eglot-booster
           ((or (node-project-p) (bun-project-p))
            '("typescript-language-server" "--stdio"))))
 
-  (defun web-mode-server-program (_)
-    (cond ((and buffer-file-name
-                (string-match-p "\\.erb\\'" buffer-file-name))
-           (my/eglot-ruby-server nil))
-          ((web-mode-javascript-buffer-p)
-           (es-server-program nil))))
 
-  (defun web-mode-eglot-ensure ()
-    (when (web-mode-server-program nil)
-      (eglot-ensure)))
-  
-  (with-eval-after-load 'eglot
-    (add-to-list 'eglot-server-programs '(js-mode . es-server-program))
-    (add-to-list 'eglot-server-programs '(web-mode . web-mode-server-program))
-    (add-hook 'web-mode-hook #'web-mode-eglot-ensure)
-    (add-hook 'js-mode-hook #'eglot-ensure))
-#+end_src
 
-** Treesitter
-#+begin_src emacs-lisp
   (setopt treesit-language-source-alist
         '((astro "https://github.com/virchau13/tree-sitter-astro")
           (c "https://github.com/tree-sitter/tree-sitter-c")
@@ -703,84 +448,19 @@ jdtsmith/eglot-booster
           (csharp "https://github.com/tree-sitter/tree-sitter-c-sharp")
           (moonbit "https://github.com/moonbitlang/tree-sitter-moonbit")
           (ruby "https://github.com/tree-sitter/tree-sitter-ruby")
-          (satysfi "https://github.com/monaqa/tree-sitter-satysfi")))
-#+end_src
+          ))
 
-** Programming Languages
-*** Arduino Style C
-#+begin_src emacs-lisp
-  (use-package arduino-mode
-    :mode (("\\.ino$" . arduino-mode))
-    :commands (arduino-mode)
-    :ensure t)
-#+end_src
 
-*** astro
-#+begin_src emacs-lisp :tangle no
-  (eval-when-compile
-    (el-clone :repo "Sorixelle/astro-ts-mode"))
 
-  (with-delayed-execution
-    (add-to-list 'load-path (locate-user-emacs-file "el-clone/astro-ts-mode"))
-    (autoload-if-found '(astro-ts-mode) "astro-ts-mode")
-    (require 'astro-ts-mode)
-    (add-to-list 'auto-mode-alist '("\\.astro$" . astro-ts-mode)))
-#+end_src
-
-*** Emacs Lisp
-#+begin_src emacs-lisp
   (use-package eldoc
     :hook ((emacs-lisp-mode-hook . turn-on-eldoc-mode)
            (lisp-interaction-mode-hook . turn-on-eldoc-mode)))
 
   (define-key lisp-interaction-mode-map (kbd "C-j") #'eval-print-last-sexp)
-#+end_src
 
-*** Common Lisp
-#+begin_src emacs-lisp 
-  (use-package lisp-mode
-    :mode (("\\.cl$" . lisp-mode)))
+ 
 
-  (use-package sly
-    :ensure t
-    :commands (sly)
-    :config
-    (setopt inferior-lisp-program "/usr/bin/sbcl"))
 
-  (defun start-sly ()
-    "Make Sly startup behavior similar to Slime"
-    (interactive)
-    (split-window-right)
-    (sly))
-#+end_src
-
-*** Flutter
-**** dart
-#+begin_src emacs-lisp
-  (use-package dart-mode
-    :ensure t
-    :hook (dart-mode-hook . flycheck-mode)
-    :config
-    (setopt dart-enable-analysis-server t))
-#+end_src
-
-**** flutter
-#+begin_src emacs-lisp
-  (use-package flutter
-    :ensure t
-    :hook (dart-mode . (lambda () (add-hook 'after-save-hook #'flutter-run-or-hot-reload nil t))))
-#+end_src
-
-*** Dockerfile
-#+begin_src emacs-lisp 
-  (use-package dockerfile-mode
-    :mode (("\\Dockerfile$" . dockerfile-mode))
-    :hook (dockerfile-mode-hook . flycheck-mode)
-    :ensure t)
-#+end_src
-
-*** C#
-#+begin_src emacs-lisp
   (use-package csharp-mode
     :mode (("\\.cs$" . csharp-mode))
     :init
@@ -788,40 +468,16 @@ jdtsmith/eglot-booster
                (treesit-available-p))
       (add-to-list 'major-mode-remap-alist
                    '(csharp-mode . csharp-ts-mode))))
-#+end_src
 
-*** F#
-#+begin_src emacs-lisp 
-  (use-package fsharp-mode
-    :mode ("\\.fs[iylx]?$" . fsharp-mode)
-    :ensure t)
-#+end_src
 
-*** Hylang
-#+begin_src emacs-lisp 
-  (use-package hy-mode
-    :ensure t
-    :hook (hy-mode . (lambda () (setq hy-shell-interpreter-args
-                                (concat "--repl-output-fn=hy.contrib.hy-repr.hy-repr "
-                                        hy-shell-interpreter-args)))))
-#+end_src
 
-*** Nix
-#+begin_src emacs-lisp
-  (use-package nix-mode
-    :mode (("\\.nix$" . nix-mode))
-    :ensure t)
-#+end_src
 
-*** pwsh
-#+begin_src emacs-lisp 
+
+
   (use-package powershell
     :mode (("\\.ps1$" . powershell-mode))
     :ensure t)
-#+end_src
 
-*** Ruby / Rails
-#+begin_src emacs-lisp
   (use-package ruby-mode
     :mode (("\\.rb\\'" . ruby-mode)
            ("\\.rake\\'" . ruby-mode)
@@ -844,60 +500,8 @@ jdtsmith/eglot-booster
     :hook ((ruby-mode-hook . inf-ruby-minor-mode)
            (ruby-ts-mode-hook . inf-ruby-minor-mode)))
 
-  (use-package rspec-mode
-    :ensure t
-    :hook ((ruby-mode-hook . rspec-mode)
-           (ruby-ts-mode-hook . rspec-mode)))
 
-  (use-package projectile-rails
-    :ensure t
-    :after projectile
-    :hook ((ruby-mode-hook . projectile-rails-on)
-           (ruby-ts-mode-hook . projectile-rails-on)
-           (web-mode-hook . projectile-rails-on)))
-#+end_src
 
-*** Rust
-#+begin_src emacs-lisp
-  (use-package rust-mode
-    :mode (("\\.rs$" . rust-mode))
-    :ensure t
-    :config
-    (add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
-    (setopt rust-format-on-save nil)
-    (setopt lsp-rust-server 'rust-analyzer))
-#+end_src
-
-**** RustOwl
-#+begin_src emacs-lisp
-  (use-package rustowl
-    :ensure t)
-#+end_src
-
-*** SATySFi
-#+begin_src emacs-lisp
-  (use-package satysfi-ts-mode
-    :mode (("\\.saty$" . satysfi-ts-mode))
-    :ensure t)
-#+end_src
-
-*** Svelte
-#+begin_src emacs-lisp
-  (use-package svelte-mode
-    :mode (("\\.svelte$" . svelte-mode))
-    :ensure t)
-#+end_src
-
-** Markup Languages
-*** CSV
-#+begin_src emacs-lisp 
-  (use-package csv-mode
-    :mode (("\\.csv$" . csv-mode))
-    :ensure t)
-#+end_src
-
-*** Markdown
-#+begin_src emacs-lisp 
   (use-package markdown-mode
     :mode (("\\.md$" . gfm-mode)
            ("\\.markdown$" . gfm-mode))
@@ -905,19 +509,8 @@ jdtsmith/eglot-booster
     :config
     (setq markdown-command "github-markup")
     (setq markdown-command-needs-filename t))
-#+end_src
 
-*** Mermaid
-#+begin_src emacs-lisp
-  (use-package mermaid-mode
-    :mode (("\\.mmd$" . mermaid-mode)
-           ("\\.mermaid$" . mermaid-mode))
-    :ensure t)
-#+end_src
 
-*** Org-mode
-**** org-mode
-#+begin_src emacs-lisp 
   (use-package org
     :config
     (setq org-directory "~/document/org")
@@ -945,140 +538,38 @@ jdtsmith/eglot-booster
                    ("\\subsubsection{%s}"  . "\\subsubsection*{%s}")
                    ("\\paragraph{%s}"      . "\\paragraph*{%s}")
                    ("\\subparagraph{%s}"   . "\\subparagraph*{%s}")))))
-#+end_src
 
-**** org-modern
-#+begin_src emacs-lisp
   (use-package org-modern
     :ensure t
     :after org
     :hook
     (org-mode-hook . org-modern-mode)
     (org-agenda-finalize-hook . org-modern-agenda))
-#+end_src
 
-**** org-roam
-#+begin_src emacs-lisp
   (use-package org-roam
     :ensure t
     :after org
     :hook
     (org-roam-mode-hook . org-roam-ui-mode))
-#+end_src
 
-**** org-tempo
-#+begin_src emacs-lisp
-  (use-package org-tempo :after org)
-#+end_src
+ ;; (use-package org-tempo :after org)
 
-**** org-ai
-#+begin_src emacs-lisp
-  (use-package org-ai
-    :ensure t
-    :after org
-    :hook
-    (org-mode-hook . org-ai-mode))
-#+end_src
 
-*** Web-mode
-#+begin_src emacs-lisp
-  (use-package web-mode
-    :ensure t
-    :hook (web-mode-hook . flycheck-mode)
-    :init
-    (add-to-list 'auto-mode-alist '("\\.[agj]sp$" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.erb$" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.gsp$" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.html$" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.liquid$" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.mustache" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.svg$" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.tpl$" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.js$" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.json$" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.mjs$" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.cjs$" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.ts$" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.tsx$" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.mts$" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.cts$" . web-mode))
-    :config
-    (setopt web-mode-markup-indent-offset 2)
-    (setopt web-mode-enable-auto-pairing t)
-    (setopt web-mode-enable-auto-closing t)
-    (setopt web-mode-tag-auto-close-style 2)
-    (setopt web-mode-enable-auto-quoting nil)
-    (setopt web-mode-enable-current-column-highlight t)
-    (setopt web-mode-enable-current-element-highlight t)
-    (setopt web-mode-comment-style 2)
-    (setopt web-mode-engines-alist '(("erb" . "\\.erb\\'")))
-    (setopt web-mode-code-indent-offset 2)
-    (setopt web-mode-css-indent-offset 2)
-    (setopt web-mode-script-padding 0)
-    (setopt web-mode-style-padding 0)
-    (setopt web-mode-enable-auto-indentation nil))
-#+end_src
 
-*** YAML
-#+begin_src emacs-lisp 
   (use-package yaml-mode
     :ensure t
     :hook (yaml-mode-hook . flycheck-mode)
     :init
     (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
     (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode)))
-#+end_src
 
-*** shell-script
-#+begin_src emacs-lisp
   (use-package flymake-shellcheck
     :ensure t
     :init
     (add-hook 'sh-mode-hook #'flymake-shellcheck-load))
-#+end_src
 
-** Shell
-*** kuro
-#+begin_src emacs-lisp
-  (defvar my/kuro-buffer-name "*kuro*"
-    "Buffer name for the dedicated Kuro terminal.")
+ 
 
-  (defvar my/kuro-window-height 0.3
-    "Height of the dedicated Kuro window as a fraction of the frame.")
-
-  (defun my/kuro--display-buffer (buffer)
-    (let ((window
-           (display-buffer-in-side-window
-            buffer
-            `((side . bottom)
-              (slot . 0)
-              (window-height . ,my/kuro-window-height)))))
-      (set-window-dedicated-p window t)
-      window))
-
-  (defun my/kuro-toggle ()
-    (interactive)
-    (let* ((buffer (get-buffer my/kuro-buffer-name))
-           (window (and buffer (get-buffer-window buffer t))))
-      (cond
-       (window
-        (delete-window window))
-       (buffer
-        (select-window (my/kuro--display-buffer buffer)))
-       (t
-        (require 'kuro)
-        (let* ((buffer (get-buffer-create my/kuro-buffer-name))
-               (window (my/kuro--display-buffer buffer)))
-          (select-window window)
-          (kuro-create nil my/kuro-buffer-name))))))
-
-  (use-package kuro
-    :ensure t
-    :commands (kuro-create kuro-copy-mode))
-#+end_src
-
-*** exec-path-from-shell
-#+begin_src emacs-lisp
   (defun my/add-to-path (dir)
     (when (and (stringp dir)
                (file-directory-p dir))
@@ -1098,50 +589,22 @@ jdtsmith/eglot-booster
                      "/nix/var/nix/profiles/default/bin"))
     (my/add-to-path dir))
 
-  (use-package exec-path-from-shell
-    :ensure t
-    :if (memq window-system '(mac ns x))
-    :config
-    (exec-path-from-shell-initialize)
-    (setopt exec-path-from-shell-check-startup-files nil)
-    (setopt exec-path-from-shell-arguments nil)
-    (setopt exec-path-from-shell-variables '("COPILOT_LANGUAGE_SERVER_PATH"
-                                             "GPG_AGENT_INFO"
-                                             "GPG_KEY_ID"
-                                             "PATH"
-                                             "SHELL"
-                                             "SSH_AUTH_SOCK" 
-                                             "TERM"
-                                             "TEXMFHOME"
-                                             "WSL_DISTRO_NAME"
-                                             "http_proxy")))
-#+end_src
 
-** Extensions
-*** ace-window
-#+begin_src emacs-lisp
+
   (use-package ace-window :ensure t)
-#+end_src
 
-*** avy
-#+begin_src emacs-lisp
   (use-package avy
     :ensure t
     :config
     (setq avy-all-windows nil)
     (setq avy-background t))
-#+end_src
 
-*** aggressive-indent
-#+begin_src emacs-lisp
   (use-package aggressive-indent
     :ensure t
     :commands (global-aggressive-indent-mode)
     :hook (after-init-hook . (lambda ()
                                (run-with-idle-timer 1 nil #'global-aggressive-indent-mode))))
-#+end_src
-*** cape
-#+begin_src emacs-lisp
+
   (use-package cape
     :ensure t
     :init
@@ -1149,10 +612,7 @@ jdtsmith/eglot-booster
     (add-to-list 'completion-at-point-functions #'cape-file)
     (add-to-list 'completion-at-point-functions #'cape-elisp-block)
     (add-to-list 'completion-at-point-functions #'cape-history))
-    #+end_src
 
-*** Centaur-tabs
-#+begin_src emacs-lisp
   (use-package centaur-tabs
     :ensure t
     :commands (centaur-tabs-mode centaur-tabs-local-mode)
@@ -1225,16 +685,9 @@ jdtsmith/eglot-booster
          (setq centaur-tabs-set-icons t
                centaur-tabs-icon-type 'all-the-icons)
          (force-window-update t)))))
-#+end_src
 
-*** consult
-#+begin_src emacs-lisp
   (use-package consult :ensure t)
-#+end_src
 
-*** corfu
-**** corfu
-#+begin_src emacs-lisp
   (use-package corfu
     :ensure t
     :commands (global-corfu-mode corfu-mode)
@@ -1245,27 +698,15 @@ jdtsmith/eglot-booster
     (setopt corfu-cycle t)
     (setopt corfu-on-exact-match nil)
     (setopt tab-always-indent 'complete))
-#+end_src
 
-*** Dashboard
-**** dashboard-recover-layout-p
-#+begin_src emacs-lisp
   (defvar dashboard-recover-layout-p nil
     "Whether recovers the layout.")
-#+end_src
 
-**** dashboard-goto-recent-files
-[[https://github.com/seagle0128/.emacs.d/blob/b5158448e3c38cef2f81b53f894e6a0b7b302d48/lisp/init-dashboard.el#L158][Source]]
-#+begin_src emacs-lisp
   (defun dashboard-goto-recent-files ()
     "Go to recent files."
     (interactive)
     (dashboard--goto-section-by-index 2))
-#+end_src
 
-**** open-dashboard
-[[https://github.com/seagle0128/.emacs.d/blob/8cbec0c132cd6de06a8c293598a720d377f3f5b9/lisp/init-dashboard.el#L198][Source]]
-#+begin_src emacs-lisp
   (defun open-dashboard ()
     "Open the *dashboard* buffer and jump to the first widget."
     (interactive)
@@ -1276,9 +717,7 @@ jdtsmith/eglot-booster
     (dashboard-open)
     ;; Jump to the first section
     (dashboard-goto-recent-files))
-#+end_src
-**** quit-dashboard
-#+begin_src emacs-lisp
+
   (defun quit-dashboard ()
     "Quit dashboard window."
     (interactive)
@@ -1286,18 +725,12 @@ jdtsmith/eglot-booster
     (and dashboard-recover-layout-p
          (and (bound-and-true-p winner-mode) (winner-undo))
          (setq dashboard-recover-layout-p nil)))
-#+end_src
 
-**** projectile
-#+begin_src emacs-lisp
   (use-package projectile
     :ensure t
     :config
     (projectile-mode t))
-#+end_src
 
-**** dashboard
-#+begin_src emacs-lisp 
   (with-eval-after-load 'dashboard-widgets
     (defun my/dashboard-remote-file-p (file)
       (and (stringp file)
@@ -1364,53 +797,26 @@ jdtsmith/eglot-booster
     (define-key dashboard-mode-map (kbd "n") #'next-line)
     (define-key dashboard-mode-map (kbd "b") #'backward-char)
     (define-key dashboard-mode-map (kbd "f") #'forward-char))
-#+end_src
 
-*** dirvish/dired
-**** dired
-#+begin_src emacs-lisp
   (with-eval-after-load 'dired
     (setq dired-recursive-copies 'always)
     (put 'dired-find-alternate-file 'disabled nil)
     (define-key dired-mode-map (kbd "RET") #'dired-open-in-accordance-with-situation)
     (define-key dired-mode-map (kbd "<left>") #'dired-up-directory)
     (define-key dired-mode-map (kbd "<right>") #'dired-open-in-accordance-with-situation))
-#+end_src
 
-**** dired-async
-#+begin_src emacs-lisp :tangle no
-  (use-package dired-async
-    :after async
-    :init
-    (dired-async-mode t))
-#+end_src
 
-**** dired-k
-highlights dired buffer like supercrabtree/k
-#+begin_src emacs-lisp
-  (use-package dired-k
-    :ensure t
-    :hook
-    (dired-initial-position-hook . dired-k))
-#+end_src
 
-**** dired-open-in-accordance-with-situation
-[[https://nishikawasasaki.hatenablog.com/entry/20120222/1329932699][Source]]
-#+begin_src emacs-lisp
+
   (defun dired-open-in-accordance-with-situation ()
     (interactive)
     (let ((file (dired-get-filename)))
       (if (file-directory-p file)
           (dired-find-alternate-file)
         (dired-find-file))))
-#+end_src
 
-**** dired-toggle-sudo
-#+begin_src emacs-lisp
   (use-package dired-toggle-sudo :ensure t)
-#+end_src
-**** dirvish
-#+begin_src emacs-lisp
+
   (use-package dirvish
     :ensure t
     :after nerd-icons
@@ -1424,194 +830,97 @@ highlights dired buffer like supercrabtree/k
                                    (format "  %s " (nerd-icons-codicon "nf-cod-home"))
                                    (format "  %s " (nerd-icons-codicon "nf-cod-root_folder"))
                                    (format " %s " (nerd-icons-faicon "nf-fa-angle_right")))))
-#+end_src
 
-*** dumb-jump
-#+begin_src emacs-lisp
   (use-package dumb-jump
     :ensure t
     :config
     (setq dumb-jump-force-searcher 'rg))
-#+end_src
 
-*** editorconfig
-#+begin_src emacs-lisp
   (use-package editorconfig
     :ensure t
     :hook (after-init-hook . (lambda ()
                                (run-with-idle-timer 1 nil #'editorconfig-mode))))
-#+end_src
 
-*** embark
-**** embark
-#+begin_src emacs-lisp
   (use-package embark :ensure t)
-#+end_src
 
-**** embark-consult
-#+begin_src emacs-lisp
   (use-package embark-consult
     :ensure t
     :hook (embark-collect-mode . consult-preview-at-point-mode))
-#+end_src
 
-*** Flycheck
-#+begin_src emacs-lisp
   (use-package flycheck
     :ensure t
     :hook (prog-mode-hook . flycheck-mode)
     :config
     (setopt flycheck-idle-change-delay 0))
-#+end_src
 
-*** gcmh
-#+begin_src emacs-lisp
   (use-package gcmh
     :ensure t
     :hook (after-init-hook . gcmh-mode)
     :config
     (setopt gcmh-verbose t))
-#+end_src
 
-*** hydra
-#+begin_src emacs-lisp
   (use-package hydra :ensure t)
-#+end_src
 
-*** marginalia
-#+begin_src emacs-lisp
   (use-package marginalia
     :ensure t
     :hook (window-startup-hook . marginalia-mode))
-#+end_src
 
-*** multiple-cursors
-https://dev.classmethod.jp/articles/emacs-multiple-cursors/
-#+begin_src emacs-lisp
   (use-package multiple-cursors :ensure t)
-#+end_src
 
-*** mwim
-#+begin_src emacs-lisp
   (use-package mwim :ensure t)
-#+end_src
 
-*** Nu-fun
-#+begin_src emacs-lisp
-  (use-package nu-fun
-    :ensure t
-    :config
-    (setopt nu-my-toten "，")
-    (setopt nu-my-kuten "．"))  
-#+end_src
 
-*** orderless
-#+begin_src emacs-lisp
-  (use-package orderless
-    :after compat
-    :commands (orderless orderless-try-complation orderless-all-completions)
-    :ensure t
-    :init
-    (setq completion-styles '(orderless basic))
-    (setq completion-category-overrides '((file (styles basic partial-completion))))
-    (add-to-list 'completion-styles-alist
-             '(orderless
-               orderless-try-completion orderless-all-completions
-               "Completion of multiple components, in any order.")))
-#+end_src
 
-*** puni
-#+begin_src emacs-lisp
   (use-package puni
     :ensure t
     :hook ((after-init-hook . puni-global-mode)
            (lisp-mode-hook . puni-disable-puni-mode)
            (emacs-lisp-mode-hook . puni-disable-puni-mode)
            (lisp-interaction-mode-hook . puni-disable-puni-mode)))
-#+end_src
 
-*** posframe
-#+begin_src emacs-lisp
   (use-package posframe :ensure t)
-#+end_src
 
-*** smart-hungry-delete
-#+begin_src emacs-lisp
   (use-package smart-hungry-delete :ensure t)
-#+end_src
 
-*** smart-newline
-#+begin_src emacs-lisp
   (use-package smart-newline :ensure t)
-#+end_src
 
-*** sublimity
-#+begin_src emacs-lisp
   (use-package sublimity
     :ensure t
     :config
     (sublimity-mode t))
-#+end_src
 
-*** sublimity-attractive
-#+begin_src emacs-lisp
   (use-package sublimity-attractive
     :after sublimity
     :config
     (setopt sublimity-attractive-centering-width 200))
-#+end_src
 
-*** sublimity-scroll
-#+begin_src emacs-lisp
   (use-package sublimity-scroll
     :after sublimity
     :config
     (setopt sublimity-scroll-weight 15)
     (setopt sublimity-scroll-drift-length 10))
-#+end_src
 
-*** undo-fu
-#+begin_src emacs-lisp
   (use-package undo-fu :ensure t)
-#+end_src
 
-*** vertico
-**** vertico
-#+begin_src emacs-lisp
   (use-package vertico
     :ensure t
     :hook (after-init-hook . vertico-mode))
-#+end_src
 
-**** vertico-posframe
-#+begin_src emacs-lisp
   (use-package vertico-posframe
     :commands (vertico-posframe-mode)
     :ensure t
     :hook (vertico-mode . vertico-posframe-mode))
-#+end_src
 
-*** visual-regexp
-#+begin_src emacs-lisp
   (use-package visual-regexp :ensure t)
-#+end_src
 
-*** which-key
-#+begin_src emacs-lisp
   (use-package which-key
     :ensure t
     :hook (after-init-hook . which-key-mode))
-#+end_src
 
-*** which-key-posframe
-#+begin_src emacs-lisp
   (use-package which-key-posframe
     :ensure t
     :hook (which-key-mode . which-key-posframe-mode))
-#+end_src
 
-*** yasnippet
-#+begin_src emacs-lisp
   (use-package yasnippet
     :ensure t
     :config
@@ -1620,149 +929,24 @@ https://dev.classmethod.jp/articles/emacs-multiple-cursors/
   (use-package consult-yasnippet
     :ensure t
     :after (consult yasnippet))
-#+end_src
 
-** Utilities
-*** agent-shell
-#+begin_src emacs-lisp
-  (use-package agent-shell
-    :ensure t
-    :commands (agent-shell agent-shell-openai-start-codex)
-    :custom
-    (agent-shell-openai-default-session-mode-id "full-access"))
-#+end_src
 
-*** comment-translate
-#+begin_src emacs-lisp
-  (use-package comment-translate
-    :ensure t
-    :hook (prog-mode-hook . comment-translate-mode))
-#+end_src
 
-*** copilot.el
-#+begin_src emacs-lisp
-  (use-package copilot
-    :ensure t
-    :commands (copilot-mode)
-    :hook (prog-mode-hook . my/copilot-mode)
-    :preface
-    (defun my/copilot-mode ()
-      (unless (or (string= (buffer-name) "*scratch*")
-                  (derived-mode-p 'lisp-data-mode))
-        (copilot-mode 1)))
-    :init
-    (let* ((user-profile-bin (format "/etc/profiles/per-user/%s/bin/copilot-language-server"
-                                     (user-login-name)))
-           (nix-profile-bin (expand-file-name "~/.nix-profile/bin/copilot-language-server"))
-           (server-executable (or (getenv "COPILOT_LANGUAGE_SERVER_PATH")
-                                  (and (file-executable-p user-profile-bin) user-profile-bin)
-                                  (and (file-executable-p nix-profile-bin) nix-profile-bin)
-                                  (executable-find "copilot-language-server"))))
-      (when server-executable
-        (setopt copilot-server-executable server-executable)))
-    :config
-    (define-key copilot-completion-map (kbd "S-<tab>") 'copilot-accept-completion)
-    (define-key copilot-completion-map (kbd "S-TAB") 'copilot-accept-completion))
-#+end_src
 
-*** copilot-chat
-#+begin_src emacs-lisp
-  (use-package copilot-chat
-    :ensure t
-    :after git-commit
-    :hook (git-commit-setup . copilot-chat-insert-commit-message)
-    :config
-    (setopt copilot-chat-default-model "gpt-5.2")
-    (setopt copilot-chat-commit-model "gpt-4.1"))
-#+end_src
-
-*** Docker
-#+begin_src emacs-lisp
-  (use-package docker :ensure t)
-#+end_src
-
-*** Elcord
-Allows you to integrate Rich Presence from Discord.
-#+begin_src emacs-lisp
-  (use-package elcord
-    :ensure t
-    :hook (after-init-hook . (lambda ()
-                               (run-with-idle-timer 2 nil #'elcord-mode))))
-#+end_src
-
-*** Magit
-**** Magit
-#+begin_src emacs-lisp
   (use-package magit
     :ensure t
     :commands (global-git-commit-mode)
     :hook (magit-status-mode-hook . toggle-centaur-tabs-local-mode)
     :config
     (setopt magit-repository-directories '(("~/ghq/" . 3))))
-#+end_src
 
-**** magit-prime
-#+begin_src emacs-lisp
-  (use-package magit-prime
-    :ensure t
-    :hook (magit-pre-refresh-hook . magit-prime-refresh-cache))
-#+end_src
 
-**** forge
-#+begin_src emacs-lisp
   (use-package forge
     :ensure t
     :after magit)
-#+end_src
 
-*** swagg
-#+begin_src emacs-lisp
-  (use-package swagg :ensure t)
-#+end_src
-
-*** twist
-#+begin_src emacs-lisp
-  (use-package twist
-    :ensure t
-    :hook (emacs-startup-hook . twist-watch-mode))
-#+end_src
-
-** Functions
-*** delete-word
-[[https://qiita.com/ballforest/items/5a76f284af254724144a][Source]]
-#+begin_src emacs-lisp
-  (defun delete-word (arg)
-    "Delete characters forward until encountering the end of a word.
-  With argument ARG, do this that many times."
-    (interactive "p")
-    (delete-region (point) (progn (forward-word arg) (point))))
-#+end_src
-*** backward-delete-word
-[[https://qiita.com/ballforest/items/5a76f284af254724144a][Source]]
-#+begin_src emacs-lisp
-  (defun backward-delete-word (arg)
-    "Delete characters backward until encountering the beginning of a word.
-  With argument ARG, do this that many times."
-    (interactive "p")
-    (delete-word (- arg)))
-#+end_src
-
-** Finalize
-*** Magic File name
-#+begin_src emacs-lisp
-  (setq file-name-handler-alist init/saved-file-name-handler-alist)
-#+end_src
-
-*** profiler
-#+begin_src emacs-lisp :tangle no
-  (profiler-report)
-  (profiler-stop)
-#+end_src
-
-** Footer
-#+begin_src emacs-lisp 
   (provide 'init)
 
   ;; End:
   ;;; init.el ends here
-#+end_src
+

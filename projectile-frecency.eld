@@ -1,0 +1,1 @@
+(("c:/Users/Administrator/AppData/Roaming/.emacs.d/" ("custom.el" 1 1783839574)))

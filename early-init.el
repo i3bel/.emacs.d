@@ -1,18 +1,3 @@
-#+title: early-init.org
-#+description: Kyure_A's Emacs config
-#+author: Kyure_A
- 
-* Introduction
-
-** Author
-Kyure_A
-
-** Repository
-https://github.com/Kyure-A/.emacs.d
-
-** Initialize
-*** Header
-#+begin_src emacs-lisp 
 ;;; early-init.el ---  -*- lexical-binding: t -*-
 
   ;; Author: Kyure_A <github.com/Kyure-A>
@@ -30,26 +15,14 @@ https://github.com/Kyure-A/.emacs.d
   ;;  .?eeeee`                       .AA!    AAA                  .ssss<s!   .!!
 
   ;;; Code:  
-#+end_src
 
-*** profiler
-#+begin_src emacs-lisp :tangle no
   (require 'profiler)
   (profiler-start 'cpu)
-#+end_src
 
-*** Suppress auto package loading
-#+begin_src emacs-lisp
   (setq package-enable-at-startup nil)
-#+end_src
 
-*** Decrease GC
-#+begin_src emacs-lisp
   (setq gc-cons-threshold (* 512 1024 1024))
-#+end_src
 
-*** other
-#+begin_src emacs-lisp
   (defun display-startup-echo-area-message ())
   (setq inhibit-startup-message t)
   (setq inhibit-startup-screen t)
@@ -59,12 +32,7 @@ https://github.com/Kyure-A/.emacs.d
   (setq ring-bell-function 'ignore)
   (setq default-directory "~/")
   (setq command-line-default-directory "~/")
-#+end_src
 
-*** nano-emacs like style
-[[https://github.com/rougier/nano-emacs/blob/b8631088220dbbcd885ad1353bdc52b569655f85/nano-layout.el#L21][Source]]
-and disable scroll-bar, tool-bar and menu-bar.
-#+begin_src emacs-lisp
   (push '(min-height . 1) default-frame-alist)
   (push '(min-width . 1) default-frame-alist)
   (push '(height . 45) default-frame-alist)
@@ -76,52 +44,28 @@ and disable scroll-bar, tool-bar and menu-bar.
   (push '(fullscreen . maximized) default-frame-alist)
   (push '(tool-bar-lines . 0) default-frame-alist)
   (push '(menu-bar-lines . 0) default-frame-alist)
-#+end_src
 
-*** suppress window resize
-#+begin_src emacs-lisp :tangle no
   (setq frame-inhibit-implied-resize t)
-#+end_src
 
-*** suppress warning
-#+begin_src emacs-lisp
   (setq display-warning-minimum-level :error)
-#+end_src
 
-*** User Info
-#+begin_src emacs-lisp 
   (setq user-full-name "Kyure_A")
   (setq user-mail-address "49436968+Kyure-A@users.noreply.github.com")
-#+end_src
 
-*** Disable Magic File Name at startup
-#+begin_src emacs-lisp
   (defconst init/saved-file-name-handler-alist file-name-handler-alist)
   (setq file-name-handler-alist nil)
-#+end_src
 
-*** System Language Setting
-#+begin_src emacs-lisp 
   (set-language-environment "Japanese")
   (prefer-coding-system 'utf-8)
   (set-default 'buffer-file-coding-system 'utf-8)
-#+end_src
 
-*** load custom.el
-#+begin_src emacs-lisp
   (setq custom-file (locate-user-emacs-file "custom.el"))
-#+end_src
 
-*** debug-on-error
-#+begin_src emacs-lisp
   (setq debug-on-error t)
-#+end_src
 
-*** native compile
-#+begin_src emacs-lisp
   (custom-set-variables '(warning-suppress-types '((comp))))
   (with-eval-after-load 'comp
     (setq native-comp-async-jobs-number 8)
     (setq native-comp-speed 3)
     (setq native-comp-always-compile t))
-#+end_src
+
