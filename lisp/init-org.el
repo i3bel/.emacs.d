@@ -12,36 +12,31 @@
   ;; Wrong type argument: commandp, dired-copy-images-links
   (keymap-global-set "C-c n m"     'dired-copy-images-links)
   (keymap-global-set "C-c b"       'org-cite-insert)
-  (:idle org-agenda org-habit org-clock ob-core ox-latex bibtex)
+  (:idle org-agenda org-habit org-clock ob-core)
   (:when-loaded
-    (:also-load lib-org)
-    (:with-feature yank-media
-        (:when-loaded
-          (:with-mode org-mode (:bind "C-c C-v" yank-media))
-          (add-to-list 'yank-media-preferred-types 'image/tiff)))
-    (setopt org-directory ORG-PATH
-            org-image-actual-width nil
-            org-src-content-indentation 0
-            org-goto-interface 'outline-path-completion
-            org-log-done 'time
-            org-edit-timestamp-down-means-later t
-            org-hide-emphasis-markers t
-            org-fold-catch-invisible-edits 'show
-            org-export-coding-system 'utf-8
-            org-fast-tag-selection-single-key 'expert
-            org-tags-column 80
-            ;; TODO
-            ;; HOLD(h@)       ; 进入时添加笔记
-            ;; HOLD(h/!)      ; 离开时添加变更信息
-            ;; HOLD(h@/!)     ; 进入时添加笔记，离开时添加变更信息
-            org-todo-keywords
-            '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
-              (sequence "PROJECT(p)" "|" "DONE(d!/!)" "CANCELLED(c/!)")
-              (sequence "WAITING(w/!)" "DELEGATED(e!)" "HOLD(h)" "|" "CANCELLED(c/!)"))
-            org-todo-repeat-to-state "NEXT"
-            org-todo-keyword-faces
-            '(("NEXT" :inherit warning)
-              ("PROJECT" :inherit font-lock-string-face)))
+  (:also-load lib-org)
+  
+
+  
+  (setopt org-directory ORG-PATH
+          org-image-actual-width nil
+          org-src-content-indentation 0
+          org-goto-interface 'outline-path-completion
+          org-log-done 'time
+          org-edit-timestamp-down-means-later t
+          org-hide-emphasis-markers t
+          org-fold-catch-invisible-edits 'show
+          org-export-coding-system 'utf-8
+          org-fast-tag-selection-single-key 'expert
+          org-tags-column 80
+          org-todo-keywords
+          '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
+            (sequence "PROJECT(p)" "|" "DONE(d!/!)" "CANCELLED(c/!)")
+            (sequence "WAITING(w/!)" "DELEGATED(e!)" "HOLD(h)" "|" "CANCELLED(c/!)"))
+          org-todo-repeat-to-state "NEXT"
+          org-todo-keyword-faces
+          '(("NEXT" :inherit warning)
+            ("PROJECT" :inherit font-lock-string-face)))
     ;; emphasis
     (setq org-emphasis-regexp-components '("-[:space:]('\"{[:nonascii:]"
                                            "-[:space:].,:!?;'\")}\\[[:nonascii:]"
@@ -114,7 +109,8 @@
   (:when-loaded
     (:also-load ob-plantuml
                 ob-python
-                ob-latex)
+                ob-latex
+                )
     (setopt org-plantuml-jar-path
             (expand-file-name (concat ORG-PATH "/plantuml/plantuml.jar"))
             ;; 这里应该就是 .zshrc 里面配置的 python
@@ -137,7 +133,6 @@
     (keymap-global-set "C-c n b" 'denote-backlinks)
     (keymap-global-set "C-c n r" 'denote-rename-file)
     (keymap-global-set "C-c n R" 'denote-rename-file-using-front-matter)
-    (keymap-global-set "C-c n w" '+org-defuddle-to-clipping)
     (setopt denote-directory (expand-file-name "denote" ORG-PATH)
             denote-save-buffers nil
             denote-known-keywords '("emacs" "private")
@@ -160,7 +155,7 @@
 
 (setup denote-journal
   (:when-loaded
-    (:also-load lib-weather)
+    
     (setopt denote-journal-directory (expand-file-name "daily" denote-directory)
             denote-journal-title-format 'day-date-month-year)
     (keymap-global-set "C-c c" 'org-capture)
@@ -201,11 +196,7 @@
                 denote-journal-path-to-new-or-existing-entry
                 org-capture-heading-consume)
                "** %?\n" :kill-buffer t)
-              ("w" "Weather           ||" entry
-               (file+headline
-                denote-journal-path-to-new-or-existing-entry
-                get-today-heading)
-               "%(fetch-weather-data)\n")
+              
               ("a" "Tasks             || copying to journal" plain
                (file+olp
                 denote-journal-path-to-new-or-existing-entry
@@ -214,123 +205,7 @@
       (:with-hook org-capture-before-finalize-hook
         (:hook org-sort-second-level-entries-by-time)))))
 
-(setup ox-latex
-  (:when-loaded
-    (setopt
-     org-latex-pdf-process '("latexmk -f -xelatex -shell-escape -output-directory=%o %F")
-     org-preview-latex-process-alist
-     '((xelatex :programs
-                ("xelatex" "dvisvgm")
-                :description "xdv > svg"
-                :message "you need to install the programs: xelatex and dvisvgm."
-                :use-xcolor t
-                :image-input-type "xdv"
-                :image-output-type "svg"
-                :image-size-adjust (1.5 . 1.2)
-                :latex-compiler
-                ("xelatex -no-pdf -interaction nonstopmode -shell-escape -output-directory %o %f")
-                :image-converter
-                ("dvisvgm %f -e -n -b min -c %S -o %O")))
-     org-preview-latex-default-process 'xelatex
-     ;; ‘org-latex-listings’ is obsolete since 9.6; use ‘org-latex-src-block-backend’ instead.
-     org-latex-src-block-backend 'minted
-     org-latex-minted-options '(("breaklines" "")
-                                ("bgcolor" "bg"))
-     org-latex-compiler "xelatex"
-     org-latex-packages-alist
-     '(;; hook right arrow with text above and below
-       ;; https://tex.stackexchange.com/questions/186896/xhookrightarrow-and-xmapsto
-       ("" "svg" t)
-       ("" "svg-extract" t)
 
-       ("" "mathtools"   t)
-       ("" "amsmath"     t)
-       ("" "amssymb"     t)
-
-       ;; for mapsfrom
-       ;; see: https://tex.stackexchange.com/questions/26508/left-version-of-mapsto
-       ("" "stmaryrd"    t)
-       ("" "mathrsfs"    t)
-       ("" "tikz"        t)
-       ("" "tikz-cd"     t)
-       ;; ("" "quiver" t)
-       ;; see https://castel.dev/post/lecture-notes-2/
-       ("" "import"      t)
-       ("" "xifthen"     t)
-       ("" "pdfpages"    t)
-       ("" "transparent" t)
-       ;; algorithm
-       ;; https://tex.stackexchange.com/questions/229355/algorithm-algorithmic-algorithmicx-algorithm2e-algpseudocode-confused
-       ("ruled,linesnumbered" "algorithm2e" t)
-       ;; You should not load the algorithm2e, algcompatible, algorithmic packages if you have already loaded algpseudocode.
-       ;; ("" "algpseudocode" t)
-       ;; for chinese preview
-       ("UTF8" "ctex"    t))
-     ;; `arev' and `arevmath' is font packages
-     org-format-latex-header
-     (string-join
-      '("\\documentclass{ctexart}"
-        "\\usepackage[usenames]{color}"
-        "\\setCJKmainfont{LXGW WenKai}"
-        "[DEFAULT-PACKAGES]"
-        "[PACKAGES]"
-        "\\usepackage{arev}"
-        "\\usepackage{arevmath}"
-        "\\pagestyle{empty}             % do not remove"
-        "% The settings below are copied from fullpage.sty"
-        "\\setlength{\\textwidth}{\\paperwidth}"
-        "\\addtolength{\\textwidth}{-3cm}"
-        "\\setlength{\\oddsidemargin}{1.5cm}"
-        "\\addtolength{\\oddsidemargin}{-2.54cm}"
-        "\\setlength{\\evensidemargin}{\\oddsidemargin}"
-        "\\setlength{\\textheight}{\\paperheight}"
-        "\\addtolength{\\textheight}{-\\headheight}"
-        "\\addtolength{\\textheight}{-\\headsep}"
-        "\\addtolength{\\textheight}{-\\footskip}"
-        "\\addtolength{\\textheight}{-3cm}"
-        "\\setlength{\\topmargin}{1.5cm}"
-        "\\addtolength{\\topmargin}{-2.54cm}")))
-    ;; To set the fonts, you can refer to `org-format-latex-header'
-    ;; Make sure to have NotesTeXV3.sty in the export directory
-    ;; Add #+LATEX_CLASS: Notes to the org header
-    ;; https://github.com/Adhumunt/NotesTeX
-    (add-to-list
-     'org-latex-classes
-     `("Notes"
-       ,(concat "\\documentclass{ctexart}\n"
-                "\\usepackage{NotesTeXV3}\n"
-                "[EXTRA]\n" ;; the stuff from #+LATEX_HEADER(_EXTRA)
-                ;; Ignore invisible zero-width space (U+200B) characters that may appear in the source.
-                ;; Make them active and define them to do nothing to prevent compilation errors.
-                "\\catcode`\\^^^^200b=\\active\\let^^^^200b\\relax\n"
-                "\\setCJKmainfont{LXGW WenKai}")
-       ;; ("\\part{%s}" . "\\part*{%s}")
-       ("\\section{%s}" . "\\section*{%s}")
-       ("\\subsection{%s}" . "\\subsection*{%s}")
-       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-       ("\\paragraph{%s}" . "\\paragraph*{%s}")
-       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-    (add-to-list
-     'org-latex-classes
-     `("article_cn"
-       ,(concat
-         "\\documentclass[11pt]{ctexart}\n"
-         "[DEFAULT-PACKAGES]\n"
-         "[PACKAGES]\n"
-         "[EXTRA]\n"
-         "\\catcode`\\^^^^200b=\\active\\let^^^^200b\\relax\n"
-         "\\usepackage[dvipsnames]{xcolor}\n"
-         "\\hypersetup{colorlinks=true,"
-         "linkcolor=Maroon,"
-         "urlcolor=Maroon,"
-         "citecolor=Maroon,"
-         "filecolor=Maroon,"
-         "pdfborder={0 0 0}}")
-       ("\\section{%s}" . "\\section*{%s}")
-       ("\\subsection{%s}" . "\\subsection*{%s}")
-       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-       ("\\paragraph{%s}" . "\\paragraph*{%s}")
-       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))))
 
 (setup org-agenda
   (keymap-global-set "C-c a" 'org-agenda)
@@ -446,66 +321,7 @@
       (let ((agenda-sorting-strategy (assoc 'agenda org-agenda-sorting-strategy)))
         (setcdr agenda-sorting-strategy (remove 'habit-down (cdr agenda-sorting-strategy)))))))
 
-(setup bibtex
-  (:when-loaded
-    (setopt bibtex-file-path (concat ORG-PATH "/bib/")
-            bibtex-files '("bibtex.bib")
-            bibtex-align-at-equal-sign t
-            bibtex-autokey-titleword-separator "-"
-            bibtex-autokey-year-title-separator "-"
-            bibtex-autokey-name-year-separator "-"
-            bibtex-dialect 'biblatex)))
 
-(setup citar
-  (:when-loaded
-    (:also-load nerd-icons)
-    ;; nerd-icons
-    (defvar citar-indicator-files-icons
-      (citar-indicator-create
-       :symbol (nerd-icons-faicon
-                "nf-fa-file_o"
-                :face 'nerd-icons-green
-                :v-adjust -0.1)
-       :function #'citar-has-files
-       :padding "  " ; need this because the default padding is too low for these icons
-       :tag "has:files"))
-    (defvar citar-indicator-links-icons
-      (citar-indicator-create
-       :symbol (nerd-icons-faicon
-                "nf-fa-link"
-                :face 'nerd-icons-orange
-                :v-adjust 0.01)
-       :function #'citar-has-links
-       :padding "  "
-       :tag "has:links"))
-    (defvar citar-indicator-notes-icons
-      (citar-indicator-create
-       :symbol (nerd-icons-codicon
-                "nf-cod-note"
-                :face 'nerd-icons-blue
-                :v-adjust -0.3)
-       :function #'citar-has-notes
-       :padding "    "
-       :tag "has:notes"))
-    (defvar citar-indicator-cited-icons
-      (citar-indicator-create
-       :symbol (nerd-icons-faicon
-                "nf-fa-circle_o"
-                :face 'nerd-icon-green)
-       :function #'citar-is-cited
-       :padding "  "
-       :tag "is:cited"))
-    (setq citar-indicators (list citar-indicator-files-icons
-                                 citar-indicator-links-icons
-                                 citar-indicator-notes-icons
-                                 citar-indicator-cited-icons))
-    (setopt org-cite-global-bibliography (list (concat ORG-PATH "/bib/bibtex.bib"))
-            citar-notes-paths (list (concat ORG-PATH "/main"))
-            citar-library-paths (list (concat ORG-PATH "/bib/files"))
-            org-cite-insert-processor 'citar
-            org-cite-follow-processor 'citar
-            org-cite-activate-processor 'citar
-            citar-bibliography org-cite-global-bibliography)))
 
 (setup org-modern
   (:with-mode org-mode
@@ -555,15 +371,6 @@
         1 'org-checkbox-partial-text prepend))
      'append)))
 
-(setup ox-hugo
-  (:load-after ox)
-  (:when-loaded
-    (:advice org-hugo-export-wim-to-md
-             :after
-             (lambda (&rest _)
-               (let ((default-directory (replace-regexp-in-string "org" "hugo" ORG-PATH)))
-                 (if (eq (call-process "hugo" nil nil) 0)
-                     (message "Hugo compilation successful")
-                   (message "Hugo compilation failed")))))))
+
 (provide 'init-org)
 ;;; init-org.el ends here

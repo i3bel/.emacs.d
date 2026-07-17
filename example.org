@@ -1,0 +1,259 @@
+#+TITLE: Org-mode 功能示例
+#+AUTHOR: Your Name
+#+DATE: <2026-01-17 Sat>
+#+STARTUP: indent
+#+TAGS: emacs(private) org(work) test
+
+* TODO 这是一个任务
+:PROPERTIES:
+:ID:       test-task-001
+:END:
+
+这是一个普通任务描述。
+
+** NEXT 下一步行动
+SCHEDULED: <2026-01-18 Sun>
+:PROPERTIES:
+:ID:       next-action-001
+:END:
+
+这是下一步行动的具体描述。
+
+*** DONE 已完成的任务
+CLOSED: [2026-01-15 Wed 14:30]
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2026-01-15 Wed 14:30]
+:END:
+
+这是一个已完成的任务示例。
+
+* PROJECT 项目示例
+:PROPERTIES:
+:ID:       project-001
+:END:
+
+这是一个项目级别的任务。
+
+** TODO 子任务 1
+** TODO 子任务 2
+** DONE 子任务 3
+CLOSED: [2026-01-16 Thu 10:00]
+
+* 笔记与引用
+:PROPERTIES:
+:ID:       note-example-001
+:END:
+
+** 强调标记示例
+
+- *粗体文本*
+- /斜体文本/
+- _下划线_
+- =等宽代码=
+- ~代码（无语法高亮）~
+- +删除线+
+
+** 列表示例
+
+无序列表：
+- 项目 1
+- 项目 2
+  - 子项目 2.1
+  - 子项目 2.2
+- 项目 3
+
+有序列表：
+1. 第一步
+2. 第二步
+3. 第三步
+
+** 复选框示例
+
+- [ ] 未完成事项
+- [X] 已完成事项
+- [-] 部分完成事项（有子项）
+  - [X] 子项 1
+  - [ ] 子项 2
+
+** 表格示例
+
+| 名称 | 数量 | 价格 |
+|------+------+------|
+| 苹果 |    5 | 2.50 |
+| 香蕉 |    3 | 1.80 |
+| 橙子 |    2 | 3.20 |
+| 总计 |   10 | 7.50 |
+#+TBLFM: @4$2=vsum(@2..@3)::@4$3=vsum(@2..@3)
+
+** 代码块示例
+
+#+BEGIN_SRC python
+def hello(name):
+    return f"Hello, {name}!"
+
+print(hello("World"))
+#+END_SRC
+
+#+BEGIN_SRC shell
+echo "当前目录："
+pwd
+ls -la
+#+END_SRC
+
+#+BEGIN_SRC plantuml
+@startuml
+Alice -> Bob: 你好
+Bob --> Alice: 你好！
+@enduml
+#+END_SRC
+
+* 链接和引用
+:PROPERTIES:
+:ID:       links-example-001
+:END:
+
+** 内部链接
+
+- 跳转到 [[*这是一个任务][任务示例]]
+- 跳转到 [[*笔记与引用][笔记部分]]
+- 使用 ID 链接：[[id:test-task-001][任务 ID 链接]]
+
+** 外部链接
+
+- [[https://www.gnu.org/software/emacs/][Emacs 官网]]
+- [[file:~/Documents/example.pdf][本地 PDF 文件]]
+- [[mailto:user@example.com][发送邮件]]
+
+** 脚注
+
+这是一个带脚注的句子[fn:1]。
+
+[fn:1] 这是脚注内容。
+
+* 标签和属性
+:PROPERTIES:
+:ID:       tags-example-001
+:END:
+
+带标签的任务：TODO 学习 Org-mode                                  :emacs:org:learning:
+
+* 时间戳
+
+- 活动时间戳：<2026-01-17 Sat>
+- 非活动时间戳：[2026-01-17 Sat]
+- 带时间的时间戳：<2026-01-17 Sat 14:30-16:00>
+- 重复任务：TODO 每周回顾 <2026-01-17 Sat +1w>
+
+* 绘图示例（使用 tikz）
+
+#+BEGIN_SRC latex :file tikz-example.png :results file
+\documentclass{standalone}
+\usepackage{tikz}
+\begin{document}
+\begin{tikzpicture}
+  \draw[thick] (0,0) circle (2cm);
+  \draw[fill=red] (0,0) -- (2,0) arc (0:45:2) -- cycle;
+  \node at (0,0) {T};
+\end{tikzpicture}
+\end{document}
+#+END_SRC
+
+* 日记条目（Denote Journal）
+:PROPERTIES:
+:ID:       journal-example-001
+:END:
+
+** 2026-01-17 周六
+
+今天学习了 Org-mode 的配置和使用。
+
+- 配置了 TODO 状态：TODO → NEXT → DONE
+- 学习了 Agenda 视图
+- 设置了 Denote 笔记系统
+
+*** 任务
+- [X] 完成 Org-mode 示例文件
+- [ ] 阅读 Org-mode 手册
+- [-] 配置 Agenda
+  - [X] 设置自定义视图
+  - [ ] 配置过滤条件
+
+*** 阅读记录
+- 正在阅读：《Emacs 入门指南》
+- 已完成：《Org-mode 简明教程》
+
+#+BEGIN_QUOTE
+Org-mode is your life in plain text.
+#+END_QUOTE
+
+* 待办事项和习惯追踪
+
+** TODO 每日冥想
+SCHEDULED: <2026-01-17 Sat .+1d>
+:PROPERTIES:
+:STYLE:    habit
+:END:
+
+每天冥想 10 分钟。
+
+** TODO 锻炼身体
+SCHEDULED: <2026-01-17 Sat .+2d>
+:PROPERTIES:
+:STYLE:    habit
+:END:
+
+每周至少锻炼 3 次。
+
+* 归档
+:PROPERTIES:
+:ID:       archive-example-001
+:ARCHIVE:  %s_archive::* Archive
+:END:
+
+这个任务会被归档到 archive 文件中。
+
+* COMMENT 注释部分
+
+这部分内容不会被导出。
+
+- 只是临时笔记
+- 草稿内容
+- 不会出现在导出文档中
+
+* 导出设置
+
+#+LATEX_CLASS: article_cn
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage{amssymb}
+
+* 阅读列表
+
+** BOOK 书籍
+:PROPERTIES:
+:ID:       book-example-001
+:END:
+
+- 正在读：《SICP》 :reading:
+- 已读：《Emacs Lisp 入门》 :done:
+- 计划读：《计算机程序的构造和解释》
+
+* 捕获模板示例
+
+#+CAPTURE: 这是一个快速捕获的笔记
+- 记录时间：[2026-01-17 Sat 15:00]
+- 来源：Org-mode 示例文件
+- 标签：:emacs:org:
+
+* 最后的想法
+
+Org-mode 是一个非常强大的工具，可以用来：
+
+1. 管理任务和项目
+2. 记录笔记和想法
+3. 编写文档和文章
+4. 追踪时间和习惯
+5. 导出为各种格式
+
+#+BEGIN_CENTER
+快乐使用 Org-mode！
+#+END_CENTER

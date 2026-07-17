@@ -1,1 +1,1 @@
-(("c:/Users/Administrator/AppData/Roaming/.emacs.d/" ("README.org" 2 1784287479)))
+(("c:/Users/Administrator/AppData/Roaming/.emacs.d/" ("README.org" 11 1784301983) ("init.el" 8 1784300826) ("example.org" 35 1784301993)))

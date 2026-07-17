@@ -1,22 +1,92 @@
 ;; ==========================================
+;; 0. ELPA 镜像配置 (清华大学 TUNA 镜像)
+;; ==========================================
+
+;; 使用清华大学 TUNA 镜像
+(setq package-archives
+      '(("gnu"    . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+        ("nongnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
+        ("melpa"  . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
+
+(package-initialize)
+
+(unless package-archive-contents
+  (package-refresh-contents))
+
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+(require 'use-package)
+(setopt use-package-always-ensure t)
+
+(defun my/use-package-ensure-smart (name args state &optional no-refresh)
+  "如果 NAME 已经是内置可用的功能/函数,就跳过安装,否则走正常的 package-install。"
+  (unless (or (fboundp name) (featurep name) (locate-library (symbol-name name)))
+    (use-package-ensure-elpa name args state no-refresh)))
+
+(setopt use-package-ensure-function #'my/use-package-ensure-smart)
+
+;; 忽略原生编译警告
+(setq warning-minimum-level :emergency)
+
+;; ==========================================
 ;; 1. Windows 专属路径与字体设置
 ;; ==========================================
+
+;; 限制最大窗口尺寸，避免超出屏幕
+(setq default-frame-alist
+      '((width . 70)          ;; 字符宽度
+        (height . 34)          ;; 字符高度
+        (left . 50)            ;; 左边距像素
+        (top . 10)             ;; 上边距像素
+        (fullscreen . nil)))   ;; 不要全屏
+
 
 ;; 设置你的本地 Org 笔记路径（这里默认定位到 Windows 的用户文档目录下的 org 文件夹）
 ;; 如果你存放在其他地方（例如 D 盘），可以把 "~/Documents/org" 改为 "D:/org" 这样的路径
 (defconst ORG-PATH (expand-file-name "~/Documents/org"))
 
-(defconst FALLBACK-FONTS '("Jigmo" "Jigmo2" "Jigmo3"))
-(defconst FONT-SIZE 12)
-(defconst DEFAULT-FONT (format "Consolas %d" FONT-SIZE))
-(defconst ORG-FONT (format "PragmataPro %d" FONT-SIZE))
+;; === 字号设置 ===
+;; Emacs height = 点数 × 10
+(defconst FONT-SIZE 180)      ;; 18pt
+(defconst FONT-SIZE-ZH 200)   ;; 20pt，比例 1.11
+
+;; === 字体族 ===
+(defconst DEFAULT-FONT "Consolas")
+(defconst ORG-FONT "PragmataPro")
 (defconst ZH-DEFAULT-FONT "LXGW WenKai Screen")
 (defconst EMOJI-FONTS '("Segoe UI Emoji"))
 (defconst SYMBOL-FONT '("PragmataPro"
                         "Segoe UI Symbol"
                         "Symbola"
                         "Symbol"))
+(defconst FALLBACK-FONTS '("Jigmo" "Jigmo2" "Jigmo3"))
 
+;; === 设置函数 ===
+(defun my/setup-fonts (&optional frame)
+  (let ((frame (or frame (selected-frame))))
+    (set-face-attribute 'default frame
+                        :family DEFAULT-FONT
+                        :height FONT-SIZE)
+    
+    (dolist (charset '(han cjk-misc bopomofo kana hangul))
+      (set-fontset-font t charset
+                        (font-spec :family ZH-DEFAULT-FONT
+                                   :size FONT-SIZE-ZH)
+                        frame))
+    
+    (set-fontset-font t 'emoji
+                      (font-spec :family "Segoe UI Emoji" :size FONT-SIZE)
+                      frame)
+    
+    (set-fontset-font t 'symbol
+                      (font-spec :family "Consolas" :size FONT-SIZE)
+                      frame 'prepend)))
+
+;; 初始化
+(my/setup-fonts)
+
+;; 新 frame 生效
+(add-hook 'after-make-frame-functions #'my/setup-fonts)
 ;; ==========================================
 ;; 2. 安装并初始化 straight.el 包管理器
 ;; ==========================================
@@ -59,7 +129,13 @@
     projectile consult-dir scratch ace-pinyin
     
     ;; 核心笔记包 (Denote & Org-mode)
-    denote denote-org denote-journal denote-markdown org-modern org-remark org-cliplink
+    denote
+    denote-org
+    denote-journal
+    denote-markdown
+    org-modern
+    org-remark
+    org-cliplink
     
     ;; 你特意保留的个性化工具
     (org-defuddle :host github :repo "LuciusChen/org-defuddle")
@@ -91,10 +167,16 @@
 (require 'init-prog)
 (require 'init-nav)
 (require 'init-transient)
+(require 'init-minibuffer)
 
 (require 'init-org)        ; 你的核心 Org-mode 配置
 
 (require 'init-local)
+
+(require 'init-completion)
+(require 'init-local)
+
+
 
 (provide 'init)
 ;; Local Variables:

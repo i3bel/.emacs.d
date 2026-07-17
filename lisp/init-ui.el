@@ -77,10 +77,9 @@
 ;; ==========================================
 ;; 【安全防护】只有当 panel 确实可用且没有图片渲染报错时才加载
 ;; ==========================================
-(when (and (member 'panel USE-PACKAGE-LIST) (require 'panel nil t))
+(when (require 'panel nil t)
   (setup panel
-    (setopt panel-latitude 32.09703
-            panel-longitude 118.77969
+    (setopt 
             panel-path-max-length 35
             panel-min-left-padding 10
             panel-intro-display 'tty
