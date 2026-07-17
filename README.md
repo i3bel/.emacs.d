@@ -1,4 +1,4 @@
-# Windows Emacs Org-mode Configuration
+# Windows Emacs Org-mode 配置
 
 &gt; 基于 [LuciusChen/.emacs.d](https://github.com/LuciusChen/.emacs.d) 改造，适配 Windows 10 环境。
 
@@ -32,7 +32,11 @@
 
 ## 截图
 
+### Emacs 启动页面
+
 ![Emacs 启动页面](assets/pic1.png)
+
+### Org-mode 笔记与任务管理
 
 ![Org-mode 笔记与任务管理](assets/pic2.png)
 

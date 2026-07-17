@@ -1,6 +1,18 @@
 ;; ==========================================
 ;; 0. ELPA 镜像配置 (清华大学 TUNA 镜像)
 ;; ==========================================
+;; 只隐藏启动时的特定消息
+(setq inhibit-startup-message t
+      inhibit-startup-screen t
+      inhibit-startup-echo-area-message t
+      initial-scratch-message nil)
+
+;; 启动完成后清空底部
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (run-with-idle-timer 0.1 nil
+                                  (lambda ()
+                                    (message "")))))
 
 ;; 使用清华大学 TUNA 镜像
 (setq package-archives
@@ -27,6 +39,8 @@
 
 ;; 忽略原生编译警告
 (setq warning-minimum-level :emergency)
+
+
 
 ;; ==========================================
 ;; 1. Windows 专属路径与字体设置
