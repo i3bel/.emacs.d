@@ -1,0 +1,186 @@
+;;; init-ui.el --- Behaviour specific to non-TTY frames -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
+
+(setup tool-bar (:when-loaded (tool-bar-mode -1)))
+(setup scroll-bar (:when-loaded (set-scroll-bar-mode nil)))
+(setup tooltip (:when-loaded (setopt tooltip-delay 2.5)))
+;; Don't scale font on trackpad pinch!
+(global-unset-key (kbd "<pinch>"))
+
+;; Better fringe symbol
+(define-fringe-bitmap 'right-curly-arrow
+  [#b00000000
+   #b00000110
+   #b00001100
+   #b00011000
+   #b00110000
+   #b00011000
+   #b00001100
+   #b00000110])
+
+(define-fringe-bitmap 'left-curly-arrow
+  [#b00000000
+   #b01100000
+   #b00110000
+   #b00011000
+   #b00001100
+   #b00011000
+   #b00110000
+   #b01100000])
+
+(setup window
+  (keymap-global-set "C-x |" 'window-layout-rotate-clockwise)
+  (keymap-global-set "C-x _" 'window-layout-rotate-anticlockwise)
+  (keymap-global-set "C-x 3" (lambda () (interactive)(select-window (split-window-horizontally))))
+  (keymap-global-set "C-x 2" (lambda () (interactive)(select-window (split-window-vertically)))))
+
+(setup custom
+  (:when-loaded
+    (:also-load lib-ui)
+    ;; Modifiers have to be specified in this order:
+    ;; A-C-H-M-S-s
+    ;; which is
+    ;; Alt-Control-Hyper-Meta-Shift-super
+    (keymap-global-set "C-M-8" (lambda () (interactive) (+adjust-opacity nil -2)))
+    (keymap-global-set "C-M-7" (lambda () (interactive) (+adjust-opacity nil 2)))
+    ;; Don't prompt to confirm theme safety. This avoids problems with
+    ;; first-time startup on Emacs > 26.3.
+    (setopt custom-safe-themes t
+            ;; If you don't customize it, this is the theme you get.
+            custom-enabled-themes '(rose-pine-night))
+    (setq light-theme 'rose-pine-day
+          dark-theme 'rose-pine-night)))
+
+(setup startup
+  (when IS-MAC
+    (apply-theme-based-on-appearance)
+    (:with-hook ns-system-appearance-change-functions
+      (:hook apply-theme-based-on-appearance)))
+
+  (:with-hook window-setup-hook
+    (:hook reapply-themes)
+    (:hook set-dividers-and-fringe-color)
+    (when window-system (:hook opacity-dark-theme)))
+
+  (:with-hook after-make-frame-functions (:hook opacity-dark-theme)))
+
+(setup frame
+  (:with-hook after-init-hook (:hook reapply-themes)))
+
+(setup hl-line
+  (setq hl-line-range-function
+        (lambda () (cons (line-end-position)
+                         (line-beginning-position 2))))
+  (global-hl-line-mode))
+
+;; ==========================================
+;; 【安全防护】只有当 panel 确实可用且没有图片渲染报错时才加载
+;; ==========================================
+(when (and (member 'panel USE-PACKAGE-LIST) (require 'panel nil t))
+  (setup panel
+    (setopt panel-latitude 32.09703
+            panel-longitude 118.77969
+            panel-path-max-length 35
+            panel-min-left-padding 10
+            panel-intro-display 'tty
+            ;; 兼容 Windows 的路径写法
+            panel-image-file (expand-file-name "assets/bitmap.png" user-emacs-directory)
+            panel-image-width 400
+            panel-image-height 169
+            panel-title "")
+    (panel-create-hook)))
+
+(when window-system
+  (setup faces
+    (:also-load lib-face)
+    (:with-hook (window-setup-hook
+                 server-after-make-frame-hook)
+      (:hook +setup-fonts))
+    (:with-mode org-mode (:set-font ORG-FONT))
+    (:advice face-at-point :around #'+suggest-other-faces)))
+
+(setup nerd-icons
+  (:when-loaded
+    (when (display-graphic-p)
+      (unless (find-font (font-spec :name nerd-icons-font-family))
+        (nerd-icons-install-fonts t))
+      (nerd-icons-set-font))))
+
+;; ==========================================
+;; 【安全防护】只有当 window-navigation 存在时才加载
+;; ==========================================
+(when (require 'window-navigation nil t)
+  (setup window-navigation
+    (:idle)
+    (:when-loaded (window-navigation-mode))))
+
+;; ==========================================
+;; 【安全防护】只有当 popper 存在时才加载
+;; ==========================================
+(when (require 'popper nil t)
+  (setup popper
+    (keymap-global-set "M-~"   'popper-cycle)
+    (keymap-global-set "C-M-`" 'popper-toggle-type)
+    (setopt popper-window-height (lambda (win)
+                                   (fit-window-to-buffer
+                                    win
+                                    (max 26 (floor (frame-height) 2))
+                                    26))
+            popper-reference-buffers
+            '("\\*Messages\\*"
+              "Output\\*$"
+              "\\*Async Shell Command\\*"
+              help-mode
+              compilation-mode
+              "\\*xref\\*"
+              "\\*OpenRouter\\*"
+              "\\*compilation\\*"
+              "\\*Org Select\\*"
+              "\\*Telega User\\*"
+              "\\*Telegram Chat Info\\*"
+              "\\*Telegram Message Info\\*"
+              "\\*Telegram Sticker Set\\*"
+              "\\*Telegram Notification Messages\\*"))
+    (:idle)
+    (:when-loaded
+      (popper-mode +1)
+      ;; (popper-echo-mode +1)
+      (popper-tab-line-mode +1))
+    ;; HACK: close popper window with `C-g'
+    (defun +popper-close-window-hack (&rest _)
+      "Close popper window via `C-g'."
+      (when (and (called-interactively-p 'interactive)
+                 (not (region-active-p))
+                 popper-open-popup-alist)
+        (let ((window (caar popper-open-popup-alist)))
+          (when (window-live-p window)
+            (delete-window window)))))
+    (:advice keyboard-quit :before +popper-close-window-hack)))
+
+(setup tab-bar
+  (:idle)
+  (keymap-global-set "C-c r t" 'tab-bar-new-tab)
+  (keymap-global-set "C-c r w" 'tab-bar-close-tab)
+  (keymap-global-set "C-c r s" 'tab-bar-switch-to-tab)
+  (:when-loaded
+    (:also-load lib-tabbar)
+    (setq tab-bar-separator "")
+    (setopt tab-bar-close-button-show nil
+            tab-bar-new-button-show nil
+            tab-bar-new-tab-to 'rightmost
+            tab-bar-tab-hints t
+            tab-bar-show 1
+            tab-bar-new-tab-choice "*scratch*"
+            tab-bar-select-tab-modifiers '(super)
+            tab-bar-tab-name-truncated-max 20
+            tab-bar-auto-width nil
+            ;; Add spaces for tab-name
+            tab-bar-tab-name-function '+tab-bar-tab-name-function
+            tab-bar-tab-name-format-function '+tab-bar-tab-name-format-function
+            tab-bar-format '(tab-bar-format-tabs
+                             tab-bar-format-add-tab
+                             tab-bar-format-align-right))))
+
+(provide 'init-ui)
+;;; init-ui.el ends here

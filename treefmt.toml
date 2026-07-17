@@ -1,5 +1,0 @@
-excludes = ["lock/**"]
-
-[formatter.nixfmt]
-command = "nixfmt"
-includes = ["*.nix"]

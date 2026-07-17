@@ -1,0 +1,121 @@
+;;; init-minibuffer.el --- Config for minibuffer completion       -*- lexical-binding: t; -*-
+;;; Commentary:
+;;; Code:
+
+(setup (:with-hook after-init-hook
+         (:hook savehist-mode)))
+
+(setup recentf
+  (:hook-into after-init)
+  (:when-loaded
+    (setopt recentf-max-saved-items 50
+            recentf-exclude (list "\\.?cache" ".cask" "url" "COMMIT_EDITMSG\\'" "bookmarks"
+                                  "\\.?ido\\.last$" "\\.revive$" "/G?TAGS$" "/.elfeed/"
+                                  "^/tmp/" "^/var/folders/.+$" "/persp-confs/"
+                                  "^/ssh:" "^/scp:" "^/sudo:" "^/rsync:" "^/ftp:" "^/sftp:" ;; TRAMP
+                                  (lambda (file) (file-in-directory-p file package-user-dir))
+                                  (expand-file-name recentf-save-file))
+            recentf-keep nil
+            recentf-autosave-interval 300
+            recentf-show-messages nil)
+    (add-to-list 'recentf-exclude #'recentf-exclude-file-by-extension-p)
+    ;; Add dired directories to recentf file list.
+    (:with-mode dired-mode
+      (:hook (lambda () (recentf-add-file default-directory))))
+    (add-to-list 'recentf-filename-handlers #'abbreviate-file-name)
+    ;; HACK: Text properties inflate the size of recentf's files, and there is
+    ;; no purpose in persisting them (Must be first in the list!)
+    (add-to-list 'recentf-filename-handlers #'substring-no-properties)))
+
+(setup minibuffer
+  ;; 用于对补全候选项进行分类的变量。通过将它们设置为 nil，我们禁用了 Emacs 自动分类补全候选项的功能，从而获得更简洁的补全列表。
+  (setq completion-category-defaults nil)
+  (setopt completion-category-overrides nil
+          ;; 将阈值设置为 4 表示只有当需要补全的字符数大于 4 时才会执行循环补全
+          completion-cycle-threshold 4))
+
+(setup doom-modeline
+  (:idle)
+  (:when-loaded
+    (setopt doom-modeline-height 18
+            doom-modeline-buffer-file-name-style 'auto
+            doom-modeline-buffer-modification-icon t
+            doom-modeline-bar-width 4
+            doom-modeline-hud t
+            doom-modeline-hud-min-height 1)
+    (:with-feature telega
+      (:when-loaded
+        (add-to-list 'global-mode-string '("" (:eval (+mode-line-telega-icon))) t)))
+
+    (doom-modeline-mode)))
+
+(setup vertico
+  (:idle)
+  (:when-loaded (setopt vertico-cycle t)
+                (vertico-mode)))
+
+(setup isearch
+  (setopt isearch-lazy-count t
+          isearch-allow-motion t
+          isearch-motion-changes-direction t))
+
+(setup embark
+  (:idle)
+  (:when-loaded
+    (:also-load embark-consult)
+
+    (defun +embark-open-in-finder (file)
+      "Open FILE in macOS Finder."
+      (interactive "fFile: ")
+      (shell-command (format "open -R %s && osascript -e 'tell application \"Finder\" to activate'" (shell-quote-argument (expand-file-name file)))))
+
+    (defun sudo-find-file (file)
+      "Open FILE as root."
+      (interactive "FOpen file as root: ")
+      (when (file-writable-p file)
+        (user-error "File is user writeable, aborting sudo"))
+      (find-file (if (file-remote-p file)
+                     (concat "/" (file-remote-p file 'method) ":"
+                             (file-remote-p file 'user) "@" (file-remote-p file 'host)
+                             "|sudo:root@"
+                             (file-remote-p file 'host) ":" (file-remote-p file 'localname))
+                   (concat "/sudo:root@localhost:" file))))
+
+    (keymap-global-set "C-c ." 'embark-act)
+    (keymap-global-set "M-n"   'embark-next-symbol)
+    (keymap-global-set "M-p"   'embark-previous-symbol)
+    (:with-map embark-file-map
+      (if IS-MAC (:bind "o" +embark-open-in-finder)
+        (:bind "S" sudo-find-file))
+      (:bind "|" (lambda (file)
+                   (select-window (split-window-right))
+                   (find-file file))))
+    (setopt embark-indicators '(embark-minimal-indicator
+                                embark-highlight-indicator
+                                embark-isearch-highlight-indicator)
+            embark-cycle-key "."
+            embark-help-key "?")
+    (:with-hook embark-collect-mode-hook (:hook consult-preview-at-point-mode))))
+
+(setup marginalia
+  (:load-after vertico)
+  (:when-loaded
+    (setopt marginalia-annotators '((default marginalia-annotators-heavy
+                                             marginalia-annotators-light
+                                             nil)))
+    (marginalia-mode)))
+
+(setup grep
+  (:with-map grep-menu-map
+    (:bind "e" grep-change-to-grep-edit-mode
+           "C-x C-q" grep-change-to-grep-edit-mode
+           "C-c C-c" grep-edit-save-changes)))
+
+(setup nerd-icons-completion
+  (:load-after marginalia)
+  (:when-loaded
+    (nerd-icons-completion-mode)
+    (:with-hook marginalia-mode-hook
+      (:hook nerd-icons-completion-marginalia-setup))))
+(provide 'init-minibuffer)
+;;; init-minibuffer.el ends here

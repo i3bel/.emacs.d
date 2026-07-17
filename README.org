@@ -1,0 +1,90 @@
+[[https://github.com/LuciusChen/.emacs.d][https://img.shields.io/badge/Linux-0.24s-brightgreen.svg?style=svg]] [[https://github.com/LuciusChen/.emacs.d][https://img.shields.io/badge/macOS-0.58s-blue.svg?style=svg]]
+* Emacs Configuration
+** Introduction
+最初因为市场上许多笔记软件无法提供足够的定制化选项，我感到不满。在朋友的推荐下，我开始接触 [[https://orgmode.org/][Org mode]]，从而进入了 [[https://github.com/doomemacs/doomemacs][doomemacs]] 的领域。然而，对于缺乏 [[https://www.gnu.org/software/emacs/manual/html_node/eintr/][elisp]] 相关知识的新手来说，doomemacs 仿佛一个黑盒，难以定位问题以及个性化调整，且这与我“满足自身需求且尽可能减少配置”的理念相悖。因此，从 2022 年起，我开始构建自己的配置。
+
+这套配置完全出于个人需求的考量而设计。如果能有幸得到他人的关注与使用，我将倍感欣慰。同时，若其中存在不足之处，欢迎随时指正。
+** Compilation
+*** MacOS
+使用脚本 [[./scripts/macos/emacs_setup.sh][emacs_setup.sh]] 进行安装时，若 [[./patches/][patches]] 目录中的补丁与 emacs-plus 维护的补丁同名，则会覆盖原有补丁并修改其 =sha= 值。否则，这些补丁将作为 =user_patch= 被纳入 =emacs-plus@31.rb= 中进行管理。
+
+只需执行 =./emacs_setup.sh= 即可完成安装。如需安装 =feature/igc= 分支，只需添加参数 =mps= 。
+**** patches
+与 [[https://github.com/d12frosted/homebrew-emacs-plus][emacs-plus]] 重复的 patches 在这里是因为我经常编译，就自己维护了。[[./patches/emacs-30/fix-window-role.patch][fix-window-role.patch]] 在 emacs@31 已经合并到上游了。
+
+1. [[./patches/emacs-31/cursor-animation.patch][cursor-animation.patch]] 相较于 neovide 等其他的光标动画，我更喜欢这个。最初由 @ksqsf 在 [[https://t.me/c/1873425044/68208][Emacs_CN Lite 轻聊版]] 中放出，@TakaObsid 完善后不再遮挡内容。
+2. [[./patches/emacs-31/ns-alpha-background.patch][ns-alpha-background.patch]]
+3. [[./patches/emacs-31/ns-mac-input-source.patch][ns-mac-input-source.patch]] 经由 @georgealbert 整理提取，用于切换输入法。
+*** Arch Linux
+使用 [[./scripts/arch/build-emacs-pgtk.sh][build-emacs-pgtk.sh]] 进行编译，这实际上是我自行维护的 =PKGBUILD= ，旨在简化编译与安装过程。
+** Package Management
+包管理使用的是 [[https://github.com/radian-software/straight.el][straight.el]] + [[https://codeberg.org/pkal/setup.el][setup.el]]，前者功能比较全面，可以 pin 到具体的 commits；后者相对简单，可以在此基础上自定义关键字，比如 [[https://github.com/LuciusChen/.emacs.d/blob/431223eaf9b726076b6c6f6e6c8502c42173b7e1/lisp/init-setup.el#L78][:set-font]]（按 =mode= 定义不同的字体）。
+*** setup.el 常见问题
+1. =:bind-into= 已经被淘汰，最好用 =(:with-map xxx-map (:bind "C-c x t" xxxx))= 的写法。
+2. =:option= 已经被淘汰，用 Emacs 内置的 =setq= 和 =setopt= 。
+3. =:file-match= 修改后，需要从 =(:match-file "\\.lua\\'")= 改为 =(:match-file "*.lua")= 。
+** UI/UX
+*** Fonts
+1. 默认字体：[[https://fsd.it/shop/fonts/pragmatapro/][PragmataPro Mono]]
+2. 中文字体：[[https://github.com/lxgw/LxgwWenKai-Screen][LXGW WenKai Screen]]，fallback 字体：[[https://kamichikoichi.github.io/jigmo/][Jigmo fonts]]（CJK 全覆盖）。
+3. org-mode 字体：[[https://fsd.it/shop/fonts/pragmatapro/][PragmataPro Liga]]
+
+配置参考：
+- [[http://xahlee.info/emacs/emacs/emacs_list_and_set_font.html][Emacs Init: Setup Font]]
+- [[https://idiocy.org/emacs-fonts-and-fontsets.html][Emacs, fonts and fontsets | idiocy.org]]
+- [[https://emacs-china.org/t/emacs/15676/34][经验分享：emacs单独设置中文与英语的字体 - #34，来自 p1uxtar - Emacs-general - Emacs China]]
+- [[https://github.com/ryanoasis/nerd-fonts/wiki/Glyph-Sets-and-Code-Points][Glyph Sets and Code Points · ryanoasis/nerd-fonts Wiki · GitHub]]
+*** Theme
+主题目前选用 [[https://github.com/LuciusChen/rose-pine][rose-pine]]，Dashboard 选用 fork 修改后的 [[https://github.com/LuciusChen/panel][panel]]，mode-line 选用 [[https://github.com/seagle0128/doom-modeline][doom-modeline]]。
+** Security
+所有条目都存入 pass 中，并通过启用 =auth-source-pass-enable= 自动读取。然而，对于自建的 GitLab， =machine= 的值必须采用 =192.168.1.220:9081/api/v4= 格式，这一信息无法直接存入 pass。因此，我更改了存储名称，并编写了 [[https://github.com/LuciusChen/.emacs.d/blob/431223eaf9b726076b6c6f6e6c8502c42173b7e1/lib/lib-auth.el#L11][check-and-update-authinfo]]，将其自动读取并写入 =.authinfo= 中，从而实现配置过程的自动化。
+** Feature Overview
+*** 输入法切换
+=ns-mac-input-source.patch= 应用后可以原生支持切换输入法，主要是添加了 =mac-input-source= 方法。
+
+1. [[https://github.com/laishulu/emacs-smart-input-source][emacs-smart-input-source]] 如果检测到 =mac-input-source= 就会才用该函数来切换输入法，代替 [[https://github.com/laishulu/macism][macism]]。
+2. 通过 [[https://karabiner-elements.pqrs.org/][Karabiner-Elements]] [[https://github.com/LuciusChen/dotfiles/blob/0b0fe7f03c932d779d187e943fc6d92c9e11795a/macos/.config/karabiner.edn#L58][映射]] =left_shift= 到 =f13= ，绑定后就可以通过 =left_shift= 切换输入法。
+**** 常见问题
+- 自 Sequoia 系统开始，系统增加了 =CursorUIViewservice= 进程来显示输入法状态，经常会卡死导致内存占用。可以通过下面的命令彻底关闭。参考自 [[https://www.reddit.com/r/MacOS/comments/16vmjfc/comment/kcq6nql/][Reddit - Dive into anything]]。
+#+begin_src shell
+sudo mkdir -p /Library/Preferences/FeatureFlags/Domain && sudo /usr/libexec/PlistBuddy -c "Add 'redesigned_text_cursor:Enabled' bool false" /Library/Preferences/FeatureFlags/Domain/UIKit.plist && sudo shutdown -r now
+#+end_src
+*** LaTeX 预览及导出
+导出到 Web 时，简单公式用 [[https://www.mathjax.org/][MathJax]]，复杂代码块（自定义关键字等）通过 =org-babel= 生成 SVG 嵌入。
+
+#+header: :headers '("\\usepackage[ruled, linesnumbered]{algorithm2e}")
+#+begin_src latex :results file raw :file assets/lamport-clocks-algorithm.svg :exports none
+\begin{algorithm}[H]
+  \renewcommand{\thealgocf}{} \SetKwProg{FnOn}{on}{ do}{end}
+  \caption{Lamport clocks algorithm}
+  \FnOn{\textsf{\upshape initialisation}} {$t := 0$ \tcp*{each node
+      has its own local variable t}} \FnOn{\textsf{\upshape any event
+      occurring at the local node}} {$t := t + 1$}
+  \FnOn{\textsf{\upshape request to send message $m$}} {$t := t + 1$\;
+    \textsf{\upshape send $(t, m)$ via the underlying network link}}
+  \FnOn{\textsf{\upshape receiving $(t', m)$ via the underlying
+      network link}} {$t := \max(t, t') + 1$\; \textsf{\upshape
+      deliver $m$ to the application}}
+\end{algorithm}
+#+end_src
+
+Emacs 内预览曾尝试 [[https://github.com/dandavison/xenops][xenops]] 和 [[https://abode.karthinks.com/org-latex-preview/][org-latex-preview]]，但后者因 [[https://git.tecosaur.net/tec/org-mode][tec/org-mode]] 异步编译导致 =org-babel= 执行失败（[[https://github.com/tecosaur/org-latex-preview-todos/issues/28][#28]]），暂未采用。
+
+配置要点：
+- 编译器 =xelatex= ，通过 =latexmk= 驱动；代码高亮使用 =minted=
+- 预览：=xelatex= + =dvisvgm= 生成 SVG
+- 中文字体 =LXGW WenKai= ，文档类 =ctexart=
+- 自定义 class： =Notes= （基于 [[https://github.com/Adhumunt/NotesTeX][NotesTeX]]）、 =article_cn= （中文文章，超链接 Maroon 配色）
+- 常用包：数学（ =amsmath= / =mathtools= ）、绘图（ =tikz= / =tikz-cd= ）、算法（ =algorithm2e= ）等
+**** 常见问题
+- 用 Homebrew 安装的 texlive，dvisvgm 包含在 texlive 当中，需要从 =/Library/TeX/texbin/= 复制到 =/opt/homebrew/bin/= 。
+*** 翻译
+[[https://github.com/lorniu/gt.el][gt.el]] 非常易于扩展，除了各种场景的翻译，我还用于 [[https://codeberg.org/martianh/mastodon.el][mastodon.el]] 的 toots 和 profiles 翻译，避免重复安装作者提供的 [[https://codeberg.org/martianh/lingva.el][lingva.el]]（该包没提供 profiles 的翻译）。
+
+我 fork 了项目做了些[[https://github.com/lorniu/gt.el/pull/100 ][修改]]：
+- 支持请求 header 自定义
+- OpenRouter 等平台不支持 =stream= 参数为 null，因此当 =stream= 为 =null= 则不纳入到入参当中。
+*** Git
+- [[https://github.com/magit/forge][forge]] 的 =forge-copy-url-at-point-as-kill= 可以复制当前文件的链接，当选择某行时，链接也会具体到某行，可以替代我用到 [[https://github.com/sshaw/git-link][git-link]] 的功能。
+- IDEA 中修改代码，也可以切换到 Emacs 用 [[https://github.com/magit/magit][magit]] 进行 git 操作, [[./scripts/macos/magit.sh][magit.sh]] 可以自动化这个过程。在 IDEA 中 =Settings>Tools>External Tools= 中设置 =Program= 为 =magit.sh= 地址，并在 =Working directory= 中填入宏 =$ProjectFileDir$= 即可。（宏参考 [[https://www.jetbrains.com/help/idea/built-in-macros.html][Built-in IDE macros | IntelliJ IDEA Documentation]]）（原文地址：[[https://dolzhenko.me/blog/2025/03/launching-magit-from-intellij-idea/][Launching Magit from IntelliJ IDEA - Dmitry Dolzhenko]]）
+*** Java 编程

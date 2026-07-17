@@ -1,2 +1,0 @@
-(lambda-line :fetcher github
-             :repo "Lambda-Emacs/lambda-line")

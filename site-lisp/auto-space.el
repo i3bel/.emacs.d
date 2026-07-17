@@ -1,0 +1,122 @@
+;;; auto-space.el --- Automatically add space between Chinese and English characters -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
+
+(defcustom auto-space-additional-halfwidth-chars '(?% ?> ?<)
+  "Additional characters to be treated as halfwidth characters.
+These characters will trigger automatic space insertion when adjacent to Chinese characters."
+  :type '(repeat character)
+  :group 'auto-space)
+
+(defun in-comment-p ()
+  "Check if point is in a comment."
+  (nth 4 (syntax-ppss)))
+
+(defun should-apply-auto-space ()
+  "Check if auto-space should be applied at current position.
+In prog-mode, only apply in comments. In other modes, always apply."
+  (if (derived-mode-p 'prog-mode)
+      (in-comment-p)
+    t))
+
+(defun add-space-between-chinese-and-english ()
+  "Automatically add a space between Chinese and English characters."
+  (when (should-apply-auto-space)
+    (let ((current-char (char-before))
+          (prev-char (char-before (1- (point))))
+          (next-char (char-after)))
+      (when (and current-char prev-char
+                 (should-insert-space prev-char current-char)
+                 (not (eq (char-before (1- (point))) ?\s)))
+        (save-excursion
+          (backward-char)
+          (insert " ")))
+      (when (and current-char next-char
+                 (should-insert-space current-char next-char)
+                 (not (eq (char-after) ?\s)))
+        (save-excursion
+          (insert " "))))))
+
+(defun is-chinese-character (char)
+  "Determine if a character is a Chinese character."
+  (and char (or (and (>= char #x4e00) (<= char #x9fff))
+                (and (>= char #x3400) (<= char #x4dbf))
+                (and (>= char #x20000) (<= char #x2a6df))
+                (and (>= char #x2a700) (<= char #x2b73f))
+                (and (>= char #x2b740) (<= char #x2b81f))
+                (and (>= char #x2b820) (<= char #x2ceaf)))))
+
+(defun is-halfwidth-character (char)
+  "Determine if a character is a halfwidth character."
+  (and char
+       (or (and (>= char ?a) (<= char ?z))
+           (and (>= char ?A) (<= char ?Z))
+           (and (>= char ?0) (<= char ?9))
+           (memq char auto-space-additional-halfwidth-chars))))
+
+(defun should-insert-space (char1 char2)
+  "Determine if a space should be inserted between CHAR1 and CHAR2."
+  (or (and (is-chinese-character char1) (is-halfwidth-character char2))
+      (and (is-halfwidth-character char1) (is-chinese-character char2))))
+
+(defun insert-space-if-needed (char1 char2 buffer-content)
+  "Insert a space between CHAR1 and CHAR2 in BUFFER-CONTENT if needed."
+  (if (and char2
+           (should-insert-space char1 char2)
+           (not (eq char2 ?\s)))
+      (concat buffer-content " ")
+    buffer-content))
+
+(defun process-pasted-text (text prev-char next-char)
+  "Process pasted TEXT to add spaces between Chinese and English characters, considering PREV-CHAR and NEXT-CHAR."
+  (with-temp-buffer
+    (insert (if prev-char (concat (char-to-string prev-char) text) text))
+    (goto-char (point-min))
+    (while (not (eobp))
+      (let ((current-char (char-after))
+            (next-char-internal (char-after (1+ (point)))))
+        (when (and current-char next-char-internal
+                   (should-insert-space current-char next-char-internal)
+                   (not (eq (char-after) ?\s)))
+          (save-excursion
+            (goto-char (1+ (point)))
+            (insert " "))))
+      (forward-char))
+    (let ((buffer-content (buffer-string)))
+      (if prev-char
+          (setq buffer-content (substring buffer-content 1)))
+      ;; Add space between the last char of pasted text and next-char
+      (setq buffer-content (insert-space-if-needed
+                            (aref buffer-content (1- (length buffer-content)))
+                            next-char
+                            buffer-content))
+      buffer-content)))
+
+(defun auto-space-yank-advice (orig-fun &rest args)
+  "Advice to automatically add spaces between Chinese and English characters after yanking."
+  (if (should-apply-auto-space)
+      (let ((beg (point))
+            (prev-char (char-before)))
+        (apply orig-fun args)
+        (let ((end (point))
+              (next-char (char-after)))
+          (let ((pasted-text (buffer-substring-no-properties beg end)))
+            (delete-region beg end)
+            (insert (process-pasted-text pasted-text prev-char next-char)))))
+    (apply orig-fun args)))
+
+;;;###autoload
+(define-minor-mode auto-space-mode
+  "Mode to automatically add a space between Chinese and English characters."
+  :lighter " Auto-Space"
+  :global t
+  (if auto-space-mode
+      (progn
+        (advice-add 'yank :around #'auto-space-yank-advice)
+        (advice-add 'yank-pop :around #'auto-space-yank-advice)
+        (add-hook 'post-self-insert-hook 'add-space-between-chinese-and-english))
+    (advice-remove 'yank #'auto-space-yank-advice)
+    (advice-remove 'yank-pop #'auto-space-yank-advice)
+    (remove-hook 'post-self-insert-hook 'add-space-between-chinese-and-english)))
+(provide 'auto-space)
+;;; auto-space.el ends here

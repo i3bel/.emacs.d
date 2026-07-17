@@ -1,3 +1,0 @@
-(nu-fun :repo "ayanyan/nihongo-util"
-        :fetcher github
-        :files ("nu-fun.el"))

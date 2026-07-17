@@ -1,0 +1,78 @@
+;;; init-completion.el --- Interactive completion in buffers -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
+(setup orderless
+  (:idle)
+  (:when-loaded
+    (setopt completion-styles '(orderless basic))
+    (setq completion-category-defaults nil
+          completion-ignore-case t)
+
+    ;; https://github.com/oantolin/orderless/issues/111#issuecomment-1098763842
+    (defun orderless+basic-all (str table pred point)
+      (or (orderless-all-completions str table pred point)
+          (completion-basic-all-completions str table pred point)))
+
+    (defun orderless+basic-try (str table pred point)
+      (or (completion-basic-try-completion str table pred point)
+          (orderless-try-completion str table pred point)))
+
+    (add-to-list 'completion-styles-alist
+                 '(orderless+basic
+                   orderless+basic-try
+                   orderless+basic-all
+                   "Unholy mix of Orderless and Basic."))))
+
+(setup pinyinlib
+  (:load-after orderless)
+  (:when-loaded
+    (add-to-list 'orderless-style-dispatchers
+                 (lambda (component _index _total)
+                   (when (string-prefix-p "`" component)
+                     `(orderless-regexp
+                       . ,(pinyinlib-build-regexp-string
+                           (substring component 1) nil nil t)))))))
+
+(setup corfu
+  (:idle)
+  (:when-loaded
+    (:with-feature nerd-icons-corfu
+      (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+    ;; Symbols Nerd Font Mono glyphs are 1-2px taller than the default font.
+    ;; corfu sizes the child frame as n × (default-line-height), so adding a
+    ;; small line-spacing *only* in the corfu buffer makes that value reflect
+    ;; the true rendered line height without touching anything else.
+    (:advice corfu--make-buffer :filter-return
+             (lambda (buf)
+               (with-current-buffer buf
+                 (setq-local line-spacing 2))
+               buf))
+    (global-corfu-mode)
+    (setopt corfu-cycle t
+            corfu-auto t
+            corfu-quit-no-match 'separator)
+    (:with-mode prog-mode (:hook corfu-mode))
+    (:with-mode corfu
+      (:bind "<escape>" corfu-quit
+             "TAB"  corfu-next
+             [tab]  corfu-next
+             "S-TAB"  corfu-previous))))
+
+(setup cape
+  (:load-after corfu)
+  (:when-loaded
+    (add-to-list 'completion-at-point-functions #'cape-emoji)
+    (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+    (add-to-list 'completion-at-point-functions #'cape-file)))
+
+(setup yasnippet
+  (:idle)
+  (:when-loaded
+    (yas-global-mode)
+    (setopt yas-keymap-disable-hook
+            (list (lambda () (and (frame-live-p corfu--frame)
+                                  (frame-visible-p corfu--frame)))))
+    (setq yas-verbosity 0)))
+
+(provide 'init-completion)
+;;; init-completion.el ends here

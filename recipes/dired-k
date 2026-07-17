@@ -1,3 +1,0 @@
-(dired-k :fetcher github
-         :repo "emacsorphanage/dired-k"
-         :files ("dired-k.el"))
