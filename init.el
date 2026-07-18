@@ -137,6 +137,10 @@
     ox-hugo
     ;; 漂亮的界面与图标
     nerd-icons doom-modeline diredfl nerd-icons-completion
+    rainbow-mode
+    indent-bars
+    breadcrumb 
+    nerd-icons-corfu
     (rose-pine :host github :repo "LuciusChen/rose-pine")
     
     ;; 笔记项目管理与快速跳转
@@ -190,7 +194,7 @@
 (require 'init-completion)
 (require 'init-local)
 
-
+(require 'roll)
 
 (provide 'init)
 ;; Local Variables:

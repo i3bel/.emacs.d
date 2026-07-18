@@ -41,3 +41,7 @@ org-clock-save.el
 *.db
 .aider*
 /org-persist
+*.eld
+*.eld
+projectile-bookmarks.eld
+projectile-frecency.eld
