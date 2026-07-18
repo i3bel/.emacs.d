@@ -1,1 +1,0 @@
-(("e:/ONS/github/roll.el/" ("README.md" 1 1784354231)) ("c:/Users/Administrator/AppData/Roaming/.emacs.d/" ("example.org" 36 1784353804) ("init.el" 9 1784353775) ("README.org" 11 1784301983)))
